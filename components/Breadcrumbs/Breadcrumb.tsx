@@ -1,26 +1,53 @@
+"use client";
 import Link from "next/link";
+import { Breadcrumb } from "antd";
+import { usePathname } from "next/navigation";
 interface BreadcrumbProps {
-  pageName: string;
+  pageName?: string;
 }
-const Breadcrumb = ({ pageName }: BreadcrumbProps) => {
-  return (
-    <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-      <h2 className="text-title-md2 font-semibold text-black dark:text-white">
-        {pageName}
-      </h2>
 
-      <nav>
-        <ol className="flex items-center gap-2">
-          <li>
-            <Link className="font-medium" href="/">
-              Dashboard /
-            </Link>
-          </li>
-          <li className="font-medium text-primary">{pageName}</li>
-        </ol>
-      </nav>
+const BreadcrumbCustom = ({ pageName }: BreadcrumbProps) => {
+  {
+    /* <!-- Get url path with useRouter --> */
+  }
+
+  const paths = usePathname();
+  const pathNames = paths.split("/").filter((path) => path);
+  const breadcrumbList = pathNames.map((segment, index) => {
+    const url = `/${pathNames.slice(0, index + 1).join("/")}`;
+    return {
+      title: (
+        <Link
+          className="capitalize dark:text-bodydark  dark:hover:text-white"
+          href={url}
+        >
+          <p className="capitalize dark:text-bodydark  dark:hover:text-white">
+            {segment}
+          </p>
+        </Link>
+      ),
+    };
+  });
+  return (
+    <div className=" flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+      <Breadcrumb
+        separator=">"
+        items={[
+          {
+            title: (
+              <Link
+                className="capitalize dark:text-bodydark dark:hover:text-white"
+                href="/"
+              >
+                Dashboard
+              </Link>
+            ),
+          },
+          ...breadcrumbList,
+        ]}
+      />
     </div>
   );
 };
 
-export default Breadcrumb;
+export default BreadcrumbCustom;
