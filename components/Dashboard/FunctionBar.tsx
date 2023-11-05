@@ -1,10 +1,12 @@
-import React from "react";
+import React, { ReactNode } from "react";
 import { DownloadOutlined } from "@ant-design/icons";
 import { Button } from "antd";
 import dayjs from "dayjs";
 import type { Dayjs } from "dayjs";
 import type { TimeRangePickerProps } from "antd";
-import { DatePicker, Space } from "antd";
+import { DatePicker } from "antd";
+import {ReloadOutlined } from '@ant-design/icons'
+import {Popover} from 'antd'
 const { RangePicker } = DatePicker;
 const onRangeChange = (
   dates: null | (Dayjs | null)[],
@@ -30,11 +32,14 @@ const FunctionBar = () => {
       <div>
         <p>Organization Dashboard!</p>
       </div>
-      <div className=" justify-between flex ml:w-1/4 md:w-1/3">
+      <div className=" justify-end items-center flex w-2/3 md:w-2/4 xl:w-2/3 ">
+        {/* Export dashboard to PDF */}
+        <Popover content={()=> {return <div>Export dashboard data!</div>}}>
         <Button type="primary" icon={<DownloadOutlined />}>
           Export Dashboard
         </Button>
-        <div className=" ml-2">
+        </Popover>
+        <div className="ml-2">
           <RangePicker
             presets={[
               {
@@ -49,6 +54,11 @@ const FunctionBar = () => {
             format="YYYY/MM/DD HH:mm:ss"
             onChange={onRangeChange}
           />
+        </div>
+        <div className="ml-2">
+          <Popover content={()=>{return <div>Reload</div>}}>
+          <ReloadOutlined style={{ fontSize: '16px', color: '#08c' }} />
+          </Popover>
         </div>
       </div>
     </div>
