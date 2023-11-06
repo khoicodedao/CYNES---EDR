@@ -64,7 +64,7 @@ const columns: ColumnsType<DataType> = [
 const data: DataType[] = [
   {
     key: "1",
-    id_agent: "John Brown",
+    id_agent: "Agent 1",
     event_info: "32",
     event_type: "New York No. 1 Lake Park",
     event_time: "",
@@ -73,7 +73,7 @@ const data: DataType[] = [
   },
   {
     key: "2",
-    id_agent: "Jim Green",
+    id_agent: "Agent 2",
     event_info: "32",
     event_type: "New York No. 1 Lake Park",
     event_time: "",
@@ -82,7 +82,7 @@ const data: DataType[] = [
   },
   {
     key: "3",
-    id_agent: "Joe Black",
+    id_agent: "Agent 3",
 
     event_info: "32",
     event_type: "New York No. 1 Lake Park",
