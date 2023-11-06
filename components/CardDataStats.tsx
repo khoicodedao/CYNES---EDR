@@ -20,7 +20,8 @@ const CardDataStats: React.FC<CardDataStatsProps> = ({
 }) => {
   return (
     <div className="grid grid-cols-2 ">
-      <div className=" flex items-center justify-between rounded-sm border border-stroke bg-white py-6 px-7.5 shadow-default dark:border-strokedark dark:bg-boxdark p-4">
+      {/* 1st grid - Main alert */}
+      <div className=" flex items-center justify-between rounded-sm border border-stroke bg-[#ffff0091] py-6 px-7.5 shadow-default dark:border-strokedark dark:bg-boxdark p-4">
         <div className="flex h-11.5 w-20 items-center justify-center rounded-full">
           {children}
         </div>
@@ -29,7 +30,9 @@ const CardDataStats: React.FC<CardDataStatsProps> = ({
             <h4 className="text-title-md font-bold text-2xl xl:text-4xl 2xl:text-6xl text-black dark:text-white">
               {total}
             </h4>
-            <span className="text-sm font-medium">{title}</span>
+            <span className="text-sm font-medium xl:text-xl 2xl:text-3xl">
+              {title}
+            </span>
             <span
               className={`flex items-center gap-1 text-sm font-medium ${
                 levelUp && "text-meta-3"
@@ -70,27 +73,26 @@ const CardDataStats: React.FC<CardDataStatsProps> = ({
           </div>
         </div>
       </div>
+      {/* end */}
+      {/*  2nd grid - detail for main grid */}
       <div className="ml-2">
         <Col>
           <Col span={24}>
-            <Card className="dark:bg-boxdark" bordered={false}>
-              <div className=" flex items-center justify-between">
-                <div>
-                <h4 className="text-title-md font-bold text-black dark:text-white">
-                  {536}
-                </h4>
-                <span className="text-sm font-medium dark:text-white opacity-50">Online</span>
+            <Card className=" dark:bg-boxdark" bordered={false}>
+              <div className=" flex items-center  justify-between">
+                <div className="flex item-center flex-col justify-center">
+                  <h4 className="text-title-md font-bold text-black dark:text-white">
+                    {536}
+                  </h4>
+                  <Statistic
+                    title="Online"
+                    value={20}
+                    precision={0}
+                    valueStyle={{ color: "#3f8600" }}
+                    prefix={<ArrowUpOutlined />}
+                    suffix=""
+                  />
                 </div>
-              
-                <Statistic
-                  title=""
-                  value={20}
-                  precision={0}
-                  valueStyle={{ color: "#3f8600" }}
-                  prefix={<ArrowUpOutlined />}
-                  suffix=""
-                />{" "}
-               
                 <Progress type="circle" strokeColor="#3f8600" percent={75} />
               </div>
             </Card>
@@ -98,28 +100,27 @@ const CardDataStats: React.FC<CardDataStatsProps> = ({
           <Col span={24}>
             <Card className="dark:bg-boxdark mt-2" bordered={false}>
               <div className=" flex items-center justify-between">
-              <div>
-                <h4 className="text-title-md font-bold text-black dark:text-white">
-                  {145}
-                </h4>
-                <span className="text-sm font-medium dark:text-white opacity-50">Offline</span>
+                <div className="flex item-center flex-col justify-center">
+                  <h4 className="text-title-md font-bold text-black dark:text-white">
+                    {536}
+                  </h4>
+                  <Statistic
+                    title="offline"
+                    value={80}
+                    precision={0}
+                    valueStyle={{ color: "#cf1322" }}
+                    prefix={<ArrowDownOutlined />}
+                    suffix=""
+                  />
                 </div>
-                <Statistic
-                  title=""
-                  value={80}
-                  precision={0}
-                  valueStyle={{ color: "#cf1322" }}
-                  prefix={<ArrowDownOutlined />}
-                  suffix=""
-                />
 
-                
                 <Progress type="circle" strokeColor="#cf1322" percent={25} />
               </div>
             </Card>
           </Col>
         </Col>
       </div>
+      {/* end */}
     </div>
   );
 };

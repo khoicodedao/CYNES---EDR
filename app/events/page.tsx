@@ -1,8 +1,8 @@
-import Calendar from "@/components/Calender";
+import Event from "@/components/Event";
 import { Metadata } from "next";
-import { Button } from "antd";
+
 export const metadata: Metadata = {
-  title: "Calendar Page | Next.js E-commerce Dashboard Template",
+  title: "Events Page",
   description: "This is Calendar page for TailAdmin Next.js",
   // other metadata
 };
@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 const CalendarPage = () => {
   return (
     <>
-      <Calendar />
+      <Event />
     </>
   );
 };

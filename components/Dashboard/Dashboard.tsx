@@ -18,7 +18,7 @@ const DashBoard: React.FC = () => {
     <>
       <FunctionBar />
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 xl:grid-cols-2 2xl:gap-7.5 mt-7.5">
-        <CardDataStats title="Agents" total="1.531"  newData="+ 1" levelUp>
+        <CardDataStats title="Agents" total="1.531" newData="+ 1" levelUp>
           <svg
             className="fill-primary dark:fill-white"
             width="150"
@@ -36,19 +36,22 @@ const DashBoard: React.FC = () => {
         </CardDataStats>
 
         <CardDataStats title="Alerts" total="3.456" newData="2.010" levelDown>
-        <WarningOutlined ></WarningOutlined>
+          <WarningOutlined></WarningOutlined>
         </CardDataStats>
       </div>
 
       <div className="mt-4 grid grid-cols-12 gap-4 md:mt-6 md:gap-6 2xl:mt-7.5 2xl:gap-7.5">
+        {/* Line chart for Alert and */}
         <ChartOne />
+        {/* End chart */}
+        {/* Column chart by time */}
         <ChartTwo />
+        {/* End chart */}
+        {/* Pie chart */}
         <ChartThree />
+        {/* Pie chart */}
+
         <MapOne />
-        {/* <div className="col-span-12 xl:col-span-8">
-          <TableOne />
-        </div>
-        <ChatCard /> */}
       </div>
     </>
   );
