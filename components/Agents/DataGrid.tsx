@@ -1,12 +1,12 @@
 "use client";
 import React, { useState } from "react";
-import { DownOutlined } from "@ant-design/icons";
+import { DownOutlined, SettingOutlined, MenuOutlined } from "@ant-design/icons";
 import type { TableColumnsType } from "antd";
-import { Badge, Dropdown, Space, Table, Tag } from "antd";
-
-import { Button, Drawer, Radio } from "antd";
+import { Select } from "antd";
+import { Badge, Dropdown, Space, Table, Tag, Tabs } from "antd";
+import { Button, Drawer, Divider } from "antd";
 import { DeleteOutlined } from "@ant-design/icons";
-
+import "./index.css";
 interface DataType {
   key: React.Key;
   name: string;
@@ -128,6 +128,102 @@ const DataGrid: React.FC = () => {
         }
       >
         {/* Drawer content */}
+        <div className=" pl-2 w-full max-w-full rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
+          <div className="flex items-center dark:opacity-50  dark:bg-boxdark">
+            <p>First Ping: 17/8/2023 20:00:00</p>{" "}
+            <Divider className="bg-black-90 dark:bg-white " type="vertical" />{" "}
+            <p>Last Ping: 17/8/2023 23:00:00</p>
+          </div>
+        </div>
+        {/* Properties */}
+        <div className="w-full p-6 mt-2 max-w-full rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
+          <div className="font-bold mb-2">
+            <SettingOutlined className="mr-1" />
+            Properties
+          </div>
+          <div className="grid grid-cols-3 ">
+            <div>
+              <p>Policy:</p>
+              <Select
+                defaultValue="lucy"
+                style={{ width: 200 }}
+                // onChange={handleChange}
+                options={[
+                  { value: "Policy", label: "Policy 1" },
+                  { value: "lucy", label: "Policy" },
+                  { value: "Yiminghe", label: "Policy" },
+                  { value: "disabled", label: "Policy", disabled: true },
+                ]}
+              />
+            </div>
+            <div>
+              <p>Update Group:</p>
+              <Select
+                defaultValue="lucy"
+                style={{ width: 200 }}
+                // onChange={handleChange}
+                options={[
+                  { value: "Policy", label: "Group 1" },
+                  { value: "lucy", label: "Policy" },
+                  { value: "Yiminghe", label: "Policy" },
+                  { value: "disabled", label: "Policy", disabled: true },
+                ]}
+              />
+            </div>
+            <div>
+              <p>Group:</p>
+              <Select
+                defaultValue="lucy"
+                style={{ width: 200 }}
+                // onChange={handleChange}
+                options={[
+                  { value: "Policy", label: "Group 2" },
+                  { value: "lucy", label: "Policy" },
+                  { value: "Yiminghe", label: "Policy" },
+                  { value: "disabled", label: "Policy", disabled: true },
+                ]}
+              />
+            </div>
+          </div>
+        </div>
+        {/* end */}
+
+        {/* Agent detail */}
+        <div className="w-full p-6 mt-2 max-w-full rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
+          <div className="font-bold mb-2">
+            <MenuOutlined className="mr-1" />
+            About Agent
+          </div>
+          <Tabs
+            // onChange={onChange}
+            className="dark:text-white"
+            type="card"
+            items={[
+              {
+                label: `Detail`,
+                key: "1",
+                children: `Content of Tab Detail ${1}`,
+              },
+              {
+                label: `Installation Files Version`,
+                key: "2",
+                children: `Installation Files Version ${1}`,
+              },
+              {
+                label: `Scheduled Tasks`,
+                key: "3",
+                children: `Content of Tab Scheduled Tasks ${1}`,
+              },
+
+              {
+                label: `Disk & partitions`,
+                key: "4",
+                children: `Content of Tab Disk & partitions ${1}`,
+              },
+            ]}
+          />
+        </div>
+        {/* end */}
 
         {/* end */}
       </Drawer>
