@@ -86,7 +86,11 @@ const DataGrid: React.FC = () => {
     { title: "Upgraded", dataIndex: "upgradeNum", key: "upgradeNum" },
     { title: "Creator", dataIndex: "creator", key: "creator" },
     { title: "Date", dataIndex: "createdAt", key: "createdAt" },
-    { title: "Action", key: "operation", render: () => <a>Publish</a> },
+    {
+      title: "Status",
+      key: "operation",
+      render: () => <Badge status="success" />,
+    },
   ];
 
   const data: DataType[] = [];
@@ -107,7 +111,7 @@ const DataGrid: React.FC = () => {
       <Drawer
         title={
           <p>
-            <Tag color="#87d068">Online</Tag>Agent detail
+            <Tag color="#87d068">Running</Tag>Agents Receive task
           </p>
         }
         placement={"right"}
@@ -130,16 +134,15 @@ const DataGrid: React.FC = () => {
         {/* Drawer content */}
         <div className=" pl-2 w-full max-w-full rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
           <div className="flex items-center dark:opacity-50  dark:bg-boxdark">
-            <p>First Ping: 17/8/2023 20:00:00</p>{" "}
-            <Divider className="bg-black-90 dark:bg-white " type="vertical" />{" "}
-            <p>Last Ping: 17/8/2023 23:00:00</p>
+            <p className="mr-2">From: 17/8/2023 20:00:00</p> -{" "}
+            <p className="ml-2">To: 17/8/2023 23:00:00</p>
           </div>
         </div>
         {/* Properties */}
         <div className="w-full p-6 mt-2 max-w-full rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
           <div className="font-bold mb-2">
             <SettingOutlined className="mr-1" />
-            Properties
+            Command
           </div>
           <div className="grid grid-cols-3 ">
             <div>
@@ -192,7 +195,7 @@ const DataGrid: React.FC = () => {
         <div className="w-full p-6 mt-2 max-w-full rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
           <div className="font-bold mb-2">
             <MenuOutlined className="mr-1" />
-            About Agent
+            List Agents
           </div>
           <Tabs
             // onChange={onChange}
