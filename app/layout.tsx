@@ -9,12 +9,16 @@ import Sidebar from "@/components/Sidebar";
 import Header from "@/components/Header";
 
 import StyledComponentsRegistry from "../lib/AntdRegistry";
+import { usePathname } from "next/navigation";
 
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const pathname = usePathname();
+  const showHeader =
+    pathname === "/signin" || pathname === "/signup" ? false : true;
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const [loading, setLoading] = useState<boolean>(true);
@@ -32,19 +36,23 @@ export default function RootLayout({
           ) : (
             <div className="flex h-screen overflow-hidden">
               {/* <!-- ===== Sidebar Start ===== --> */}
-              <Sidebar
-                sidebarOpen={sidebarOpen}
-                setSidebarOpen={setSidebarOpen}
-              />
+              {showHeader && (
+                <Sidebar
+                  sidebarOpen={sidebarOpen}
+                  setSidebarOpen={setSidebarOpen}
+                />
+              )}
               {/* <!-- ===== Sidebar End ===== --> */}
 
               {/* <!-- ===== Content Area Start ===== --> */}
               <div className="relative flex flex-1 flex-col overflow-y-auto overflow-x-hidden">
                 {/* <!-- ===== Header Start ===== --> */}
-                <Header
-                  sidebarOpen={sidebarOpen}
-                  setSidebarOpen={setSidebarOpen}
-                />
+                {showHeader && (
+                  <Header
+                    sidebarOpen={sidebarOpen}
+                    setSidebarOpen={setSidebarOpen}
+                  />
+                )}
                 {/* <!-- ===== Header End ===== --> */}
 
                 {/* <!-- ===== Main Content Start ===== --> */}

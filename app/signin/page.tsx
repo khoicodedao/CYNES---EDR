@@ -1,7 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
-import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
+
 import { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Signin Page | Next.js E-commerce Dashboard Template",
@@ -12,8 +12,6 @@ export const metadata: Metadata = {
 const SignIn: React.FC = () => {
   return (
     <>
-      <Breadcrumb pageName="Sign In" />
-
       <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
         <div className="flex flex-wrap items-center">
           <div className="hidden w-full xl:block xl:w-1/2">
@@ -287,7 +285,7 @@ const SignIn: React.FC = () => {
                 <div className="mt-6 text-center">
                   <p>
                     Don’t have any account?{" "}
-                    <Link href="/auth/signup" className="text-primary">
+                    <Link href="/signup" className="text-primary">
                       Sign Up
                     </Link>
                   </p>
