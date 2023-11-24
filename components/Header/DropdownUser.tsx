@@ -1,13 +1,25 @@
+"use client";
 import { useEffect, useRef, useState } from "react";
+import axios from "axios";
 import Link from "next/link";
 import Image from "next/image";
-
+import API_URL from "@/helpers/api_url";
+import { useRouter } from "next/navigation";
 const DropdownUser = () => {
+  const router = useRouter();
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
   const trigger = useRef<any>(null);
   const dropdown = useRef<any>(null);
 
+  const logout = async () => {
+    try {
+      await axios.get(API_URL.LOGOUT);
+      router.push(API_URL.PAGES.SIGNIN);
+    } catch (error: any) {
+      console.log(error.message);
+    }
+  };
   // close on click outside
   useEffect(() => {
     const clickHandler = ({ target }: MouseEvent) => {
@@ -157,7 +169,10 @@ const DropdownUser = () => {
             </Link>
           </li>
         </ul>
-        <button className="flex items-center gap-3.5 py-4 px-6 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base">
+        <button
+          onClick={logout}
+          className="flex items-center gap-3.5 py-4 px-6 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base"
+        >
           <svg
             className="fill-current"
             width="22"

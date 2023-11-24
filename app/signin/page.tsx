@@ -1,9 +1,10 @@
 "use client";
-import React from "react";
 import Link from "next/link";
-import Image from "next/image";
-
 import { Metadata } from "next";
+import React, { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import axios from "axios";
+import API_URL from "@/helpers/api_url";
 export const metadata: Metadata = {
   title: "Signin Page",
   description: "This is Signin page for TailAdmin Next.js",
@@ -12,6 +13,35 @@ export const metadata: Metadata = {
 window.document.body.classList.add("dark");
 
 const SignIn: React.FC = () => {
+  const router = useRouter();
+  const [user, setUser] = React.useState({
+    username: "",
+    password: "",
+  });
+  const [buttonDisabled, setButtonDisabled] = useState(false);
+  const [loading, setLoading] = useState(false);
+  useEffect(() => {
+    if (user.username.length > 0 && user.password.length > 0) {
+      setButtonDisabled(false);
+    } else {
+      setButtonDisabled(true);
+    }
+  }, [user]);
+  const onLogin = async () => {
+    try {
+      setLoading(true);
+      const response = await axios.post(API_URL.LOGIN, user);
+      console.log("Login success", response.data);
+      // toast.success("Login success");
+      router.push(API_URL.PAGES.DASHBOARD);
+    } catch (error: any) {
+      console.log("Login failed", error.message);
+      // toast.error(error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <>
       <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-3/4 ">
@@ -148,20 +178,23 @@ const SignIn: React.FC = () => {
 
           <div className="w-full border-stroke dark:border-strokedark xl:w-1/2 xl:border-l-2">
             <div className="w-full p-4 sm:p-12.5 xl:p-17.5">
-              {/* <span className="mb-1.5 block font-medium">Start for free</span> */}
               <h2 className="mb-9 text-2xl font-bold text-black dark:text-white sm:text-title-xl2">
-                Sign In
+                {loading ? "Processing" : " Sign In"}
               </h2>
 
-              <form>
+              <div>
                 <div className="mb-4">
                   <label className="mb-2.5 block font-medium text-black dark:text-white">
                     Email
                   </label>
                   <div className="relative">
                     <input
-                      type="email"
-                      placeholder="Enter your email"
+                      value={user.username}
+                      onChange={(e) =>
+                        setUser({ ...user, username: e.target.value })
+                      }
+                      type="username"
+                      placeholder="Enter your user name"
                       className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
                     />
 
@@ -191,6 +224,10 @@ const SignIn: React.FC = () => {
                   </label>
                   <div className="relative">
                     <input
+                      value={user.password}
+                      onChange={(e) =>
+                        setUser({ ...user, password: e.target.value })
+                      }
                       type="password"
                       placeholder="Enter your password"
                       className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
@@ -222,13 +259,20 @@ const SignIn: React.FC = () => {
 
                 <div className="mb-5">
                   <input
+                    onClick={onLogin}
                     type="submit"
                     value="Sign In"
-                    className="w-full cursor-pointer rounded-lg border border-primary bg-primary p-4 text-white transition hover:bg-opacity-90"
+                    className={`w-full cursor-pointer rounded-lg border border-primary bg-primary p-4 text-white transition hover:bg-opacity-90 ${
+                      buttonDisabled && "pointer-events-none opacity-50"
+                    }`}
                   />
                 </div>
 
-                <button className="flex w-full items-center justify-center gap-3.5 rounded-lg border border-stroke bg-gray p-4 hover:bg-opacity-50 dark:border-strokedark dark:bg-meta-4 dark:hover:bg-opacity-50">
+                <button
+                  className={`flex w-full items-center justify-center gap-3.5 rounded-lg border border-stroke bg-gray p-4 hover:bg-opacity-50 dark:border-strokedark dark:bg-meta-4 dark:hover:bg-opacity-50 ${
+                    buttonDisabled && "pointer-events-none opacity-50"
+                  }`}
+                >
                   <span>
                     <svg
                       width="20"
@@ -273,7 +317,7 @@ const SignIn: React.FC = () => {
                     </Link>
                   </p>
                 </div>
-              </form>
+              </div>
             </div>
           </div>
         </div>

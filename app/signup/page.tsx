@@ -3,7 +3,7 @@ import React from "react";
 import Link from "next/link";
 import { Metadata } from "next";
 export const metadata: Metadata = {
-  title: "Signup Page | Next.js E-commerce Dashboard Template",
+  title: "Signup Page",
   description: "This is Signup page for TailAdmin Next.js",
   // other metadata
 };
