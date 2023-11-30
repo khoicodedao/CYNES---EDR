@@ -2,6 +2,7 @@
 import React from "react";
 import Link from "next/link";
 import { Metadata } from "next";
+import API_URL from "@/helpers/api-url";
 export const metadata: Metadata = {
   title: "Signup Page",
   description: "This is Signup page for TailAdmin Next.js",
@@ -331,7 +332,7 @@ const SignUp: React.FC = () => {
                 <div className="mt-6 text-center">
                   <p>
                     Already have an account?{" "}
-                    <Link href="/signin" className="text-primary">
+                    <Link href={API_URL.PAGES.LOGIN} className="text-primary">
                       Sign in
                     </Link>
                   </p>

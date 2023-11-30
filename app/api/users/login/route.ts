@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { setTimeout } from "timers/promises";
+import { User } from "@/types/user";
 export async function POST(request: NextRequest) {
   try {
     const reqBody = await request.json();

@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import Link from "next/link";
 import Image from "next/image";
-import API_URL from "@/helpers/api_url";
+import API_URL from "@/helpers/api-url";
 import { useRouter } from "next/navigation";
 const DropdownUser = () => {
   const router = useRouter();
@@ -15,7 +15,7 @@ const DropdownUser = () => {
   const logout = async () => {
     try {
       await axios.get(API_URL.LOGOUT);
-      router.push(API_URL.PAGES.SIGNIN);
+      router.push(API_URL.PAGES.LOGIN);
     } catch (error: any) {
       console.log(error.message);
     }

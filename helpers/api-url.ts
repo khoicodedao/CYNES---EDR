@@ -2,9 +2,10 @@ const API_URL = {
   LOGIN: "/api/users/login",
   LOGOUT: "/api/users/logout",
   PAGES: {
-    SIGNIN: "/signin",
+    LOGIN: "/login",
     SIGNUP: "/signup",
     DASHBOARD: "/",
+    AGENT: "/agents",
   },
 };
 

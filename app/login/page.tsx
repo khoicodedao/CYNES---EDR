@@ -4,41 +4,51 @@ import { Metadata } from "next";
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
-import API_URL from "@/helpers/api_url";
+import API_URL from "@/helpers/api-url";
+import { Alert } from "antd";
 export const metadata: Metadata = {
-  title: "Signin Page",
+  title: "Login Page",
   description: "This is Signin page for TailAdmin Next.js",
   // other metadata
 };
+import { User } from "@/types/user";
 window.document.body.classList.add("dark");
 
 const SignIn: React.FC = () => {
   const router = useRouter();
-  const [user, setUser] = React.useState({
-    username: "",
+  const [user, setUser] = React.useState<User>({
+    user_name: "",
     password: "",
   });
   const [buttonDisabled, setButtonDisabled] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [alert, setAlert] = useState(false);
+
   useEffect(() => {
-    if (user.username.length > 0 && user.password.length > 0) {
+    if (user.user_name.length > 0 && user.password.length > 0) {
       setButtonDisabled(false);
     } else {
       setButtonDisabled(true);
     }
   }, [user]);
-  const onLogin = async () => {
-    try {
-      setLoading(true);
-      const response = await axios.post(API_URL.LOGIN, user);
-      console.log("Login success", response.data);
-      // toast.success("Login success");
-      router.push(API_URL.PAGES.DASHBOARD);
-    } catch (error: any) {
-      console.log("Login failed", error.message);
-      // toast.error(error.message);
-    } finally {
-      setLoading(false);
+
+  const onLogin = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (user.user_name !== "" && user.password !== "") {
+      try {
+        setLoading(true);
+        const response = await axios.post(API_URL.LOGIN, user);
+        console.log("Login success", response.data);
+        // toast.success("Login success");
+        router.push(API_URL.PAGES.DASHBOARD);
+      } catch (error: any) {
+        console.log("Login failed", error.message);
+        // toast.error(error.message);
+      } finally {
+        setLoading(false);
+      }
+    } else {
+      setAlert(true);
     }
   };
 
@@ -181,17 +191,25 @@ const SignIn: React.FC = () => {
               <h2 className="mb-9 text-2xl font-bold text-black dark:text-white sm:text-title-xl2">
                 {loading ? "Processing" : " Sign In"}
               </h2>
+              {alert && (
+                <Alert
+                  message="Username or Password is empty"
+                  type="warning"
+                  showIcon
+                  closable
+                />
+              )}
 
-              <div>
+              <form onSubmit={onLogin}>
                 <div className="mb-4">
                   <label className="mb-2.5 block font-medium text-black dark:text-white">
                     Email
                   </label>
                   <div className="relative">
                     <input
-                      value={user.username}
+                      value={user.user_name}
                       onChange={(e) =>
-                        setUser({ ...user, username: e.target.value })
+                        setUser({ ...user, user_name: e.target.value })
                       }
                       type="username"
                       placeholder="Enter your user name"
@@ -317,7 +335,7 @@ const SignIn: React.FC = () => {
                     </Link>
                   </p>
                 </div>
-              </div>
+              </form>
             </div>
           </div>
         </div>

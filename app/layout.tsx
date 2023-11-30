@@ -4,13 +4,11 @@ import "./data-tables-css.css";
 import "./satoshi.css";
 import { useState, useEffect } from "react";
 import Loader from "@/components/common/Loader";
-
 import Sidebar from "@/components/Sidebar";
 import Header from "@/components/Header";
-
 import StyledComponentsRegistry from "../lib/AntdRegistry";
 import { usePathname } from "next/navigation";
-
+import API_URL from "@/helpers/api-url";
 export default function RootLayout({
   children,
 }: {
@@ -18,9 +16,10 @@ export default function RootLayout({
 }) {
   const pathname = usePathname();
   const showHeader =
-    pathname === "/signin" || pathname === "/signup" ? false : true;
+    pathname === API_URL.PAGES.LOGIN || pathname === API_URL.PAGES.SIGNUP
+      ? false
+      : true; //hide header in Login page
   const [sidebarOpen, setSidebarOpen] = useState(false);
-
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
@@ -57,7 +56,7 @@ export default function RootLayout({
 
                 {/* <!-- ===== Main Content Start ===== --> */}
                 <main>
-                  <div className="mx-auto max-w-screen-2xl p-4 md:p-6 2xl:p-5">
+                  <div className="mx-auto  p-4 md:p-6 2xl:p-5">
                     <StyledComponentsRegistry>
                       {children}
                     </StyledComponentsRegistry>

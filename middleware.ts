@@ -1,13 +1,11 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
-import API_URL from "./helpers/api_url";
+import API_URL from "./helpers/api-url";
 export function middleware(request: NextRequest) {
   const path = request.nextUrl.pathname;
-
   const isPublicPath =
-    path === API_URL.PAGES.SIGNIN ||
-    path === API_URL.PAGES.SIGNUP ||
-    path === "/verifyemail";
+    path === API_URL.PAGES.LOGIN || path === API_URL.PAGES.SIGNUP;
+  // path === "/verifyemail";
 
   const token = request.cookies.get("token")?.value || "";
 
@@ -18,13 +16,11 @@ export function middleware(request: NextRequest) {
   }
 
   if (!isPublicPath && !token) {
-    return NextResponse.redirect(
-      new URL(API_URL.PAGES.SIGNIN, request.nextUrl)
-    );
+    return NextResponse.redirect(new URL(API_URL.PAGES.LOGIN, request.nextUrl));
   }
 }
 
 // See "Matching Paths" below to learn more
 export const config = {
-  matcher: ["/", "/profile", "/signin", "/signup", "/verifyemail"],
+  matcher: ["/login", "/signup", "/", "/agents", "/events", "/tasks"],
 };
