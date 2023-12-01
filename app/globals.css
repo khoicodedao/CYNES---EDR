@@ -199,22 +199,24 @@ span.flatpickr-weekday,
 }
 
 .dark .ant-picker-range {
-  background-color: #23303f ;
+  background-color: #23303f;
 }
 
-.dark .ant-picker-range input{
+.dark .ant-picker-range input {
   color: white !important;
 }
-.dark .ant-picker-range input::placeholder{
-  color: rgb(212, 204, 204,0.687) !important;
+.dark .ant-picker-range input::placeholder {
+  color: rgb(212, 204, 204, 0.687) !important;
 }
 
-.dark  .ant-picker-range-separator svg, .dark  .ant-picker-suffix svg{
-  fill:white;
+.dark .ant-picker-range-separator svg,
+.dark .ant-picker-suffix svg {
+  fill: white;
 }
 
-.dark .ant-input-affix-wrapper ,.dark .ant-input-affix-wrapper input  {
-  background-color: #23303f ;
+.dark .ant-input-affix-wrapper,
+.dark .ant-input-affix-wrapper input {
+  background-color: #23303f;
 }
 
 /* .dark .ant-input-affix-wrapper {
@@ -222,14 +224,18 @@ span.flatpickr-weekday,
   
 } */
 
-.dark .ant-input-affix-wrapper input{
+.dark .ant-input-affix-wrapper input {
   color: white !important;
 }
-.dark .ant-input-affix-wrapper input::placeholder{
+.dark .ant-input-affix-wrapper input::placeholder {
   color: rgba(212, 204, 204, 0.687) !important;
 }
 
 .dark .ant-drawer-body {
-  background-color: #23303f ;
+  background-color: #23303f;
   color: white;
+}
+aside > div {
+  padding-top: 1rem !important;
+  padding-bottom: 1rem !important;
 }

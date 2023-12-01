@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   description: "This is Signup page for TailAdmin Next.js",
   // other metadata
 };
-window.document.body.classList.add("dark"); //dark mode by default
+
 const SignUp: React.FC = () => {
   return (
     <>

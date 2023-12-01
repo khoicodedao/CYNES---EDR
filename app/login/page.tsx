@@ -12,8 +12,6 @@ export const metadata: Metadata = {
   // other metadata
 };
 import { User } from "@/types/user";
-window.document.body.classList.add("dark");
-
 const SignIn: React.FC = () => {
   const router = useRouter();
   const [user, setUser] = React.useState<User>({
@@ -22,11 +20,12 @@ const SignIn: React.FC = () => {
   });
   const [buttonDisabled, setButtonDisabled] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [alert, setAlert] = useState(false);
+  const [alert, setAlert] = useState("");
 
   useEffect(() => {
     if (user.user_name.length > 0 && user.password.length > 0) {
       setButtonDisabled(false);
+      setAlert("");
     } else {
       setButtonDisabled(true);
     }
@@ -43,12 +42,12 @@ const SignIn: React.FC = () => {
         router.push(API_URL.PAGES.DASHBOARD);
       } catch (error: any) {
         console.log("Login failed", error.message);
-        // toast.error(error.message);
+        setAlert("Login failed");
       } finally {
         setLoading(false);
       }
     } else {
-      setAlert(true);
+      setAlert("Username or Password is empty");
     }
   };
 
@@ -191,12 +190,12 @@ const SignIn: React.FC = () => {
               <h2 className="mb-9 text-2xl font-bold text-black dark:text-white sm:text-title-xl2">
                 {loading ? "Processing" : " Sign In"}
               </h2>
-              {alert && (
+              {alert.length > 0 && (
                 <Alert
-                  message="Username or Password is empty"
+                  className="mb-2"
+                  message={alert}
                   type="warning"
                   showIcon
-                  closable
                 />
               )}
 
