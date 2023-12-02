@@ -6,11 +6,11 @@ import { useRouter } from "next/navigation";
 import axios from "axios";
 import API_URL from "@/helpers/api-url";
 import { Alert } from "antd";
-export const metadata: Metadata = {
-  title: "Login Page",
-  description: "This is Signin page for TailAdmin Next.js",
-  // other metadata
-};
+// export const metadata: Metadata = {
+//   title: "Login Page",
+//   description: "This is Signin page for TailAdmin Next.js",
+//   // other metadata
+// };
 import { User } from "@/types/user";
 const SignIn: React.FC = () => {
   const router = useRouter();
