@@ -104,6 +104,7 @@ const DataGrid: React.FC = () => {
 
   return (
     <>
+      {/* Show Drawer content in the rightside  */}
       <Drawer
         title={
           <p>
@@ -227,6 +228,8 @@ const DataGrid: React.FC = () => {
 
         {/* end */}
       </Drawer>
+      {/* ================= */}
+      {/* Table content */}
       <Table
         onRow={(record, rowIndex) => {
           return {
@@ -240,6 +243,7 @@ const DataGrid: React.FC = () => {
         expandable={{ expandedRowRender }}
         dataSource={data}
       />
+      {/* ================ */}
     </>
   );
 };

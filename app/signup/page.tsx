@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import Link from "next/link";
-import { Metadata } from "next";
+// import { Metadata } from "next";
 import API_URL from "@/helpers/api-url";
 // export const metadata: Metadata = {
 //   title: "Signup Page",
