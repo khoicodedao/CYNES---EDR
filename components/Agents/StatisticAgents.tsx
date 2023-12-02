@@ -27,7 +27,7 @@ const StatisticAgents: React.FC = () => (
         <Statistic
           title={
             <div className="flex">
-              <Badge status="default" />
+              <Badge status="error" />
               <p className="ml-2 opacity-70 font-bold"> Offline</p>
             </div>
           }
