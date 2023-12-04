@@ -64,3 +64,15 @@
 .dark .ant-empty-description {
   color: white;
 }
+.dark  .ant-list-item{color: white;  border-block-end-color: rgba(248, 246, 246, 0.16);}
+.dark .ant-table-thead .ant-table-cell{
+  background-color: #888a8d40 !important;
+
+
+}
+.dark .ant-pagination-item:not(.ant-pagination-item-active)  a{
+  color: white !important;
+}
+.dark .ant-pagination-item-ellipsis{
+  color: white !important;
+}

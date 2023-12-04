@@ -20,7 +20,7 @@ const StatisticAgents: React.FC = () => (
               <p className="ml-2 opacity-70 font-bold"> Online</p>
             </div>
           }
-          value={2880}
+          value={0}
         />
       </Col>
       <Col span={5}>
@@ -31,7 +31,7 @@ const StatisticAgents: React.FC = () => (
               <p className="ml-2 opacity-70 font-bold"> Offline</p>
             </div>
           }
-          value={1990}
+          value={3}
         />
       </Col>
     </Row>
