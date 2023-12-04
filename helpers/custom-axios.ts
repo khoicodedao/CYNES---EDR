@@ -1,5 +1,4 @@
-
-const customAxiosPost = async<T> (
+const customAxiosPost = async <T>(
   url: string,
   data: any, // Adjust the type based on your request payload
   token: string
@@ -19,7 +18,19 @@ const customAxiosPost = async<T> (
   } catch (error) {
     // Handle errors
     console.error("Error:");
-    return "Error" as T
+    return "Error" as T;
   }
 };
-export { customAxiosPost };
+
+const customAxiosGet = async <T>(url: string): Promise<T> => {
+  try {
+    const response = await fetch(url);
+    const responseData: T = await response.json();
+    return responseData;
+  } catch (error) {
+    // Handle errors
+    console.error("Error:");
+    return "Error" as T;
+  }
+};
+export { customAxiosPost, customAxiosGet };

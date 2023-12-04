@@ -1,6 +1,5 @@
 "use client";
 import Link from "next/link";
-import { Metadata } from "next";
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";

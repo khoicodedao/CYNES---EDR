@@ -1,21 +1,15 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { DownOutlined, SettingOutlined, MenuOutlined } from "@ant-design/icons";
 import type { TableColumnsType } from "antd";
 import { Select } from "antd";
 import { Badge, Dropdown, Space, Table, Tag, Tabs } from "antd";
 import { Button, Drawer, Divider } from "antd";
 import { DeleteOutlined } from "@ant-design/icons";
+import { AGENT } from "@/types/agent";
+import { customAxiosGet } from "@/helpers/custom-axios";
 import "./index.css";
-interface DataType {
-  key: React.Key;
-  name: string;
-  platform: string;
-  version: string;
-  upgradeNum: number;
-  creator: string;
-  createdAt: string;
-}
+import API_URL from "@/helpers/api-url";
 
 interface ExpandedDataType {
   key: React.Key;
@@ -32,6 +26,7 @@ const items = [
 const DataGrid: React.FC = () => {
   // === Drawer ====
   const [open, setOpen] = useState(false);
+  const [agentList, setAgentList] = useState<AGENT[]>([]);
   const showDrawer = () => {
     setOpen(true);
   };
@@ -79,28 +74,34 @@ const DataGrid: React.FC = () => {
     return <Table columns={columns} dataSource={data} pagination={false} />;
   };
 
-  const columns: TableColumnsType<DataType> = [
-    { title: "Name", dataIndex: "name", key: "name" },
-    { title: "Platform", dataIndex: "platform", key: "platform" },
-    { title: "Version", dataIndex: "version", key: "version" },
-    { title: "Upgraded", dataIndex: "upgradeNum", key: "upgradeNum" },
-    { title: "Creator", dataIndex: "creator", key: "creator" },
-    { title: "Date", dataIndex: "createdAt", key: "createdAt" },
-    { title: "Action", key: "operation", render: () => <a>Publish</a> },
+  const columns: TableColumnsType<AGENT> = [
+    { title: "ID", dataIndex: "id", key: "id" },
+    { title: "Local IP", dataIndex: "local_ip", key: "local_ip" },
+    { title: "Public IP", dataIndex: "public_ip", key: "public_ip" },
+    {
+      title: "Computer Name",
+      dataIndex: "computer_name",
+      key: "computer_name",
+    },
+    { title: "OS", dataIndex: "os", key: "os" },
+    { title: "RAM", dataIndex: "ram", key: "ram" },
+    { title: "CPU", dataIndex: "cpu", key: "cpu" },
   ];
 
-  const data: DataType[] = [];
-  for (let i = 0; i < 3; ++i) {
-    data.push({
-      key: i.toString(),
-      name: "Screen",
-      platform: "iOS",
-      version: "10.3.4.5654",
-      upgradeNum: 500,
-      creator: "Jack",
-      createdAt: "2014-12-24 23:12:00",
-    });
-  }
+  useEffect(() => {
+    let url = API_URL.AGENT.GET_AGENTS;
+    let getData = async () => {
+      let resData: {
+        success: boolean;
+        data: { agents: AGENT[] };
+      } = await customAxiosGet(url);
+      console.log(resData);
+      if (resData.success) {
+        setAgentList(resData.data.agents);
+      }
+    };
+    getData();
+  }, []);
 
   return (
     <>
@@ -241,7 +242,7 @@ const DataGrid: React.FC = () => {
         }}
         columns={columns}
         expandable={{ expandedRowRender }}
-        dataSource={data}
+        dataSource={agentList}
       />
       {/* ================ */}
     </>

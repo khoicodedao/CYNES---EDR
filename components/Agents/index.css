@@ -57,3 +57,10 @@
 .dark .ant-tabs-nav-list div[aria-selected="true"] {
   color: black !important;
 }
+
+.dark .ant-table-cell {
+  background-color: #24303f !important;
+}
+.dark .ant-empty-description {
+  color: white;
+}
