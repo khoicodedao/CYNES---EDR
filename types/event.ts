@@ -1,4 +1,4 @@
-export type Event= {
+export type EVENT= {
     id: string;
     parent_event_id: string;
     agent_id: string;

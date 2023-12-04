@@ -1,23 +1,27 @@
-import React from "react";
+"use client";
+import React, { useState, useEffect } from "react";
 import { Space, Table, Tag } from "antd";
 import type { ColumnsType } from "antd/es/table";
 import "./index.css";
-interface DataType {
-  key: string;
-  id_agent: string;
-  event_type: string;
-  event_info: string;
-  event_time: string;
-  receive_time: string;
-  tags: string[];
-}
-
-const columns: ColumnsType<DataType> = [
+import { EVENT } from "@/types/event";
+import API_URL from "@/helpers/api-url";
+import { customAxiosGet } from "@/helpers/custom-axios";
+import formatDateString from "@/helpers/format-date";
+const columns: ColumnsType<EVENT> = [
   {
     title: "Agent",
-    dataIndex: "id_agent",
-    key: "id_agent",
-    render: (text) => <a>{text}</a>,
+    dataIndex: "agent_id",
+    key: "agent_id",
+  },
+  {
+    title: "MAC",
+    dataIndex: "mac",
+    key: "mac",
+  },
+  {
+    title: "Local IP ",
+    dataIndex: "local_ip",
+    key: "local_ip",
   },
   {
     title: "Event Type",
@@ -25,79 +29,73 @@ const columns: ColumnsType<DataType> = [
     key: "event_type",
   },
   {
-    title: "Event Info",
-    dataIndex: "event_info",
-    key: "event_info",
+    title: "Event Name",
+    dataIndex: "event_name",
+    key: "event_name",
   },
   {
-    title: "Tags",
-    key: "tags",
-    dataIndex: "tags",
-    render: (_, { tags }) => (
-      <>
-        {tags.map((tag) => {
-          let color = tag.length > 5 ? "geekblue" : "green";
-          if (tag === "loser") {
-            color = "volcano";
-          }
-          return (
-            <Tag color={color} key={tag}>
-              {tag.toUpperCase()}
-            </Tag>
-          );
-        })}
-      </>
-    ),
+    title: "Event Name",
+    dataIndex: "event_name",
+    key: "event_name",
   },
   {
-    title: "Action",
-    key: "action",
-    render: (_, record) => (
-      <Space size="middle">
-        <a>Invite {record.id_agent}</a>
-        <a>Delete</a>
-      </Space>
-    ),
+    title: "Event level",
+    dataIndex: "event_level",
+    key: "event_level",
+    render: (event_level) => {
+      switch (event_level) {
+        case 1:
+          return <Tag color="success">Low</Tag>;
+        case 2:
+          return <Tag color="warning">Hight</Tag>;
+        default:
+          return <Tag color="error">Critical</Tag>;
+      }
+    },
+  },
+  {
+    title: "Event description",
+    dataIndex: "event_description",
+    key: "event_description",
+  },
+  {
+    title: "Time",
+    dataIndex: "created_at",
+    key: "created_at",
+    render: (item) => {
+      return formatDateString(item);
+    },
   },
 ];
 
-const data: DataType[] = [
-  {
-    key: "1",
-    id_agent: "Agent 1",
-    event_info: "32",
-    event_type: "New York No. 1 Lake Park",
-    event_time: "",
-    receive_time: "",
-    tags: ["nice", "developer"],
-  },
-  {
-    key: "2",
-    id_agent: "Agent 2",
-    event_info: "32",
-    event_type: "New York No. 1 Lake Park",
-    event_time: "",
-    receive_time: "",
-    tags: ["loser"],
-  },
-  {
-    key: "3",
-    id_agent: "Agent 3",
+const DataGrid: React.FC = () => {
+  const [events, setEventList] = useState<EVENT[]>([] as EVENT[]);
+  const [loading, setLoading] = useState(false);
+  useEffect(() => {
+    let url = API_URL.EVENTS.GET_EVENTS;
 
-    event_info: "32",
-    event_type: "New York No. 1 Lake Park",
-    event_time: "",
-    receive_time: "",
-    tags: ["cool", "teacher"],
-  },
-];
+    let getData = async () => {
+      setLoading(true);
+      let resData: {
+        success: boolean;
+        events: EVENT[];
+      } = await customAxiosGet(url);
 
-const DataGrid: React.FC = () => (
-  <Table
-    className="dark:border-strokedark dark:bg-boxdark"
-    columns={columns}
-    dataSource={data}
-  />
-);
+      if (resData.success) {
+        setEventList(resData.events);
+        setLoading(false);
+      }
+    };
+    getData();
+  }, []);
+  return (
+    <Table
+      loading={loading}
+      className="dark:border-strokedark dark:bg-boxdark"
+      columns={columns}
+      dataSource={events}
+    />
+  );
+};
 
 export default DataGrid;

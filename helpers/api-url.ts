@@ -11,6 +11,9 @@ const API_URL = {
   AGENT: {
     GET_AGENTS: "/api/agent",
   },
+  EVENTS: {
+    GET_EVENTS: "/api/events",
+  },
 };
 
 export const API_BACKEND = {
@@ -19,7 +22,10 @@ export const API_BACKEND = {
     GET_USERS: BACK_END_URL + "/api/v1/user",
   },
   AGENT: {
-    GET_AGENTS: BACK_END_URL + "/api/v1/agent?page_no=2&page_size=100",
+    GET_AGENTS: BACK_END_URL + "/api/v1/agent",
   },
+  EVENTS:{
+    GET_EVENTS:BACK_END_URL + "/api/v1/event",
+  }
 };
 export default API_URL;
