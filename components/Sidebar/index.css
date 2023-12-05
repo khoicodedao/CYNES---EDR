@@ -1,3 +1,14 @@
 .w-30 .no-scrollbar a {
   width: fit-content;
 }
+.ant-popover {
+  z-index: 100000000000000000000000;
+  width: 100px;
+}
+.ant-popover-title {
+  margin-bottom: 0px !important;
+}
+
+.w-72 .ant-popover {
+  display: none !important;
+}
