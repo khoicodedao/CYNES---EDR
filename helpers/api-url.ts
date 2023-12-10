@@ -9,10 +9,13 @@ const API_URL = {
     AGENT: "/agents",
   },
   AGENT: {
-    GET_AGENTS: "/api/agent",
+    GET_AGENTS: "/api/agents",
   },
   EVENTS: {
     GET_EVENTS: "/api/events",
+  },
+  ALERTS: {
+    GET_ALERTS: "/api/alerts",
   },
 };
 
@@ -26,6 +29,10 @@ export const API_BACKEND = {
   },
   EVENTS:{
     GET_EVENTS:BACK_END_URL + "/api/v1/event",
+  },
+  ALERTS:{
+    GET_ALERTS:BACK_END_URL + "/api/v1/alert",
   }
+
 };
 export default API_URL;

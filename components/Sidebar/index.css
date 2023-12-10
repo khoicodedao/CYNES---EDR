@@ -12,3 +12,8 @@
 .w-72 .ant-popover {
   display: none !important;
 }
+
+.w-30 .translate{
+  display: none !important;
+
+}
