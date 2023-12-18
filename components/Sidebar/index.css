@@ -2,7 +2,7 @@
   width: fit-content;
 }
 .ant-popover {
-  z-index: 100000000000000000000000;
+  z-index: 1000000000;
   width: 100px;
 }
 .ant-popover-title {
@@ -13,7 +13,6 @@
   display: none !important;
 }
 
-.w-30 .translate{
+.w-30 .translate {
   display: none !important;
-
 }
