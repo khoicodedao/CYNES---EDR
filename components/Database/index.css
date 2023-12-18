@@ -1,0 +1,43 @@
+.event-range-padding .ant-picker-range {
+  padding: 7px;
+}
+.dark .ant-statistic-content-value-int {
+  color: white;
+}
+
+:where(.css-dev-only-do-not-override-qgg3xn).ant-badge.ant-badge-status
+  .ant-badge-status-dot {
+  width: 29px !important;
+
+  border-radius: 2px !important;
+}
+.dark .ant-table,
+.dark .ant-table-thead .ant-table-cell {
+  background-color: rgb(36 48 63 / var(--tw-bg-opacity));
+  color: rgb(222 228 238 / var(--tw-text-opacity));
+}
+
+.dark .ant-table-cell-row-hover {
+  background-color: #4b576671 !important;
+}
+.dark .ant-pagination-item-link svg {
+  fill: white;
+}
+.dark .react-json-view{
+  background-color: #222F3E !important;
+}
+.dark .react-json-view  .object-key{
+  color: rgb(226, 234, 243) !important;
+}
+.react-json-view {background-color: white !important;}
+
+.react-json-view  .object-key{
+  color: #222F3E !important;
+}
+/* .dark .object-key {
+  color: white !important;
+}
+
+.dark .object-key > span {
+  color: white !important;
+} */

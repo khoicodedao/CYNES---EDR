@@ -1,3 +1,4 @@
+import { GROUP } from '@/types/group';
 let BACK_END_URL = process.env.BACK_END_URL;
 const API_URL = {
   LOGIN: "/api/users/login",
@@ -17,6 +18,9 @@ const API_URL = {
   ALERTS: {
     GET_ALERTS: "/api/alerts",
   },
+  GROUPS:{
+    GET_GROUPS:"/api/groups"
+  }
 };
 
 export const API_BACKEND = {
@@ -32,6 +36,9 @@ export const API_BACKEND = {
   },
   ALERTS: {
     GET_ALERTS: BACK_END_URL + "/api/v1/alert",
+  },
+  GROUP: {
+    GET_GROUPS: BACK_END_URL + "/api/v1/group",
   },
 };
 export default API_URL;
