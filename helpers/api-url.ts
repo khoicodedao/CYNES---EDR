@@ -27,12 +27,11 @@ export const API_BACKEND = {
   AGENT: {
     GET_AGENTS: BACK_END_URL + "/api/v1/agent",
   },
-  EVENTS:{
-    GET_EVENTS:BACK_END_URL + "/api/v1/event",
+  EVENTS: {
+    GET_EVENTS: BACK_END_URL + "/api/v1/event",
   },
-  ALERTS:{
-    GET_ALERTS:BACK_END_URL + "/api/v1/alert",
-  }
-
+  ALERTS: {
+    GET_ALERTS: BACK_END_URL + "/api/v1/alert",
+  },
 };
 export default API_URL;

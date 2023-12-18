@@ -239,3 +239,6 @@ aside > div {
   padding-top: 1rem !important;
   padding-bottom: 1rem !important;
 }
+.dark .ant-pagination-item:not(.ant-pagination-item-active) a[rel="nofollow"] {
+  color: white !important;
+}

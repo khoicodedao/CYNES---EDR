@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { Space, Table, Tag } from "antd";
+import { Space, Table, Tag, Pagination } from "antd";
 import type { ColumnsType } from "antd/es/table";
 import "./index.css";
 import { EVENT } from "@/types/event";
@@ -68,10 +68,10 @@ const columns: ColumnsType<EVENT> = [
     },
   },
 ];
-
 const DataGrid: React.FC = () => {
   const [events, setEventList] = useState<EVENT[]>([] as EVENT[]);
   const [loading, setLoading] = useState(false);
+  const [filter, setFilter] = useState({ page_no: 1, page_size: 100 });
   useEffect(() => {
     let url = API_URL.EVENTS.GET_EVENTS;
     let getData = async () => {
@@ -79,8 +79,7 @@ const DataGrid: React.FC = () => {
       let resData: {
         success: boolean;
         events: EVENT[];
-      } = await customAxiosGet(url);
-
+      } = await customAxiosGet(url, filter);
       if (resData.success) {
         setEventList(resData.events);
         setLoading(false);
@@ -89,45 +88,54 @@ const DataGrid: React.FC = () => {
     getData();
   }, []);
   return (
-    <Table
-      loading={loading}
-      expandable={{
-        expandedRowRender: (record) => (
-          <>
-            {" "}
-            <p className="mt-2">
-              <Tag color="#87d068"> Event Description: </Tag>
-              {record.event_description}
-            </p>
-            <p className="mt-2">
-              <Tag color="#87d068">Artifact Name: </Tag>
-              {record.artifact_name}
-            </p>
-            <p className="mt-2">
-              <Tag color="#87d068">Mitre Tactic: </Tag>
-              {record.mitre_tactic}
-            </p>
-            <p className="mt-2">
-              <Tag color="#87d068">Mitre Technique: </Tag>
-              {record.mitre_technique}
-            </p>
-            <p className="mt-2">
-              <ReactJson
-                quotesOnKeys={false}
-                displayDataTypes={false}
-                name="Event Info"
-                src={JSON.parse(record.event_info)}
-                theme="ocean"
-              />{" "}
-              {}
-            </p>
-          </>
-        ),
-      }}
-      className="dark:border-strokedark dark:bg-boxdark"
-      columns={columns}
-      dataSource={events}
-    />
+    <>
+      <Table
+        loading={loading}
+        expandable={{
+          expandedRowRender: (record) => (
+            <>
+              {" "}
+              <p className="mt-2">
+                <Tag color="#87d068"> Event Description: </Tag>
+                {record.event_description}
+              </p>
+              <p className="mt-2">
+                <Tag color="#87d068">Artifact Name: </Tag>
+                {record.artifact_name}
+              </p>
+              <p className="mt-2">
+                <Tag color="#87d068">Mitre Tactic: </Tag>
+                {record.mitre_tactic}
+              </p>
+              <p className="mt-2">
+                <Tag color="#87d068">Mitre Technique: </Tag>
+                {record.mitre_technique}
+              </p>
+              <p className="mt-2">
+                <ReactJson
+                  quotesOnKeys={false}
+                  displayDataTypes={false}
+                  name="Event Info"
+                  src={JSON.parse(record.event_info)}
+                  theme="ocean"
+                />{" "}
+                {}
+              </p>
+            </>
+          ),
+        }}
+        className="dark:border-strokedark dark:bg-boxdark"
+        columns={columns}
+        dataSource={events}
+        pagination={{
+          pageSize: 40,
+          total: 100, //response first filter require total
+          onChange: (page, pageSize) => {
+            // fetchRecords(page, pageSize);
+          },
+        }}
+      ></Table>
+    </>
   );
 };
 

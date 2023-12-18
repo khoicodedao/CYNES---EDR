@@ -22,8 +22,18 @@ const customAxiosPost = async <T>(
   }
 };
 
-const customAxiosGet = async <T>(url: string): Promise<T> => {
+const customAxiosGet = async <T>(url: string, params?: any): Promise<T> => {
   try {
+    console.log(params);
+    if (params) {
+      const queryString = Object.keys(params)
+        .map(
+          (key) =>
+            encodeURIComponent(key) + "=" + encodeURIComponent(params[key])
+        )
+        .join("&");
+      url = `${url}?${queryString}`;
+    }
     const response = await fetch(url);
     const responseData: T = await response.json();
     return responseData;
