@@ -1,245 +1,99 @@
 "use client";
-import React, { useState } from "react";
-import { DownOutlined, SettingOutlined, MenuOutlined } from "@ant-design/icons";
-import type { TableColumnsType } from "antd";
-import { Select } from "antd";
-import { Badge, Dropdown, Space, Table, Tag, Tabs } from "antd";
-import { Button, Drawer, Divider } from "antd";
-import { DeleteOutlined } from "@ant-design/icons";
+import React, { useState, useEffect } from "react";
+import { Space, Table, Select } from "antd";
+import type { ColumnsType } from "antd/es/table";
 import "./index.css";
-interface DataType {
-  key: React.Key;
-  name: string;
-  platform: string;
-  version: string;
-  upgradeNum: number;
-  creator: string;
-  createdAt: string;
-}
+import { COMMAND } from "@/types/command";
+import API_URL from "@/helpers/api-url";
+import { customAxiosGet } from "@/helpers/custom-axios";
+import formatDateString from "@/helpers/format-date";
+import "./index.css";
+import ReactJson from "react-json-view";
 
-interface ExpandedDataType {
-  key: React.Key;
-  date: string;
-  name: string;
-  upgradeNum: string;
-}
-
-const items = [
-  { key: "1", label: "Action 1" },
-  { key: "2", label: "Action 2" },
+const columns: ColumnsType<COMMAND> = [
+  {
+    title: "ID",
+    dataIndex: "id",
+    key: "id",
+  },
+  {
+    title: "Command Name",
+    dataIndex: "command_name",
+    key: "command_name",
+  },
+  {
+    title: "Command Type",
+    dataIndex: "command_type",
+    key: "command_type",
+  },
+  {
+    title: "Command Info",
+    dataIndex: "command_info",
+    key: "command_info",
+    width: "40%",
+    render: (item) => {
+      return (
+        <ReactJson
+          quotesOnKeys={false}
+          displayDataTypes={false}
+          name="Alert Info"
+          src={item}
+          theme="ocean"
+        />
+      );
+    },
+  },
+  {
+    title: "Update at",
+    dataIndex: "update_at",
+    key: "update_at",
+    render: (item) => {
+      return formatDateString(item);
+    },
+  },
+  {
+    title: "Created At",
+    dataIndex: "created_at",
+    key: "created_at",
+    render: (item) => {
+      return formatDateString(item);
+    },
+  },
 ];
-
 const DataGrid: React.FC = () => {
-  // === Drawer ====
-  const [open, setOpen] = useState(false);
-  const showDrawer = () => {
-    setOpen(true);
-  };
-  const onClose = () => {
-    setOpen(false);
-  };
-  //=== End ====
-  const expandedRowRender = () => {
-    const columns: TableColumnsType<ExpandedDataType> = [
-      { title: "Date", dataIndex: "date", key: "date" },
-      { title: "Name", dataIndex: "name", key: "name" },
-      {
-        title: "Status",
-        key: "state",
-        render: () => <Badge status="success" text="Finished" />,
-      },
-      { title: "Upgrade Status", dataIndex: "upgradeNum", key: "upgradeNum" },
-      {
-        title: "Action",
-        dataIndex: "operation",
-        key: "operation",
-        render: () => (
-          <Space size="middle">
-            <a>Pause</a>
-            <a>Stop</a>
-            <Dropdown menu={{ items }}>
-              <a>
-                More <DownOutlined />
-              </a>
-            </Dropdown>
-          </Space>
-        ),
-      },
-    ];
-
-    const data = [];
-    for (let i = 0; i < 3; ++i) {
-      data.push({
-        key: i.toString(),
-        date: "2014-12-24 23:12:00",
-        name: "This is production name",
-        upgradeNum: "Upgraded: 56",
-      });
-    }
-    return <Table columns={columns} dataSource={data} pagination={false} />;
-  };
-
-  const columns: TableColumnsType<DataType> = [
-    { title: "Name", dataIndex: "name", key: "name" },
-    { title: "Platform", dataIndex: "platform", key: "platform" },
-    { title: "Version", dataIndex: "version", key: "version" },
-    { title: "Upgraded", dataIndex: "upgradeNum", key: "upgradeNum" },
-    { title: "Creator", dataIndex: "creator", key: "creator" },
-    { title: "Date", dataIndex: "createdAt", key: "createdAt" },
-    { title: "Action", key: "operation", render: () => <a>Publish</a> },
-  ];
-
-  const data: DataType[] = [];
-  for (let i = 0; i < 3; ++i) {
-    data.push({
-      key: i.toString(),
-      name: "Screen",
-      platform: "iOS",
-      version: "10.3.4.5654",
-      upgradeNum: 500,
-      creator: "Jack",
-      createdAt: "2014-12-24 23:12:00",
-    });
-  }
-
+  const [groups, setGroupList] = useState<COMMAND[]>([] as COMMAND[]);
+  const [loading, setLoading] = useState(false);
+  const [filter, setFilter] = useState({ page_no: 1, page_size: 100 });
+  useEffect(() => {
+    let url = API_URL.COMMANDS.GET_COMMANDS;
+    let getData = async () => {
+      setLoading(true);
+      let resData: {
+        success: boolean;
+        commands: COMMAND[];
+      } = await customAxiosGet(url, filter);
+      if (resData.success) {
+        setGroupList(resData.commands);
+        setLoading(false);
+      }
+    };
+    getData();
+  }, []);
   return (
     <>
-      <Drawer
-        title={
-          <p>
-            <Tag color="#87d068">Online</Tag>Agent detail
-          </p>
-        }
-        placement={"right"}
-        width={1000}
-        onClose={onClose}
-        open={open}
-        extra={
-          <Space>
-            <Button
-              type="primary"
-              icon={<DeleteOutlined />}
-              size={"large"}
-              danger
-            >
-              Uninstall
-            </Button>
-          </Space>
-        }
-      >
-        {/* Drawer content */}
-        <div className=" pl-2 w-full max-w-full rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
-          <div className="flex items-center dark:opacity-50  dark:bg-boxdark">
-            <p>First Ping: 17/8/2023 20:00:00</p>{" "}
-            <Divider className="bg-black-90 dark:bg-white " type="vertical" />{" "}
-            <p>Last Ping: 17/8/2023 23:00:00</p>
-          </div>
-        </div>
-        {/* Properties */}
-        <div className="w-full p-6 mt-2 max-w-full rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
-          <div className="font-bold mb-2">
-            <SettingOutlined className="mr-1" />
-            Properties
-          </div>
-          <div className="grid grid-cols-3 ">
-            <div>
-              <p>Policy:</p>
-              <Select
-                defaultValue="lucy"
-                style={{ width: 200 }}
-                // onChange={handleChange}
-                options={[
-                  { value: "Policy", label: "Policy 1" },
-                  { value: "lucy", label: "Policy" },
-                  { value: "Yiminghe", label: "Policy" },
-                  { value: "disabled", label: "Policy", disabled: true },
-                ]}
-              />
-            </div>
-            <div>
-              <p>Update Group:</p>
-              <Select
-                defaultValue="lucy"
-                style={{ width: 200 }}
-                // onChange={handleChange}
-                options={[
-                  { value: "Group 1", label: "Group 1" },
-                  { value: "lucy", label: "Policy" },
-                  { value: "Yiminghe", label: "Policy" },
-                  { value: "disabled", label: "Policy", disabled: true },
-                ]}
-              />
-            </div>
-            <div>
-              <p>Group:</p>
-              <Select
-                defaultValue="lucy"
-                style={{ width: 200 }}
-                // onChange={handleChange}
-                options={[
-                  { value: "Group 2", label: "Group 2" },
-                  { value: "lucy", label: "Policy" },
-                  { value: "Yiminghe", label: "Policy" },
-                  { value: "disabled", label: "Policy", disabled: true },
-                ]}
-              />
-            </div>
-          </div>
-        </div>
-        {/* end */}
-
-        {/* Agent detail */}
-        <div className="w-full p-6 mt-2 max-w-full rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
-          <div className="font-bold mb-2">
-            <MenuOutlined className="mr-1" />
-            About Agent
-          </div>
-          <Tabs
-            // onChange={onChange}
-            className="dark:text-white"
-            type="card"
-            items={[
-              {
-                label: `Detail`,
-                key: "1",
-                children: `Content of Tab Detail ${1}`,
-              },
-              {
-                label: `Installation Files Version`,
-                key: "2",
-                children: `Installation Files Version ${1}`,
-              },
-              {
-                label: `Scheduled Tasks`,
-                key: "3",
-                children: `Content of Tab Scheduled Tasks ${1}`,
-              },
-
-              {
-                label: `Disk & partitions`,
-                key: "4",
-                children: `Content of Tab Disk & partitions ${1}`,
-              },
-            ]}
-          />
-        </div>
-        {/* end */}
-
-        {/* end */}
-      </Drawer>
       <Table
-        onRow={(record, rowIndex) => {
-          return {
-            onDoubleClick: (event) => {
-              showDrawer();
-              console.log(event);
-            },
-          };
-        }}
+        loading={loading}
+        className="dark:border-strokedark dark:bg-boxdark"
         columns={columns}
-        expandable={{ expandedRowRender }}
-        dataSource={data}
-      />
+        dataSource={groups}
+        pagination={{
+          pageSize: 40,
+          total: 100, //response first filter require total
+          onChange: (page, pageSize) => {
+            // fetchRecords(page, pageSize);
+          },
+        }}
+      ></Table>
     </>
   );
 };

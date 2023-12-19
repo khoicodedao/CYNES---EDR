@@ -24,6 +24,9 @@ const API_URL = {
   TASKS: {
     GET_TASKS: "/api/tasks",
   },
+  COMMANDS: {
+    GET_COMMANDS: "/api/commands",
+  },
 };
 
 export const API_BACKEND = {
@@ -45,6 +48,9 @@ export const API_BACKEND = {
   },
   TASK: {
     GET_TASKS: BACK_END_URL + "/api/v1/task",
+  },
+  COMMAND: {
+    GET_COMMAND: BACK_END_URL + "/api/v1/command",
   },
 };
 export default API_URL;

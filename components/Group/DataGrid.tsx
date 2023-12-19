@@ -45,29 +45,13 @@ const columns: ColumnsType<GROUP> = [
     },
   },
   {
-    title: "Update at",
-    dataIndex: "update_at",
-    key: "update_at",
+    title: "Created At",
+    dataIndex: "created_at",
+    key: "created_at",
     render: (item) => {
       return formatDateString(item);
     },
   },
-
-  // {
-  //   title: "Event level",
-  //   dataIndex: "event_level",
-  //   key: "event_level",
-  //   render: (event_level) => {
-  //     switch (event_level) {
-  //       case 1:
-  //         return <Tag color="success">Low</Tag>;
-  //       case 2:
-  //         return <Tag color="warning">Hight</Tag>;
-  //       default:
-  //         return <Tag color="error">Critical</Tag>;
-  //     }
-  //   },
-  // },
 ];
 const DataGrid: React.FC = () => {
   const [groups, setGroupList] = useState<GROUP[]>([] as GROUP[]);
