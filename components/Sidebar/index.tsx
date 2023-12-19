@@ -344,7 +344,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                             <li>
                               <Link
                                 href="/list-command"
-                                className={`group relative flex items-center gap-2.5 rounded-md  font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ${
+                                className={` pt-1 group relative flex items-center gap-2.5 rounded-md  font-medium text-bodydark2 duration-300 ease-in-out  ${
                                   pathname === "/ui/alerts" && "text-white"
                                 }`}
                               >
@@ -354,7 +354,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                             <li>
                               <Link
                                 href="/control-directly"
-                                className={`group relative flex items-center gap-2.5 rounded-md font-medium text-bodydark2 duration-300 ease-in-out hover:text-white ${
+                                className={` pt-1  group relative flex items-center gap-2.5 rounded-md font-medium text-bodydark2 duration-300 ease-in-out  ${
                                   pathname === "/ui/buttons" && "text-white"
                                 }`}
                               >
