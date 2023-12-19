@@ -1,8 +1,8 @@
 "use client";
 import FunctionBar from "./FunctionBar";
-import StatisticTasks from "./StatisticTasks";
+import StatisticTask from "./StatisticTask";
 import DataGrid from "./DataGrid";
-const Agent = () => {
+const Group = () => {
   return (
     <>
       {/* <!-- ====== FunctionBar Section Start ====== --> */}
@@ -13,7 +13,7 @@ const Agent = () => {
 
       {/* <!-- ====== StatisticEvent Section Start ====== --> */}
       <div className=" mt-1 w-full max-w-full rounded-sm border border-stroke bg-white  dark:border-strokedark dark:bg-boxdark shadow-default">
-        <StatisticTasks></StatisticTasks>
+        <StatisticTask></StatisticTask>
       </div>
 
       {/* <!-- ====== Event Section End ====== --> */}
@@ -27,4 +27,4 @@ const Agent = () => {
   );
 };
 
-export default Agent;
+export default Group;

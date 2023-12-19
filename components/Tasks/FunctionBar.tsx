@@ -33,7 +33,7 @@ const FunctionBar = () => {
     <div className=" justify-between flex  rounded-sm border border-stroke bg-white py-2 px-2 shadow-default dark:border-strokedark dark:bg-boxdark">
       <div className="flex justify-center items-center w-3/4">
         <Search
-          placeholder="f(x) Search by queries (ex: task_name='...' and mac='time_start='...')"
+          placeholder="f(x) Search by queries (ex: level='3' and mac='aa-2b-4c-5d-4f')"
           allowClear
           enterButton="Search"
           size="large"
