@@ -7,7 +7,6 @@ import { COMMAND } from "@/types/command";
 import API_URL from "@/helpers/api-url";
 import { customAxiosGet } from "@/helpers/custom-axios";
 import formatDateString from "@/helpers/format-date";
-import "./index.css";
 import ReactJson from "react-json-view";
 
 const columns: ColumnsType<COMMAND> = [

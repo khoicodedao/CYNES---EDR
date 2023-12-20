@@ -2,8 +2,10 @@
   width: fit-content;
 }
 .ant-popover {
-  z-index: 1000000000;
-  width: 132px;
+  z-index: 99999;
+}
+.ant-popover-title {
+  min-width: unset !important;
 }
 .ant-popover-title {
   margin-bottom: 0px !important;
