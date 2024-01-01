@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { Space, Table, Select } from "antd";
+import { Space, Table, Select, Tag } from "antd";
 import type { ColumnsType } from "antd/es/table";
 import "./index.css";
 import { TASK } from "@/types/task";
@@ -29,14 +29,21 @@ const columns: ColumnsType<TASK> = [
     key: "command_name",
   },
   {
-    title: "Is Active",
+    title: "Active",
     dataIndex: "is_active",
     key: "is_active",
+    render: (is_active) => {
+      return is_active ? (
+        <Tag color="success">Active</Tag>
+      ) : (
+        <Tag color="error">Not Active</Tag>
+      );
+    },
   },
   {
-    title: "Update at",
-    dataIndex: "update_at",
-    key: "update_at",
+    title: "Create at",
+    dataIndex: "created_at",
+    key: "created_at",
     render: (item) => {
       return formatDateString(item);
     },

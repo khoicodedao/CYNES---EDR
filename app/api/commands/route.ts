@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { customAxiosGet } from "@/helpers/custom-axios";
+import { customAxiosPost } from "@/helpers/custom-axios";
 import { API_BACKEND } from "@/helpers/api-url";
 import { COMMAND } from "@/types/command";
 
@@ -8,7 +8,7 @@ export async function GET(request: NextRequest) {
   const url = API_BACKEND.COMMAND.GET_COMMAND + searchParams;
   try {
     const res: { count: number; error: boolean; commands: COMMAND[] } =
-      await customAxiosGet(url);
+      await customAxiosPost(url);
     if (res.error === false) {
       const response = NextResponse.json({
         success: true,

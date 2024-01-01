@@ -35,7 +35,7 @@ const columns: ColumnsType<COMMAND> = [
         <ReactJson
           quotesOnKeys={false}
           displayDataTypes={false}
-          name="Alert Info"
+          name="Command Info"
           src={item}
           theme="ocean"
         />

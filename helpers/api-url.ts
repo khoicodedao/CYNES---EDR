@@ -41,16 +41,16 @@ export const API_BACKEND = {
     GET_EVENTS: BACK_END_URL + "/api/v1/event",
   },
   ALERTS: {
-    GET_ALERTS: BACK_END_URL + "/api/v1/alert",
+    GET_ALERTS: BACK_END_URL + "/api/v1/alert/list",
   },
   GROUP: {
-    GET_GROUPS: BACK_END_URL + "/api/v1/group",
+    GET_GROUPS: BACK_END_URL + "/api/v1/group/list",
   },
   TASK: {
-    GET_TASKS: BACK_END_URL + "/api/v1/task",
+    GET_TASKS: BACK_END_URL + "/api/v1/task/list",
   },
   COMMAND: {
-    GET_COMMAND: BACK_END_URL + "/api/v1/command",
+    GET_COMMAND: BACK_END_URL + "/api/v1/command/list",
   },
 };
 export default API_URL;

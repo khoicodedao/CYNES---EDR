@@ -1,16 +1,16 @@
 const customAxiosPost = async <T>(
   url: string,
-  data: any, // Adjust the type based on your request payload
-  token: string
+  data?: any, // Adjust the type based on your request payload
+  token?: string
 ): Promise<T> => {
   try {
     const response = await fetch(url, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
+        Authorization: token ? `Bearer ${token}` : "",
       },
-      body: JSON.stringify(data),
+      body: data ? JSON.stringify(data) : "",
     });
 
     const responseData: T = await response.json();

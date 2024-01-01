@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { customAxiosGet } from "@/helpers/custom-axios";
+import { customAxiosPost } from "@/helpers/custom-axios";
 import { API_BACKEND } from "@/helpers/api-url";
 import { GROUP } from "@/types/group";
 
@@ -9,7 +9,7 @@ export async function GET(request: NextRequest) {
 
   try {
     const res: { count: number; error: boolean; groups: GROUP[] } =
-      await customAxiosGet(url);
+      await customAxiosPost(url);
     if (res.error === false) {
       const response = NextResponse.json({
         success: true,
