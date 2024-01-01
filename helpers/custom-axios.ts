@@ -1,3 +1,25 @@
+const customAxiosDelete = async <T>(
+  url: string,
+  token?: string
+): Promise<T> => {
+  try {
+    const response = await fetch(url, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: token ? `Bearer ${token}` : "",
+      },
+    });
+
+    const responseData: T = await response.json();
+    return responseData;
+  } catch (error: any) {
+    // Handle errors
+    console.error(error?.message);
+    return "Error" as T;
+  }
+};
+
 const customAxiosPost = async <T>(
   url: string,
   data?: any, // Adjust the type based on your request payload
@@ -22,9 +44,12 @@ const customAxiosPost = async <T>(
   }
 };
 
-const customAxiosGet = async <T>(url: string, params?: any): Promise<T> => {
+const customAxiosGet = async <T>(
+  url: string,
+  params?: any,
+  cache?: Object
+): Promise<T> => {
   try {
-    console.log(params);
     if (params) {
       const queryString = Object.keys(params)
         .map(
@@ -34,7 +59,7 @@ const customAxiosGet = async <T>(url: string, params?: any): Promise<T> => {
         .join("&");
       url = `${url}?${queryString}`;
     }
-    const response = await fetch(url);
+    const response = await fetch(url, cache);
     const responseData: T = await response.json();
     return responseData;
   } catch (error) {
@@ -43,4 +68,4 @@ const customAxiosGet = async <T>(url: string, params?: any): Promise<T> => {
     return "Error" as T;
   }
 };
-export { customAxiosPost, customAxiosGet };
+export { customAxiosPost, customAxiosGet, customAxiosDelete };

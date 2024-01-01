@@ -1,0 +1,21 @@
+import { NextRequest, NextResponse } from "next/server";
+import { customAxiosDelete } from "@/helpers/custom-axios";
+import { API_BACKEND } from "@/helpers/api-url";
+type DEL_RESPONSE = {
+  error: boolean;
+  msg: string;
+};
+export async function DELETE(
+  request: NextRequest,
+  { params }: { params: { id: string } }
+) {
+  const id = params.id;
+  const url = API_BACKEND.AGENT.DELETE_AGENT + `/${id}`;
+  try {
+    const res: { res: DEL_RESPONSE } = await customAxiosDelete(url);
+    const response = NextResponse.json(res);
+    return response;
+  } catch (error: any) {
+    return NextResponse.json({ error: error.message }, { status: 500 });
+  }
+}
