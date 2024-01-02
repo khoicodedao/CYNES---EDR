@@ -5,10 +5,15 @@ import type { ColumnsType } from "antd/es/table";
 import "./index.css";
 import { EVENT } from "@/types/event";
 import API_URL from "@/helpers/api-url";
-import { customAxiosGet } from "@/helpers/custom-axios";
+import { customAxiosPost } from "@/helpers/custom-axios";
 import formatDateString from "@/helpers/format-date";
 import ReactJson from "react-json-view";
 const columns: ColumnsType<EVENT> = [
+  {
+    title: "ID",
+    dataIndex: "id",
+    key: "id",
+  },
   {
     title: "Agent",
     dataIndex: "agent_id",
@@ -79,9 +84,13 @@ const DataGrid: React.FC = () => {
       let resData: {
         success: boolean;
         events: EVENT[];
-      } = await customAxiosGet(url, filter);
+      } = await customAxiosPost(url, filter);
       if (resData.success) {
-        setEventList(resData.events);
+        setEventList(
+          resData.events.map((data, index) => {
+            return { ID: index, ...data };
+          })
+        );
         setLoading(false);
       }
     };
@@ -90,10 +99,12 @@ const DataGrid: React.FC = () => {
   return (
     <>
       <Table
+        rowKey="ID"
         loading={loading}
+        // bordered
         expandable={{
           expandedRowRender: (record) => (
-            <>
+            <div>
               {" "}
               <p className="mt-2">
                 <Tag color="#87d068"> Event Description: </Tag>
@@ -121,7 +132,7 @@ const DataGrid: React.FC = () => {
                 />{" "}
                 {}
               </p>
-            </>
+            </div>
           ),
         }}
         className="dark:border-strokedark dark:bg-boxdark"
@@ -134,6 +145,7 @@ const DataGrid: React.FC = () => {
             // fetchRecords(page, pageSize);
           },
         }}
+        // pagination={{ position: [Tab, bottom] }}
       ></Table>
     </>
   );

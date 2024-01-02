@@ -39,7 +39,7 @@ export const API_BACKEND = {
     DELETE_AGENT: BACK_END_URL + "/api/v1/agent",
   },
   EVENTS: {
-    GET_EVENTS: BACK_END_URL + "/api/v1/event",
+    GET_EVENTS: BACK_END_URL + "/api/v1/event/list",
   },
   ALERTS: {
     GET_ALERTS: BACK_END_URL + "/api/v1/alert/list",

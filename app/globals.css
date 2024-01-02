@@ -242,3 +242,26 @@ aside > div {
 .dark .ant-pagination-item:not(.ant-pagination-item-active) a[rel="nofollow"] {
   color: white !important;
 }
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #888;
+  border-radius: 5px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #24303f98;
+  width: 5px;
+  border-radius: 5px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+  width: 10px;
+}
