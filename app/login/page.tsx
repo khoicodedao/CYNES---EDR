@@ -10,7 +10,11 @@ import { Alert } from "antd";
 //   description: "This is Signin page for TailAdmin Next.js",
 //   // other metadata
 // };
-import { User } from "@/types/user";
+// import { User } from "@/types/user";
+type User = {
+  user_name: string;
+  password: string;
+};
 const SignIn: React.FC = () => {
   const router = useRouter();
   const [user, setUser] = React.useState<User>({
