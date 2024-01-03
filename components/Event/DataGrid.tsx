@@ -7,6 +7,7 @@ import { EVENT } from "@/types/event";
 import API_URL from "@/helpers/api-url";
 import { customAxiosPost } from "@/helpers/custom-axios";
 import formatDateString from "@/helpers/format-date";
+import getHeightScroll from "@/helpers/get-height-scroll";
 import ReactJson from "react-json-view";
 const columns: ColumnsType<EVENT> = [
   {
@@ -138,6 +139,7 @@ const DataGrid: React.FC = () => {
         className="dark:border-strokedark dark:bg-boxdark"
         columns={columns}
         dataSource={events}
+        scroll={{ y: getHeightScroll() }}
         pagination={{
           pageSize: 40,
           total: 100, //response first filter require total

@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { Space, Table, Tag } from "antd";
 import type { ColumnsType } from "antd/es/table";
+import getHeightScroll from "@/helpers/get-height-scroll";
 import "./index.css";
 import { ALERT } from "@/types/alert";
 import API_URL from "@/helpers/api-url";
@@ -94,6 +95,7 @@ const DataGrid: React.FC = () => {
   return (
     <Table
       loading={loading}
+      scroll={{ y: getHeightScroll() }}
       expandable={{
         expandedRowRender: (record) => (
           <>
