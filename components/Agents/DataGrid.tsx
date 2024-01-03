@@ -7,7 +7,7 @@ import { Badge, Dropdown, Space, Table, Tag, Tabs, Progress } from "antd";
 import { Button, Drawer, Divider } from "antd";
 import { DeleteOutlined } from "@ant-design/icons";
 import { AGENT } from "@/types/agent";
-import { customAxiosGet } from "@/helpers/custom-axios";
+import { customAxiosPost } from "@/helpers/custom-axios";
 import "./index.css";
 import API_URL from "@/helpers/api-url";
 import formatDateString from "@/helpers/format-date";
@@ -90,7 +90,7 @@ const DataGrid: React.FC = () => {
       let resData: {
         success: boolean;
         data: { agents: AGENT[] };
-      } = await customAxiosGet(url);
+      } = await customAxiosPost(url, {});
 
       if (resData.success) {
         setAgentList(resData.data.agents);

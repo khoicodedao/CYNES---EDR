@@ -37,10 +37,10 @@ const customAxiosPost = async <T>(
 
     const responseData: T = await response.json();
     return responseData;
-  } catch (error) {
+  } catch (error: any) {
     // Handle errors
-    console.error("Error:");
-    return "Error" as T;
+    console.error(error?.message);
+    return error?.message as T;
   }
 };
 
@@ -62,10 +62,10 @@ const customAxiosGet = async <T>(
     const response = await fetch(url, cache);
     const responseData: T = await response.json();
     return responseData;
-  } catch (error) {
+  } catch (error: any) {
     // Handle errors
-    console.error("Error:");
-    return "Error" as T;
+    console.error(error?.message);
+    return error?.message as T;
   }
 };
 export { customAxiosPost, customAxiosGet, customAxiosDelete };

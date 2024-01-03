@@ -7,6 +7,7 @@ interface CardDataStatsProps {
   newData: string;
   levelUp?: boolean;
   levelDown?: boolean;
+  detail?: Array<{ title: string; count: string; ratio: number }>;
   children: ReactNode;
 }
 
@@ -16,6 +17,10 @@ const CardDataStats: React.FC<CardDataStatsProps> = ({
   newData,
   levelUp,
   levelDown,
+  detail = [
+    { title: "Loading...", count: "0", ratio: 0 },
+    { title: "Loading...", count: "0", ratio: 0 },
+  ],
   children,
 }) => {
   return (
@@ -82,18 +87,23 @@ const CardDataStats: React.FC<CardDataStatsProps> = ({
               <div className=" flex items-center  justify-between">
                 <div className="flex item-center flex-col justify-center">
                   <h4 className="text-title-md font-bold text-black dark:text-white">
-                    {536}
+                    {detail[0].count}
                   </h4>
-                  <Statistic
-                    title="Online"
-                    value={20}
+                  <p className="text-white">{detail[0].title}</p>
+                  {/* <Statistic
+                    title={detail[0].title}
+                    // value={20}
                     precision={0}
                     valueStyle={{ color: "#3f8600" }}
-                    prefix={<ArrowUpOutlined />}
+                    // prefix={<ArrowUpOutlined />}
                     suffix=""
-                  />
+                  /> */}
                 </div>
-                <Progress type="circle" strokeColor="#3f8600" percent={75} />
+                <Progress
+                  type="circle"
+                  strokeColor="#3f8600"
+                  percent={detail[0].ratio}
+                />
               </div>
             </Card>
           </Col>
@@ -102,19 +112,25 @@ const CardDataStats: React.FC<CardDataStatsProps> = ({
               <div className=" flex items-center justify-between">
                 <div className="flex item-center flex-col justify-center">
                   <h4 className="text-title-md font-bold text-black dark:text-white">
-                    {536}
+                    {detail[1].count}
                   </h4>
-                  <Statistic
+                  <p className="text-white">{detail[1].title}</p>
+
+                  {/* <Statistic
                     title="offline"
                     value={80}
                     precision={0}
                     valueStyle={{ color: "#cf1322" }}
                     prefix={<ArrowDownOutlined />}
                     suffix=""
-                  />
+                  /> */}
                 </div>
 
-                <Progress type="circle" strokeColor="#cf1322" percent={25} />
+                <Progress
+                  type="circle"
+                  strokeColor="#cf1322"
+                  percent={detail[1].ratio}
+                />
               </div>
             </Card>
           </Col>

@@ -3,7 +3,7 @@ import { customAxiosPost } from "@/helpers/custom-axios";
 import { API_BACKEND } from "@/helpers/api-url";
 import { AGENT } from "@/types/agent";
 
-export async function GET() {
+export async function POST(request: NextRequest) {
   const url = API_BACKEND.AGENT.GET_AGENTS;
   try {
     const agents: { agents: AGENT[] } = await customAxiosPost(url, {});

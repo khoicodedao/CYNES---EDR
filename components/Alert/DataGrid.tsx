@@ -5,7 +5,7 @@ import type { ColumnsType } from "antd/es/table";
 import "./index.css";
 import { ALERT } from "@/types/alert";
 import API_URL from "@/helpers/api-url";
-import { customAxiosGet } from "@/helpers/custom-axios";
+import { customAxiosPost } from "@/helpers/custom-axios";
 import formatDateString from "@/helpers/format-date";
 import ReactJson from "react-json-view";
 const columns: ColumnsType<ALERT> = [
@@ -79,7 +79,10 @@ const DataGrid: React.FC = () => {
       let resData: {
         success: boolean;
         alerts: ALERT[];
-      } = await customAxiosGet(url);
+      } = await customAxiosPost(url, {
+        page_no: 2,
+        page_size: 100,
+      });
 
       if (resData.success) {
         setEventList(resData.alerts);
