@@ -5,8 +5,8 @@ import dayjs from "dayjs";
 import type { Dayjs } from "dayjs";
 import type { TimeRangePickerProps } from "antd";
 import { DatePicker } from "antd";
-import {ReloadOutlined } from '@ant-design/icons'
-import {Popover} from 'antd'
+import { ReloadOutlined } from "@ant-design/icons";
+import { Popover } from "antd";
 const { RangePicker } = DatePicker;
 const onRangeChange = (
   dates: null | (Dayjs | null)[],
@@ -34,10 +34,14 @@ const FunctionBar = () => {
       </div>
       <div className=" justify-end items-center flex w-2/3 md:w-2/4 xl:w-2/3 ">
         {/* Export dashboard to PDF */}
-        <Popover content={()=> {return <div>Export dashboard data!</div>}}>
-        <Button type="primary" icon={<DownloadOutlined />}>
-          Export Dashboard
-        </Button>
+        <Popover
+          content={() => {
+            return <div>Export dashboard data!</div>;
+          }}
+        >
+          <Button type="primary" icon={<DownloadOutlined />}>
+            Export Dashboard
+          </Button>
         </Popover>
         <div className="ml-2">
           <RangePicker
@@ -50,14 +54,19 @@ const FunctionBar = () => {
               },
               ...rangePresets,
             ]}
+            defaultValue={[dayjs(), dayjs().endOf("day")]}
             showTime
             format="YYYY/MM/DD HH:mm:ss"
             onChange={onRangeChange}
           />
         </div>
         <div className="ml-2">
-          <Popover content={()=>{return <div>Reload</div>}}>
-          <ReloadOutlined style={{ fontSize: '16px', color: '#08c' }} />
+          <Popover
+            content={() => {
+              return <div>Reload</div>;
+            }}
+          >
+            <ReloadOutlined style={{ fontSize: "16px", color: "#08c" }} />
           </Popover>
         </div>
       </div>

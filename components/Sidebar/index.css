@@ -18,3 +18,8 @@
 .w-30 .translate {
   display: none !important;
 }
+
+aside svg {
+  width: 20px;
+  height: 20px;
+}

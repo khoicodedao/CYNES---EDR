@@ -22,5 +22,14 @@ export function middleware(request: NextRequest) {
 
 // See "Matching Paths" below to learn more
 export const config = {
-  matcher: ["/login", "/signup", "/", "/agents", "/events", "/tasks"],
+  matcher: [
+    "/login",
+    "/signup",
+    "/",
+    "/agents",
+    "/events",
+    "/tasks",
+    "/control-directly",
+    "/list-command",
+  ],
 };

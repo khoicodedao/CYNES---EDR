@@ -10,9 +10,9 @@ const ControlDirectly = () => {
   return (
     <>
       {/* <!-- ====== FunctionBar Section Start ====== --> */}
-      <div className="w-full max-w-full rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
+      {/* <div className="w-full max-w-full rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
         <FunctionBar></FunctionBar>
-      </div>
+      </div> */}
       {/* <!-- ====== FunctionBar Section End ====== --> */}
 
       {/* <!-- ====== StatisticEvent Section Start ====== --> */}

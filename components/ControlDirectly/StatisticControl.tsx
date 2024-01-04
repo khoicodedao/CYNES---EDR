@@ -8,7 +8,7 @@ import {
   CloudSyncOutlined,
 } from "@ant-design/icons";
 const StatisticAgents: React.FC = () => (
-  <div className="">
+  <div className="p-2">
     <Row gutter={16}>
       <Col
         className="flex justify-center items-center border-r border-solid border-gray"

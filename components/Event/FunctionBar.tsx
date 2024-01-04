@@ -58,6 +58,7 @@ const FunctionBar = () => {
               },
               ...rangePresets,
             ]}
+            defaultValue={[dayjs(), dayjs().endOf("day")]}
             showTime
             format="YYYY/MM/DD HH:mm:ss"
             onChange={onRangeChange}

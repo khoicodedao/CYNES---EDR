@@ -61,6 +61,7 @@ const FunctionBar = () => {
             showTime
             format="YYYY/MM/DD HH:mm:ss"
             onChange={onRangeChange}
+            defaultValue={[dayjs(), dayjs().endOf("day")]}
           />
         </div>
         <div className="ml-2">
