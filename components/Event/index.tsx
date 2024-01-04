@@ -1,8 +1,10 @@
 "use client";
-import FunctionBar from "./FunctionBar";
+import FunctionBar from "@/components/common/FunctionBar";
 import StatisticEvent from "./StatisticEvent";
 import DataGrid from "./DataGrid";
+import { useState } from "react";
 const Event = () => {
+  const [timeRange, setTimeRange] = useState();
   return (
     <>
       {/* <!-- ====== FunctionBar Section Start ====== --> */}

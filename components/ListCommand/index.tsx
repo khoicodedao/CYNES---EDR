@@ -1,5 +1,6 @@
 "use client";
-import FunctionBar from "./FunctionBar";
+import FunctionBar from "@/components/common/FunctionBar";
+
 import StatisticAgents from "./StatisticCommand";
 import DataGrid from "./DataGrid";
 const Agent = () => {

@@ -6,7 +6,6 @@ import type { TimeRangePickerProps } from "antd";
 import { DatePicker } from "antd";
 import { ReloadOutlined } from "@ant-design/icons";
 import { Popover } from "antd";
-import "./index.css";
 const { RangePicker } = DatePicker;
 const { Search } = Input;
 const onRangeChange = (
@@ -31,7 +30,7 @@ const onSearch = (value: any) => console.log(value);
 const FunctionBar = () => {
   return (
     <div className=" justify-between flex  rounded-sm border border-stroke bg-white py-2 px-2 shadow-default dark:border-strokedark dark:bg-boxdark">
-      <div className="flex justify-center items-center w-3/4">
+      <div className="flex justify-center items-center w-2/3 md:w-2/3">
         <Search
           placeholder="f(x) Search by queries (ex: level='3' and mac='aa-2b-4c-5d-4f')"
           allowClear
@@ -40,7 +39,7 @@ const FunctionBar = () => {
           onSearch={onSearch}
         />
       </div>
-      <div className=" justify-end items-center flex w-1/4 md:w-1/4 xl:w-1/4 ">
+      <div className=" justify-end items-center flex w-1/3 md:w-1/3  ">
         {/* Export dashboard to PDF */}
         <Popover
           content={() => {

@@ -1,5 +1,5 @@
 "use client";
-import FunctionBar from "./FunctionBar";
+import FunctionBar from "@/components/common/FunctionBar";
 import StatisticTask from "./StatisticTask";
 import DataGrid from "./DataGrid";
 const Group = () => {

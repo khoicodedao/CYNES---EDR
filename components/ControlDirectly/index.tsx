@@ -1,5 +1,4 @@
 "use client";
-import FunctionBar from "./FunctionBar";
 import StatisticAgents from "./StatisticControl";
 import Terminal, { ColorMode, TerminalOutput } from "react-terminal-ui";
 import { useState } from "react";
