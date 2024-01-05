@@ -4,12 +4,17 @@ import StatisticEvent from "./StatisticEvent";
 import DataGrid from "./DataGrid";
 import { useState } from "react";
 const Event = () => {
-  const [timeRange, setTimeRange] = useState();
+  const [timeRange, setTimeRange] = useState<any>(null);
+  const [search, setSearch] = useState<string>("");
+
   return (
     <>
       {/* <!-- ====== FunctionBar Section Start ====== --> */}
       <div className="w-full max-w-full rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
-        <FunctionBar></FunctionBar>
+        <FunctionBar
+          setTimeRange={setTimeRange}
+          setSearch={setSearch}
+        ></FunctionBar>
       </div>
       {/* <!-- ====== FunctionBar Section End ====== --> */}
 
