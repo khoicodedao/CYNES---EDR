@@ -23,16 +23,18 @@
 .dark .ant-pagination-item-link svg {
   fill: white;
 }
-.dark .react-json-view{
-  background-color: #222F3E !important;
+.dark .react-json-view {
+  background-color: #222f3e !important;
 }
-.dark .react-json-view  .object-key{
+.dark .react-json-view .object-key {
   color: rgb(226, 234, 243) !important;
 }
-.react-json-view {background-color: white !important;}
+.react-json-view {
+  background-color: white !important;
+}
 
-.react-json-view  .object-key{
-  color: #222F3E !important;
+.react-json-view .object-key {
+  color: #222f3e !important;
 }
 /* .dark .object-key {
   color: white !important;
@@ -41,3 +43,6 @@
 .dark .object-key > span {
   color: white !important;
 } */
+.dark .ant-table-cell {
+  background-color: #222f3e !important;
+}

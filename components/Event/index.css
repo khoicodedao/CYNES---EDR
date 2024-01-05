@@ -47,3 +47,6 @@
   width: 84vw !important;
   overflow: auto;
 }
+.dark .ant-tabs-tab:not(.active) {
+  color: white;
+}

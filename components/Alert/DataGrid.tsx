@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { Space, Table, Tag } from "antd";
+import { Tabs, Table, Tag } from "antd";
 import type { ColumnsType } from "antd/es/table";
 import getHeightScroll from "@/helpers/get-height-scroll";
 import "./index.css";
@@ -10,6 +10,11 @@ import { customAxiosPost } from "@/helpers/custom-axios";
 import formatDateString from "@/helpers/format-date";
 import ReactJson from "react-json-view";
 const columns: ColumnsType<ALERT> = [
+  {
+    title: "ID",
+    dataIndex: "id",
+    key: "id",
+  },
   {
     title: "Agent",
     dataIndex: "agent_id",
@@ -59,6 +64,7 @@ const columns: ColumnsType<ALERT> = [
     title: "Alert description",
     dataIndex: "alert_description",
     key: "alert_description",
+    width: 440,
   },
   {
     title: "Time",
@@ -81,7 +87,7 @@ const DataGrid: React.FC = () => {
         success: boolean;
         alerts: ALERT[];
       } = await customAxiosPost(url, {
-        page_no: 2,
+        page_no: 1,
         page_size: 100,
       });
 
@@ -94,31 +100,49 @@ const DataGrid: React.FC = () => {
   }, []);
   return (
     <Table
+      rowKey="id"
       loading={loading}
       scroll={{ y: getHeightScroll() }}
       expandable={{
         expandedRowRender: (record) => (
-          <>
-            {" "}
-            <p className="mt-2">
-              <Tag color="#87d068"> Alert Description: </Tag>
-              {record.alert_description}
-            </p>
-            <p className="mt-2">
-              <Tag color="#87d068">Artifact Name: </Tag>
-              {record.artifact_name}
-            </p>
-            <p className="mt-2">
-              <ReactJson
-                quotesOnKeys={false}
-                displayDataTypes={false}
-                name="Alert Info"
-                src={JSON.parse(record.alert_info)}
-                theme="ocean"
-              />{" "}
-              {}
-            </p>
-          </>
+          <Tabs
+            type="card"
+            items={[
+              {
+                label: `SUMMARY`,
+                key: "1",
+                children: (
+                  <>
+                    <p className="mt-2">
+                      <Tag color="#87d068"> Alert Description: </Tag>
+                      <span className="dark:text-white">
+                        {record.alert_description}
+                      </span>
+                    </p>
+                    <p className="mt-2">
+                      <Tag color="#87d068">Artifact Name: </Tag>
+                      <span className="dark:text-white">
+                        {record.artifact_name}
+                      </span>
+                    </p>
+                  </>
+                ),
+              },
+              {
+                label: `JSON`,
+                key: "2",
+                children: (
+                  <ReactJson
+                    quotesOnKeys={false}
+                    displayDataTypes={false}
+                    name="Alert Info"
+                    src={JSON.parse(record.alert_info)}
+                    theme="ocean"
+                  />
+                ),
+              },
+            ]}
+          />
         ),
       }}
       className="dark:border-strokedark dark:bg-boxdark"
