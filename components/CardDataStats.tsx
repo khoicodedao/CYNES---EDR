@@ -89,7 +89,7 @@ const CardDataStats: React.FC<CardDataStatsProps> = ({
                   <h4 className="text-title-md font-bold text-black dark:text-white">
                     {detail[0].count}
                   </h4>
-                  <p className="text-white">{detail[0].title}</p>
+                  <p className="text-custom-green">{detail[0].title}</p>
                   {/* <Statistic
                     title={detail[0].title}
                     // value={20}
@@ -100,6 +100,7 @@ const CardDataStats: React.FC<CardDataStatsProps> = ({
                   /> */}
                 </div>
                 <Progress
+                  width={50}
                   type="circle"
                   strokeColor="#3f8600"
                   percent={detail[0].ratio}
@@ -114,7 +115,7 @@ const CardDataStats: React.FC<CardDataStatsProps> = ({
                   <h4 className="text-title-md font-bold text-black dark:text-white">
                     {detail[1].count}
                   </h4>
-                  <p className="text-white">{detail[1].title}</p>
+                  <p className="text-custom-red">{detail[1].title}</p>
 
                   {/* <Statistic
                     title="offline"
@@ -127,6 +128,7 @@ const CardDataStats: React.FC<CardDataStatsProps> = ({
                 </div>
 
                 <Progress
+                  width={50}
                   type="circle"
                   strokeColor="#cf1322"
                   percent={detail[1].ratio}

@@ -1,3 +1,10 @@
+/**
+ * Sends a DELETE request using Axios.
+ *
+ * @param url - The URL to send the request to.
+ * @param token - Optional token for authorization.
+ * @returns A promise that resolves to the response data.
+ */
 const customAxiosDelete = async <T>(
   url: string,
   token?: string
@@ -14,15 +21,22 @@ const customAxiosDelete = async <T>(
     const responseData: T = await response.json();
     return responseData;
   } catch (error: any) {
-    // Handle errors
     console.error(error?.message);
     return "Error" as T;
   }
 };
 
+/**
+ * Sends a POST request using Axios.
+ *
+ * @param url - The URL to send the request to.
+ * @param data - Optional data payload for the request.
+ * @param token - Optional token for authorization.
+ * @returns A promise that resolves to the response data.
+ */
 const customAxiosPost = async <T>(
   url: string,
-  data?: any, // Adjust the type based on your request payload
+  data?: any,
   token?: string
 ): Promise<T> => {
   try {
@@ -38,12 +52,19 @@ const customAxiosPost = async <T>(
     const responseData: T = await response.json();
     return responseData;
   } catch (error: any) {
-    // Handle errors
     console.error(error?.message);
     return error?.message as T;
   }
 };
 
+/**
+ * Sends a GET request using Axios.
+ *
+ * @param url - The URL to send the request to.
+ * @param params - Optional query parameters for the request.
+ * @param cache - Optional cache configuration for the request.
+ * @returns A promise that resolves to the response data.
+ */
 const customAxiosGet = async <T>(
   url: string,
   params?: any,
@@ -63,9 +84,9 @@ const customAxiosGet = async <T>(
     const responseData: T = await response.json();
     return responseData;
   } catch (error: any) {
-    // Handle errors
     console.error(error?.message);
     return error?.message as T;
   }
 };
+
 export { customAxiosPost, customAxiosGet, customAxiosDelete };

@@ -41,3 +41,4 @@ const ControlDirectly = () => {
 };
 
 export default ControlDirectly;
+// add padding in tailwind css?
