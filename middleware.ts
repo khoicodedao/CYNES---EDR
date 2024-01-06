@@ -27,7 +27,9 @@ export const config = {
     "/signup",
     "/",
     "/agents",
-    "/events",
+    // "/events",
+    // "/alerts",
+
     "/tasks",
     "/control-directly",
     "/list-command",

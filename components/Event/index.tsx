@@ -14,6 +14,7 @@ const Event = () => {
         <FunctionBar
           setTimeRange={setTimeRange}
           setSearch={setSearch}
+          placeHolder="Search by query (mac='AA-DC-2F-4A-AD-F5')"
         ></FunctionBar>
       </div>
       {/* <!-- ====== FunctionBar Section End ====== --> */}

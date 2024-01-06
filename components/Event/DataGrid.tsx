@@ -64,6 +64,7 @@ const columns: ColumnsType<EVENT> = [
     title: "Event description",
     dataIndex: "event_description",
     key: "event_description",
+    width: 440,
   },
   {
     title: "Time",

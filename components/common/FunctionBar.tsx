@@ -29,17 +29,19 @@ const rangePresets: TimeRangePickerProps["presets"] = [
 type FunctionBarProps = {
   setTimeRange?: React.Dispatch<React.SetStateAction<any>>;
   setSearch: React.Dispatch<React.SetStateAction<string>>;
+  placeHolder?: string;
 };
 const onSearch = (value: any) => console.log(value);
 const FunctionBar: React.FC<FunctionBarProps> = ({
   setTimeRange,
   setSearch,
+  placeHolder = "Search by queries",
 }) => {
   return (
     <div className=" justify-between flex  rounded-sm border border-stroke bg-white py-2 px-2 shadow-default dark:border-strokedark dark:bg-boxdark">
       <div className="flex justify-center items-center w-2/3 md:w-2/3">
         <Search
-          placeholder="f(x) Search by queries (ex: level='3' and mac='aa-2b-4c-5d-4f')"
+          placeholder={placeHolder}
           allowClear
           enterButton="Search"
           size="large"
