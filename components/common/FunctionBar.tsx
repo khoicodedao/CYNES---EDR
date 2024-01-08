@@ -28,7 +28,7 @@ const rangePresets: TimeRangePickerProps["presets"] = [
 ];
 type FunctionBarProps = {
   setTimeRange?: React.Dispatch<React.SetStateAction<any>>;
-  setSearch: React.Dispatch<React.SetStateAction<string>>;
+  setSearch?: React.Dispatch<React.SetStateAction<string>>;
   placeHolder?: string;
 };
 const onSearch = (value: any) => console.log(value);
