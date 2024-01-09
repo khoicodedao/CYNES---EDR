@@ -2,17 +2,15 @@
 import FunctionBar from "@/components/common/FunctionBar";
 import StatisticEvent from "./StatisticEvent";
 import DataGrid from "./DataGrid";
-import dayjs from "dayjs";
-import type { Dayjs } from "dayjs";
 import { useState } from "react";
+import dayjs from "dayjs";
 const Event = () => {
   const [timeRange, setTimeRange] = useState<string[]>([
     dayjs().toISOString(),
     dayjs().endOf("day").toISOString(),
   ]);
-  const [search, setSearch] = useState<string>("");
   console.log(timeRange);
-  console.log(search);
+  const [search, setSearch] = useState<string>("");
   return (
     <>
       {/* <!-- ====== FunctionBar Section Start ====== --> */}

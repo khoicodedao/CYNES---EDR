@@ -14,8 +14,6 @@ const onRangeChange = (
   dateStrings: string[]
 ) => {
   if (dates) {
-    console.log("From: ", dates[0], ", to: ", dates[1]);
-    console.log("From: ", dateStrings[0], ", to: ", dateStrings[1]);
   } else {
     console.log("Clear");
   }

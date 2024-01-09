@@ -1,13 +1,12 @@
 import React from "react";
 import dayjs from "dayjs";
 import type { Dayjs } from "dayjs";
-import { Input } from "antd";
 import type { TimeRangePickerProps } from "antd";
 import { DatePicker } from "antd";
 import { ReloadOutlined } from "@ant-design/icons";
 import { Popover } from "antd";
 const { RangePicker } = DatePicker;
-const { Search } = Input;
+import { AutoComplete, Input } from "antd";
 
 const rangePresets: TimeRangePickerProps["presets"] = [
   { label: "Last 7 Days", value: [dayjs().add(-7, "d"), dayjs()] },
@@ -26,11 +25,10 @@ const FunctionBar: React.FC<FunctionBarProps> = ({
   setSearch,
   placeHolder = "Search by queries",
 }) => {
-  const onRangeChange = (dates: null | Dayjs[], dateStrings: string[]) => {
-    if (dates) {
-      console.log("From: ", dateStrings[0], ", to: ", dateStrings[1]);
+  const onRangeChange = (values: any, dateStrings: string[]) => {
+    if (values) {
       if (setTimeRange) {
-        setTimeRange(dateStrings);
+        setTimeRange([values[0].toISOString(), values[1].toISOString()]);
       }
     } else {
       console.log("Clear");
@@ -45,13 +43,16 @@ const FunctionBar: React.FC<FunctionBarProps> = ({
   return (
     <div className=" justify-between flex  rounded-sm border border-stroke bg-white py-2 px-2 shadow-default dark:border-strokedark dark:bg-boxdark">
       <div className="flex justify-center items-center w-2/3 md:w-2/3">
-        <Search
-          placeholder={placeHolder}
-          allowClear
-          enterButton="Search"
+        <AutoComplete
+          popupMatchSelectWidth={252}
+          style={{ width: "100%" }}
+          // options={options}
+          // onSelect={onSelect}
+          // onSearch={handleSearch}
           size="large"
-          onSearch={onSearch}
-        />
+        >
+          <Input.Search size="large" placeholder="input here" enterButton />
+        </AutoComplete>
       </div>
       <div className=" justify-end items-center flex w-1/3 md:w-1/3  ">
         {/* Export dashboard to PDF */}
@@ -73,7 +74,7 @@ const FunctionBar: React.FC<FunctionBarProps> = ({
             ]}
             defaultValue={[dayjs(), dayjs().endOf("day")]}
             showTime
-            format="YYYY/MM/DD HH:mm:ss"
+            format="YYYY-MM-DD HH:mm:ss"
             onChange={onRangeChange}
           />
         </div>

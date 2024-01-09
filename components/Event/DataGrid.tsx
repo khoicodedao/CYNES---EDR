@@ -9,7 +9,6 @@ import { customAxiosPost } from "@/helpers/custom-axios";
 import formatDateString from "@/helpers/format-date";
 import getHeightScroll from "@/helpers/get-height-scroll";
 import dayjs from "dayjs";
-import type { Dayjs } from "dayjs";
 import ReactJson from "react-json-view";
 const columns: ColumnsType<EVENT> = [
   {
@@ -95,7 +94,22 @@ type DataGridProps = {
 const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
   const [events, setEventList] = useState<EVENT[]>([] as EVENT[]);
   const [loading, setLoading] = useState(false);
-  const [filter, setFilter] = useState({ page_no: 1, page_size: 100 });
+  const [filter, setFilter] = useState<any>({ page_no: 1, page_size: 100 });
+  if (timeRange) {
+    const filterInTimeRage = [
+      {
+        field: "created_at",
+        operator: ">=",
+        value: timeRange[0],
+      },
+      {
+        field: "created_at",
+        operator: "<=",
+        value: timeRange[1],
+      },
+    ];
+    filter["filter"] = filterInTimeRage;
+  }
   useEffect(() => {
     let url = API_URL.EVENTS.GET_EVENTS;
     let getData = async () => {
@@ -114,7 +128,7 @@ const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
       }
     };
     getData();
-  }, []);
+  }, [timeRange, search]);
   return (
     <>
       <Table
