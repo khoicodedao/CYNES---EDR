@@ -8,6 +8,8 @@ import API_URL from "@/helpers/api-url";
 import { customAxiosPost } from "@/helpers/custom-axios";
 import formatDateString from "@/helpers/format-date";
 import getHeightScroll from "@/helpers/get-height-scroll";
+import dayjs from "dayjs";
+import type { Dayjs } from "dayjs";
 import ReactJson from "react-json-view";
 const columns: ColumnsType<EVENT> = [
   {
@@ -19,36 +21,43 @@ const columns: ColumnsType<EVENT> = [
     title: "Agent",
     dataIndex: "agent_id",
     key: "agent_id",
+    width: 120,
   },
   {
     title: "MAC",
     dataIndex: "mac",
     key: "mac",
+    width: 120,
   },
   {
     title: "Local IP ",
     dataIndex: "local_ip",
     key: "local_ip",
+    width: 120,
   },
   {
     title: "Event Type",
     dataIndex: "event_type",
     key: "event_type",
+    width: 120,
   },
   {
     title: "Event Name",
     dataIndex: "event_name",
     key: "event_name",
+    width: 120,
   },
   {
     title: "Event Name",
     dataIndex: "event_name",
     key: "event_name",
+    width: 120,
   },
   {
     title: "Event level",
     dataIndex: "event_level",
     key: "event_level",
+    width: 120,
     render: (event_level) => {
       switch (event_level) {
         case 1:
@@ -70,13 +79,20 @@ const columns: ColumnsType<EVENT> = [
     title: "Time",
     dataIndex: "created_at",
     key: "created_at",
+    fixed: "right",
+    width: 200,
     render: (item) => {
       return formatDateString(item);
     },
   },
 ];
 
-const DataGrid: React.FC = () => {
+type DataGridProps = {
+  timeRange?: string[];
+  search?: string;
+};
+
+const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
   const [events, setEventList] = useState<EVENT[]>([] as EVENT[]);
   const [loading, setLoading] = useState(false);
   const [filter, setFilter] = useState({ page_no: 1, page_size: 100 });
@@ -118,7 +134,6 @@ const DataGrid: React.FC = () => {
                       <p className="mt-2">
                         <Tag color="#87d068"> Event Description: </Tag>
                         <span className="dark:text-white">
-                          {" "}
                           {record.event_description}
                         </span>
                       </p>
@@ -165,7 +180,7 @@ const DataGrid: React.FC = () => {
         className="dark:border-strokedark dark:bg-boxdark"
         columns={columns}
         dataSource={events}
-        scroll={{ y: getHeightScroll() }}
+        scroll={{ y: getHeightScroll(), x: 1000 }}
         pagination={{
           pageSize: 40,
           total: 100, //response first filter require total

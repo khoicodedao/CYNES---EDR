@@ -265,3 +265,7 @@ aside > div {
   background: #555;
   width: 10px;
 }
+.dark .ant-table-cell.ant-table-cell-fix-right {
+  background-color: #283341 !important;
+  border-bottom: 2px solid #ebe5e5 !important;
+}

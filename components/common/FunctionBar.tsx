@@ -8,17 +8,6 @@ import { ReloadOutlined } from "@ant-design/icons";
 import { Popover } from "antd";
 const { RangePicker } = DatePicker;
 const { Search } = Input;
-const onRangeChange = (
-  dates: null | (Dayjs | null)[],
-  dateStrings: string[]
-) => {
-  if (dates) {
-    console.log("From: ", dates[0], ", to: ", dates[1]);
-    console.log("From: ", dateStrings[0], ", to: ", dateStrings[1]);
-  } else {
-    console.log("Clear");
-  }
-};
 
 const rangePresets: TimeRangePickerProps["presets"] = [
   { label: "Last 7 Days", value: [dayjs().add(-7, "d"), dayjs()] },
@@ -27,16 +16,32 @@ const rangePresets: TimeRangePickerProps["presets"] = [
   { label: "Last 90 Days", value: [dayjs().add(-90, "d"), dayjs()] },
 ];
 type FunctionBarProps = {
-  setTimeRange?: React.Dispatch<React.SetStateAction<any>>;
+  setTimeRange?: React.Dispatch<React.SetStateAction<string[]>>;
   setSearch?: React.Dispatch<React.SetStateAction<string>>;
   placeHolder?: string;
 };
-const onSearch = (value: any) => console.log(value);
+
 const FunctionBar: React.FC<FunctionBarProps> = ({
   setTimeRange,
   setSearch,
   placeHolder = "Search by queries",
 }) => {
+  const onRangeChange = (dates: null | Dayjs[], dateStrings: string[]) => {
+    if (dates) {
+      console.log("From: ", dateStrings[0], ", to: ", dateStrings[1]);
+      if (setTimeRange) {
+        setTimeRange(dateStrings);
+      }
+    } else {
+      console.log("Clear");
+    }
+  };
+
+  const onSearch = (value: string) => {
+    if (setSearch) {
+      setSearch(value);
+    }
+  };
   return (
     <div className=" justify-between flex  rounded-sm border border-stroke bg-white py-2 px-2 shadow-default dark:border-strokedark dark:bg-boxdark">
       <div className="flex justify-center items-center w-2/3 md:w-2/3">
