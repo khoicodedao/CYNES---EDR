@@ -1,14 +1,7 @@
 "use client";
 import React from "react";
 import Link from "next/link";
-// import { Metadata } from "next";
 import API_URL from "@/helpers/api-url";
-// export const metadata: Metadata = {
-//   title: "Signup Page",
-//   description: "This is Signup page for TailAdmin Next.js",
-//   // other metadata
-// };
-
 const SignUp: React.FC = () => {
   return (
     <>

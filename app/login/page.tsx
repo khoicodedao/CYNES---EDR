@@ -4,13 +4,8 @@ import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 import API_URL from "@/helpers/api-url";
-import { Alert } from "antd";
-// export const metadata: Metadata = {
-//   title: "Login Page",
-//   description: "This is Signin page for TailAdmin Next.js",
-//   // other metadata
-// };
-// import { User } from "@/types/user";
+import { Alert, Spin } from "antd";
+import { LoadingOutlined } from "@ant-design/icons";
 type User = {
   user_name: string;
   password: string;
@@ -191,7 +186,14 @@ const SignIn: React.FC = () => {
           <div className="w-full border-stroke dark:border-strokedark xl:w-1/2 xl:border-l-2">
             <div className="w-full p-4 sm:p-12.5 xl:p-17.5">
               <h2 className="mb-9 text-2xl font-bold text-black dark:text-white sm:text-title-xl2">
-                {loading ? "Processing" : " Sign In"}
+                Sign In{" "}
+                {loading && (
+                  <Spin
+                    indicator={
+                      <LoadingOutlined style={{ fontSize: 24 }} spin />
+                    }
+                  />
+                )}
               </h2>
               {alert.length > 0 && (
                 <Alert
