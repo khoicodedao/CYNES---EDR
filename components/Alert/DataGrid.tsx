@@ -136,7 +136,7 @@ const DataGrid: React.FC = () => {
                     quotesOnKeys={false}
                     displayDataTypes={false}
                     name="Alert Info"
-                    src={JSON.parse(record.alert_info)}
+                    src={record.alert_info}
                     theme="ocean"
                   />
                 ),

@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { Space, Table, Tag, Tabs } from "antd";
+import { Table, Tag, Tabs } from "antd";
 import type { ColumnsType } from "antd/es/table";
 import "./index.css";
 import { EVENT } from "@/types/event";
@@ -8,13 +8,13 @@ import API_URL from "@/helpers/api-url";
 import { customAxiosPost } from "@/helpers/custom-axios";
 import formatDateString from "@/helpers/format-date";
 import getHeightScroll from "@/helpers/get-height-scroll";
-import dayjs from "dayjs";
 import ReactJson from "react-json-view";
 const columns: ColumnsType<EVENT> = [
   {
     title: "ID",
     dataIndex: "id",
     key: "id",
+    width: 120,
   },
   {
     title: "Agent",
@@ -181,7 +181,7 @@ const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
                         quotesOnKeys={false}
                         displayDataTypes={false}
                         name="Event Info"
-                        src={JSON.parse(record.event_info)}
+                        src={record.event_info}
                         theme="ocean"
                       />
                     </p>
