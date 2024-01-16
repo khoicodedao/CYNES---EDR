@@ -269,3 +269,20 @@ aside > div {
   background-color: #283341 !important;
   border-bottom: 2px solid #ebe5e5 !important;
 }
+.dark .ant-table-expanded-row-fixed {
+  background-color: #283341 !important;
+}
+
+.dark .ant-empty-description {
+  color: white !important;
+}
+.dark .ant-select-selection-search .ant-input-wrapper input {
+  background-color: #283341 !important;
+  color: white;
+}
+.dark .ant-select-selection-search .ant-input-wrapper input::placeholder {
+  color: rgb(131, 121, 121) !important;
+}
+.dark .ant-pagination-item-ellipsis {
+  color: white !important;
+}

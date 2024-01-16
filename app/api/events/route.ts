@@ -13,6 +13,7 @@ export async function POST(request: NextRequest) {
       const response = NextResponse.json({
         success: true,
         events: res.events,
+        count: res.count,
       });
       return response;
     } else return "Error";

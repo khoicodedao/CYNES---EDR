@@ -4,18 +4,25 @@ import StatisticEvent from "./StatisticEvent";
 import DataGrid from "./DataGrid";
 import { useState } from "react";
 import dayjs from "dayjs";
+import useLocalStorage from "@/hooks/useLocalStorage";
 const Event = () => {
-  const [timeRange, setTimeRange] = useState<string[]>([
+  const [storedValue, setStoredValue] = useLocalStorage("local-time", [
     dayjs().toISOString(),
     dayjs().endOf("day").toISOString(),
   ]);
-  console.log(timeRange);
+  const defaultTimeRange =
+    storedValue.length > 0
+      ? [storedValue[0], storedValue[1]]
+      : [dayjs().toISOString(), dayjs().endOf("day").toISOString()];
+  const [timeRange, setTimeRange] = useState<string[]>(defaultTimeRange);
   const [search, setSearch] = useState<string>("");
   return (
     <>
       {/* <!-- ====== FunctionBar Section Start ====== --> */}
       <div className="w-full max-w-full rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
         <FunctionBar
+          setStoredValue={setStoredValue}
+          storedValue={storedValue}
           setTimeRange={setTimeRange}
           setSearch={setSearch}
           placeHolder="Search by query (mac='AA-DC-2F-4A-AD-F5')"

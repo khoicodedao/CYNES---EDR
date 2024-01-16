@@ -1,13 +1,11 @@
 import React from "react";
 import dayjs from "dayjs";
-import type { Dayjs } from "dayjs";
 import type { TimeRangePickerProps } from "antd";
 import { DatePicker } from "antd";
 import { ReloadOutlined } from "@ant-design/icons";
 import { Popover } from "antd";
 const { RangePicker } = DatePicker;
 import { AutoComplete, Input } from "antd";
-
 const rangePresets: TimeRangePickerProps["presets"] = [
   { label: "Last 7 Days", value: [dayjs().add(-7, "d"), dayjs()] },
   { label: "Last 14 Days", value: [dayjs().add(-14, "d"), dayjs()] },
@@ -17,24 +15,30 @@ const rangePresets: TimeRangePickerProps["presets"] = [
 type FunctionBarProps = {
   setTimeRange?: React.Dispatch<React.SetStateAction<string[]>>;
   setSearch?: React.Dispatch<React.SetStateAction<string>>;
+  storedValue: string[];
+  setStoredValue?: React.Dispatch<React.SetStateAction<string[]>>;
   placeHolder?: string;
 };
 
 const FunctionBar: React.FC<FunctionBarProps> = ({
   setTimeRange,
   setSearch,
+  storedValue,
+  setStoredValue,
   placeHolder = "Search by queries",
 }) => {
   const onRangeChange = (values: any, dateStrings: string[]) => {
     if (values) {
       if (setTimeRange) {
         setTimeRange([values[0].toISOString(), values[1].toISOString()]);
+        if (setStoredValue) {
+          setStoredValue([values[0].toISOString(), values[1].toISOString()]);
+        }
       }
     } else {
       console.log("Clear");
     }
   };
-
   const onSearch = (value: string) => {
     if (setSearch) {
       setSearch(value);
@@ -51,7 +55,7 @@ const FunctionBar: React.FC<FunctionBarProps> = ({
           // onSearch={handleSearch}
           size="large"
         >
-          <Input.Search size="large" placeholder="input here" enterButton />
+          <Input.Search size="large" placeholder={placeHolder} enterButton />
         </AutoComplete>
       </div>
       <div className=" justify-end items-center flex w-1/3 md:w-1/3  ">
@@ -72,7 +76,11 @@ const FunctionBar: React.FC<FunctionBarProps> = ({
               },
               ...rangePresets,
             ]}
-            defaultValue={[dayjs(), dayjs().endOf("day")]}
+            defaultValue={
+              storedValue.length > 0
+                ? [dayjs(storedValue[0]), dayjs(storedValue[1])]
+                : [dayjs(), dayjs().endOf("day")]
+            }
             showTime
             format="YYYY-MM-DD HH:mm:ss"
             onChange={onRangeChange}

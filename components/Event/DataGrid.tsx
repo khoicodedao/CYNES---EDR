@@ -9,12 +9,13 @@ import { customAxiosPost } from "@/helpers/custom-axios";
 import formatDateString from "@/helpers/format-date";
 import getHeightScroll from "@/helpers/get-height-scroll";
 import ReactJson from "react-json-view";
+import CONSTANT_DATA from "../common/constant";
 const columns: ColumnsType<EVENT> = [
   {
     title: "ID",
-    dataIndex: "id",
-    key: "id",
-    width: 120,
+    dataIndex: "ID",
+    key: "ID",
+    width: 150,
   },
   {
     title: "Agent",
@@ -26,7 +27,7 @@ const columns: ColumnsType<EVENT> = [
     title: "MAC",
     dataIndex: "mac",
     key: "mac",
-    width: 120,
+    width: 180,
   },
   {
     title: "Local IP ",
@@ -94,7 +95,8 @@ type DataGridProps = {
 const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
   const [events, setEventList] = useState<EVENT[]>([] as EVENT[]);
   const [loading, setLoading] = useState(false);
-  const [filter, setFilter] = useState<any>({ page_no: 1, page_size: 100 });
+  const [totalCount, setTotalCount] = useState(0);
+  const [filter, setFilter] = useState<any>(CONSTANT_DATA.PAGINATION);
   if (timeRange) {
     const filterInTimeRage = [
       {
@@ -110,6 +112,9 @@ const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
     ];
     filter["filter"] = filterInTimeRage;
   }
+  // filter["require_total"]=
+  Object.assign(filter, CONSTANT_DATA.REQUIRED_TOTAL);
+
   useEffect(() => {
     let url = API_URL.EVENTS.GET_EVENTS;
     let getData = async () => {
@@ -117,18 +122,23 @@ const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
       let resData: {
         success: boolean;
         events: EVENT[];
+        count: number;
       } = await customAxiosPost(url, filter);
       if (resData.success) {
+        setTotalCount(resData.count);
         setEventList(
           resData.events.map((data, index) => {
-            return { ID: index, ...data };
+            return {
+              ID: filter.page_no * CONSTANT_DATA.PAGINATION.page_size + index,
+              ...data,
+            };
           })
         );
         setLoading(false);
       }
     };
     getData();
-  }, [timeRange, search]);
+  }, [timeRange, search, filter]);
   return (
     <>
       <Table
@@ -196,10 +206,11 @@ const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
         dataSource={events}
         scroll={{ y: getHeightScroll(), x: 1000 }}
         pagination={{
-          pageSize: 40,
-          total: 100, //response first filter require total
+          hideOnSinglePage: true,
+          pageSize: CONSTANT_DATA.PAGINATION.page_size,
+          total: totalCount, //response first filter require total
           onChange: (page, pageSize) => {
-            // fetchRecords(page, pageSize);
+            setFilter({ ...filter, page_no: page });
           },
         }}
         // pagination={{ position: [Tab, bottom] }}
