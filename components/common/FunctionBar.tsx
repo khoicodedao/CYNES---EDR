@@ -3,9 +3,22 @@ import dayjs from "dayjs";
 import type { TimeRangePickerProps } from "antd";
 import { DatePicker } from "antd";
 import { ReloadOutlined } from "@ant-design/icons";
+import { useState } from "react";
 import { Popover } from "antd";
 const { RangePicker } = DatePicker;
-import { AutoComplete, Input } from "antd";
+import { Select } from "antd";
+import type { SelectProps } from "antd";
+
+// <===== data suggestion for search box ======>
+const filterData = ["mac", "local_ip", ">", "<", ">=", "<=", "computer_name"];
+const options: SelectProps["options"] = [];
+filterData.forEach((item) => {
+  options.push({
+    value: item,
+    label: item,
+  });
+});
+//=============================================
 const rangePresets: TimeRangePickerProps["presets"] = [
   { label: "Last 7 Days", value: [dayjs().add(-7, "d"), dayjs()] },
   { label: "Last 14 Days", value: [dayjs().add(-14, "d"), dayjs()] },
@@ -22,11 +35,15 @@ type FunctionBarProps = {
 
 const FunctionBar: React.FC<FunctionBarProps> = ({
   setTimeRange,
-  setSearch,
+  setSearch, // getValue from Search bar to parent component
   storedValue,
   setStoredValue,
   placeHolder = "Search by queries",
 }) => {
+  const handleChange = (value: string) => {
+    console.log(`selected ${value}`);
+  };
+
   const onRangeChange = (values: any, dateStrings: string[]) => {
     if (values) {
       if (setTimeRange) {
@@ -39,24 +56,26 @@ const FunctionBar: React.FC<FunctionBarProps> = ({
       console.log("Clear");
     }
   };
-  const onSearch = (value: string) => {
-    if (setSearch) {
-      setSearch(value);
-    }
-  };
   return (
     <div className=" justify-between flex  rounded-sm border border-stroke bg-white py-2 px-2 shadow-default dark:border-strokedark dark:bg-boxdark">
       <div className="flex justify-center items-center w-2/3 md:w-2/3">
-        <AutoComplete
+        {/* <AutoComplete
           popupMatchSelectWidth={252}
           style={{ width: "100%" }}
-          // options={options}
-          // onSelect={onSelect}
-          // onSearch={handleSearch}
+          options={options}
+          onSelect={onSelect}
+          onSearch={(text) => setOptions(getPanelValue(text))}
           size="large"
         >
           <Input.Search size="large" placeholder={placeHolder} enterButton />
-        </AutoComplete>
+        </AutoComplete> */}
+        <Select
+          mode="tags"
+          style={{ width: "100%" }}
+          placeholder={placeHolder}
+          onChange={handleChange}
+          options={options}
+        />
       </div>
       <div className=" justify-end items-center flex w-1/3 md:w-1/3  ">
         {/* Export dashboard to PDF */}

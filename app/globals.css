@@ -286,3 +286,14 @@ aside > div {
 .dark .ant-pagination-item-ellipsis {
   color: white !important;
 }
+.dark .ant-select {
+  padding: 5px;
+}
+.dark .ant-select-selector {
+  background-color: #283341 !important;
+  color: white;
+}
+
+.dark .ant-select-selector .ant-select-selection-placeholder {
+  color: rgb(131, 121, 121) !important;
+}

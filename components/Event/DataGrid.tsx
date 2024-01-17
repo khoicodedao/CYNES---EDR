@@ -129,7 +129,10 @@ const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
         setEventList(
           resData.events.map((data, index) => {
             return {
-              ID: filter.page_no * CONSTANT_DATA.PAGINATION.page_size + index,
+              ID:
+                (filter.page_no - 1) * CONSTANT_DATA.PAGINATION.page_size +
+                index +
+                1,
               ...data,
             };
           })

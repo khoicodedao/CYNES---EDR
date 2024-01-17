@@ -8,11 +8,10 @@ import { useRouter } from "next/navigation";
 const DropdownUser = () => {
   const router = useRouter();
   const [dropdownOpen, setDropdownOpen] = useState(false);
-
   const trigger = useRef<any>(null);
   const dropdown = useRef<any>(null);
-
   const logout = async () => {
+    localStorage.removeItem("local-time");
     try {
       await axios.get(API_URL.LOGOUT);
       router.push(API_URL.PAGES.LOGIN);
