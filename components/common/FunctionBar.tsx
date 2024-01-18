@@ -71,8 +71,22 @@ const FunctionBar: React.FC<FunctionBarProps> = ({
         </AutoComplete> */}
         <Select
           mode="tags"
-          style={{ width: "100%" }}
-          placeholder={placeHolder}
+          style={{ width: "30%" }}
+          placeholder={"Field"}
+          onChange={handleChange}
+          options={options}
+        />
+        <Select
+          mode="tags"
+          style={{ width: "30%" }}
+          placeholder={"Operator"}
+          onChange={handleChange}
+          options={options}
+        />
+        <Select
+          mode="tags"
+          style={{ width: "30%" }}
+          placeholder={"Value"}
           onChange={handleChange}
           options={options}
         />

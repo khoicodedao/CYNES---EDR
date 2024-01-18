@@ -297,3 +297,15 @@ aside > div {
 .dark .ant-select-selector .ant-select-selection-placeholder {
   color: rgb(131, 121, 121) !important;
 }
+.dark .ant-select-selection-item {
+  background-color: gray !important;
+}
+.dark .ant-select svg path {
+  fill: white !important;
+}
+.dark .rc-virtual-list {
+  background-color: #283341 !important;
+}
+.dark .ant-select-item-option-content {
+  color: white !important;
+}
