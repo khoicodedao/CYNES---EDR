@@ -1,14 +1,14 @@
 import React from "react";
 import dayjs from "dayjs";
 import type { TimeRangePickerProps } from "antd";
-import { DatePicker } from "antd";
+import { DatePicker, Drawer } from "antd";
 import { ReloadOutlined } from "@ant-design/icons";
 import { useState } from "react";
-import { Popover } from "antd";
+import { Popover, Space, Button } from "antd";
+import type { DrawerProps, RadioChangeEvent } from "antd";
 const { RangePicker } = DatePicker;
 import { Select } from "antd";
 import type { SelectProps } from "antd";
-
 // <===== data suggestion for search box ======>
 const filterData = ["mac", "local_ip", ">", "<", ">=", "<=", "computer_name"];
 const options: SelectProps["options"] = [];
@@ -40,10 +40,16 @@ const FunctionBar: React.FC<FunctionBarProps> = ({
   setStoredValue,
   placeHolder = "Search by queries",
 }) => {
+  const [open, setOpen] = useState(false);
   const handleChange = (value: string) => {
     console.log(`selected ${value}`);
   };
-
+  const showDrawer = () => {
+    setOpen(true);
+  };
+  const onClose = () => {
+    setOpen(false);
+  };
   const onRangeChange = (values: any, dateStrings: string[]) => {
     if (values) {
       if (setTimeRange) {
@@ -57,18 +63,22 @@ const FunctionBar: React.FC<FunctionBarProps> = ({
     }
   };
   return (
-    <div className=" justify-between flex  rounded-sm border border-stroke bg-white py-2 px-2 shadow-default dark:border-strokedark dark:bg-boxdark">
-      <div className="flex justify-center items-center w-2/3 md:w-2/3">
-        {/* <AutoComplete
-          popupMatchSelectWidth={252}
-          style={{ width: "100%" }}
-          options={options}
-          onSelect={onSelect}
-          onSearch={(text) => setOptions(getPanelValue(text))}
-          size="large"
-        >
-          <Input.Search size="large" placeholder={placeHolder} enterButton />
-        </AutoComplete> */}
+    <div className=" justify-start flex  rounded-sm border border-stroke bg-white py-2 px-2 shadow-default dark:border-strokedark dark:bg-boxdark">
+      <Drawer
+        title="Drawer with extra actions"
+        placement={"left"}
+        width={500}
+        onClose={onClose}
+        open={open}
+        extra={
+          <Space>
+            <Button onClick={onClose}>Cancel</Button>
+            <Button type="primary" onClick={onClose}>
+              OK
+            </Button>
+          </Space>
+        }
+      >
         <Select
           mode="tags"
           style={{ width: "30%" }}
@@ -90,6 +100,11 @@ const FunctionBar: React.FC<FunctionBarProps> = ({
           onChange={handleChange}
           options={options}
         />
+      </Drawer>
+      <div className="flex  justify-center items-center w-2/3 md:w-2/3">
+        <Button type="primary" onClick={showDrawer}>
+          Open
+        </Button>
       </div>
       <div className=" justify-end items-center flex w-1/3 md:w-1/3  ">
         {/* Export dashboard to PDF */}

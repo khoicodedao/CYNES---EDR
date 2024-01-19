@@ -309,3 +309,7 @@ aside > div {
 .dark .ant-select-item-option-content {
   color: white !important;
 }
+
+.ant-drawer {
+  z-index: 99999;
+}
