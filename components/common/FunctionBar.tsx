@@ -1,19 +1,34 @@
-import React from "react";
+import React, { ChangeEventHandler } from "react";
 import dayjs from "dayjs";
 import type { TimeRangePickerProps } from "antd";
 import { DatePicker, Drawer } from "antd";
 import { ReloadOutlined } from "@ant-design/icons";
 import { useState } from "react";
-import { Popover, Space, Button } from "antd";
-import type { DrawerProps, RadioChangeEvent } from "antd";
+import { Popover, Space, Button, Divider, Tag, notification } from "antd";
+import { FilterOutlined } from "@ant-design/icons";
+import { Input } from "antd";
 const { RangePicker } = DatePicker;
 import { Select } from "antd";
 import type { SelectProps } from "antd";
+import { CloseCircleOutlined } from "@ant-design/icons";
+function findKeysWithEmptyStringValue(obj: any) {
+  const keysWithEmptyString = [];
+  let keys = Object.keys(obj);
+  const sample = ["field", "operator", "value"];
+  const diffKey = sample.filter((item) => !keys.includes(item));
+  for (const key in obj) {
+    if (obj.hasOwnProperty(key) && obj[key] === "") {
+      keysWithEmptyString.push(key);
+    }
+  }
+  return [...keysWithEmptyString, ...diffKey];
+}
+
 // <===== data suggestion for search box ======>
-const filterData = ["mac", "local_ip", ">", "<", ">=", "<=", "computer_name"];
-const options: SelectProps["options"] = [];
-filterData.forEach((item) => {
-  options.push({
+const filterOperator = [">", "<", ">=", "<=", "="];
+const optionOperator: SelectProps["options"] = [];
+filterOperator.forEach((item) => {
+  optionOperator.push({
     value: item,
     label: item,
   });
@@ -27,10 +42,14 @@ const rangePresets: TimeRangePickerProps["presets"] = [
 ];
 type FunctionBarProps = {
   setTimeRange?: React.Dispatch<React.SetStateAction<string[]>>;
-  setSearch?: React.Dispatch<React.SetStateAction<string>>;
+  setSearch?: React.Dispatch<
+    React.SetStateAction<{ field: string; operator: string; value: string }[]>
+  >;
+  search: { field: string; operator: string; value: string }[];
   storedValue: string[];
   setStoredValue?: React.Dispatch<React.SetStateAction<string[]>>;
   placeHolder?: string;
+  filterKey?: string[];
 };
 
 const FunctionBar: React.FC<FunctionBarProps> = ({
@@ -39,17 +58,52 @@ const FunctionBar: React.FC<FunctionBarProps> = ({
   storedValue,
   setStoredValue,
   placeHolder = "Search by queries",
+  filterKey,
+  search = [{ field: "string", operator: "string", value: "string" }],
 }) => {
-  const [open, setOpen] = useState(false);
-  const handleChange = (value: string) => {
-    console.log(`selected ${value}`);
+  //<============Notification api===========>
+  const [api, contextHolder] = notification.useNotification();
+  const openNotificationWithIcon = (data: string) => {
+    api["error"]({
+      message: "Error",
+      description: `${data} is empty`,
+      placement: "bottomLeft",
+    });
   };
+  // <======Filter key========>
+  let filterKeyData;
+  if (filterKey) {
+    filterKeyData = filterKey.map((item) => {
+      return { value: item, label: item };
+    });
+  }
+  // ==========================
+  const [filterData, setFilterData] = useState<{
+    field: string;
+    operator: string;
+    value: string;
+  }>({} as { field: string; operator: string; value: string });
+  const [open, setOpen] = useState(false);
+  const handleFilter = () => {
+    const fieldEmpty = findKeysWithEmptyStringValue(filterData);
+
+    if (fieldEmpty.length > 0) {
+      openNotificationWithIcon(fieldEmpty.toString());
+    } else {
+      if (filterData && search && setSearch) {
+        setSearch([...search, filterData]);
+      }
+    }
+  };
+
   const showDrawer = () => {
     setOpen(true);
   };
   const onClose = () => {
     setOpen(false);
   };
+  console.log(search);
+  // <======= Datetime global and save to local_storage =========>
   const onRangeChange = (values: any, dateStrings: string[]) => {
     if (values) {
       if (setTimeRange) {
@@ -62,12 +116,14 @@ const FunctionBar: React.FC<FunctionBarProps> = ({
       console.log("Clear");
     }
   };
+  // ==========================================
   return (
     <div className=" justify-start flex  rounded-sm border border-stroke bg-white py-2 px-2 shadow-default dark:border-strokedark dark:bg-boxdark">
+      {contextHolder}
       <Drawer
-        title="Drawer with extra actions"
+        title="Filter"
         placement={"left"}
-        width={500}
+        width={800}
         onClose={onClose}
         open={open}
         extra={
@@ -79,32 +135,67 @@ const FunctionBar: React.FC<FunctionBarProps> = ({
           </Space>
         }
       >
-        <Select
-          mode="tags"
-          style={{ width: "30%" }}
-          placeholder={"Field"}
-          onChange={handleChange}
-          options={options}
-        />
-        <Select
-          mode="tags"
-          style={{ width: "30%" }}
-          placeholder={"Operator"}
-          onChange={handleChange}
-          options={options}
-        />
-        <Select
-          mode="tags"
-          style={{ width: "30%" }}
-          placeholder={"Value"}
-          onChange={handleChange}
-          options={options}
-        />
-      </Drawer>
-      <div className="flex  justify-center items-center w-2/3 md:w-2/3">
-        <Button type="primary" onClick={showDrawer}>
-          Open
+        <Divider orientation="left" plain>
+          Setting
+        </Divider>
+        <div className="flex ">
+          <div className="flex flex-col w-1/3">
+            <span> Field:</span>
+            <Select
+              onSelect={(value: string) =>
+                setFilterData({ ...filterData, field: value })
+              }
+              size="large"
+              placeholder={"Field"}
+              options={filterKeyData || []}
+            />
+          </div>
+          <div className="flex flex-col w-1/3">
+            <span> Operator:</span>
+
+            <Select
+              onSelect={(value: string) =>
+                setFilterData({ ...filterData, operator: value })
+              }
+              size="large"
+              placeholder={"Operator"}
+              options={optionOperator}
+            />
+          </div>
+          <div className=" w-1/3 flex flex-col">
+            <span> Value:</span>
+            <Input
+              style={{ marginTop: "5px" }}
+              placeholder="Value"
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                setFilterData({ ...filterData, value: e.target.value })
+              }
+            />
+          </div>
+        </div>
+        <Button className="mt-2" type="primary" onClick={handleFilter}>
+          Apply filter
         </Button>
+        <Divider orientation="left" plain>
+          Filter Value
+        </Divider>
+        {/* <==== Show Tag has filter when apply filter  */}
+        {search.map((item, key) => {
+          return (
+            <Tag key={key} closeIcon={<CloseCircleOutlined />}>
+              {item.toString()}
+            </Tag>
+          );
+        })}
+
+        {/* ===================================== */}
+      </Drawer>
+      <div className="flex  justify-start items-center w-2/3 md:w-2/3">
+        <Button
+          type="primary"
+          icon={<FilterOutlined />}
+          onClick={showDrawer}
+        ></Button>
       </div>
       <div className=" justify-end items-center flex w-1/3 md:w-1/3  ">
         {/* Export dashboard to PDF */}

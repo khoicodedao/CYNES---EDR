@@ -89,7 +89,7 @@ const columns: ColumnsType<EVENT> = [
 
 type DataGridProps = {
   timeRange?: string[];
-  search?: string;
+  search?: { field: string; operator: string; value: string }[];
 };
 
 const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {

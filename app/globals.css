@@ -297,9 +297,9 @@ aside > div {
 .dark .ant-select-selector .ant-select-selection-placeholder {
   color: rgb(131, 121, 121) !important;
 }
-.dark .ant-select-selection-item {
+/* .dark .ant-select-selection-item {
   background-color: gray !important;
-}
+} */
 .dark .ant-select svg path {
   fill: white !important;
 }
@@ -312,4 +312,34 @@ aside > div {
 
 .ant-drawer {
   z-index: 99999;
+}
+
+.ant-select-dropdown {
+  z-index: 99999;
+}
+.dark .ant-select-dropdown {
+  padding: 0px !important;
+}
+.dark .ant-select-selector {
+  color: white !important;
+}
+.dark .ant-divider {
+  color: white;
+  border-block-start: 0 white;
+}
+.dark .ant-input {
+  background-color: #283341 !important;
+  color: white;
+}
+.dark .ant-input::placeholder {
+  color: rgb(131, 121, 121) !important;
+}
+
+.dark .ant-tag,
+.dark .ant-tag-close-icon {
+  color: white;
+}
+
+.ant-notification {
+  z-index: 999999999999 !important;
 }
