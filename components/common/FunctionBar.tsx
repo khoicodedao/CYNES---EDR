@@ -182,8 +182,17 @@ const FunctionBar: React.FC<FunctionBarProps> = ({
         {/* <==== Show Tag has filter when apply filter  */}
         {search.map((item, key) => {
           return (
-            <Tag key={key} closeIcon={<CloseCircleOutlined />}>
-              {item.toString()}
+            <Tag
+              key={key}
+              onClose={() => {
+                search.slice(key, 1);
+                if (setSearch) {
+                  setSearch([...search]);
+                }
+              }}
+              closeIcon={<CloseCircleOutlined />}
+            >
+              {Object.values(item).toString().replaceAll(",", "")}
             </Tag>
           );
         })}
