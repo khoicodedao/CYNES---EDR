@@ -61,6 +61,7 @@ const FunctionBar: React.FC<FunctionBarProps> = ({
   filterKey,
   search = [{ field: "string", operator: "string", value: "string" }],
 }) => {
+  console.log(search);
   //<============Notification api===========>
   const [api, contextHolder] = notification.useNotification();
   const openNotificationWithIcon = (data: string) => {
@@ -102,7 +103,6 @@ const FunctionBar: React.FC<FunctionBarProps> = ({
   const onClose = () => {
     setOpen(false);
   };
-  console.log(search);
   // <======= Datetime global and save to local_storage =========>
   const onRangeChange = (values: any, dateStrings: string[]) => {
     if (values) {
@@ -183,14 +183,17 @@ const FunctionBar: React.FC<FunctionBarProps> = ({
         {search.map((item, key) => {
           return (
             <Tag
+              className="filter"
               key={key}
-              onClose={() => {
-                search.slice(key, 1);
+              onClick={() => {
+                search.splice(key, 1); //remove element when click x
+                console.log("sliceSearch", search);
                 if (setSearch) {
                   setSearch([...search]);
                 }
               }}
-              closeIcon={<CloseCircleOutlined />}
+              // closeIcon={<CloseCircleOutlined />}
+              icon={<CloseCircleOutlined />}
             >
               {Object.values(item).toString().replaceAll(",", "")}
             </Tag>
