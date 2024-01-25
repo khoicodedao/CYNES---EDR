@@ -112,6 +112,9 @@ const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
     ];
     filter["filter"] = filterInTimeRage;
   }
+  if (search) {
+    filter["filter"] = [...filter["filter"], ...search];
+  }
   // filter["require_total"]=
   Object.assign(filter, CONSTANT_DATA.REQUIRED_TOTAL);
 
