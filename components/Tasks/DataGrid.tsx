@@ -5,13 +5,16 @@ import type { ColumnsType } from "antd/es/table";
 import "./index.css";
 import { TASK } from "@/types/task";
 import API_URL from "@/helpers/api-url";
-import { customAxiosGet } from "@/helpers/custom-axios";
+import { customAxiosPost } from "@/helpers/custom-axios";
 import formatDateString from "@/helpers/format-date";
+import CONSTANT_DATA from "../common/constant";
+import getHeightScroll from "@/helpers/get-height-scroll";
+
 const columns: ColumnsType<TASK> = [
   {
     title: "ID",
-    dataIndex: "id",
-    key: "id",
+    dataIndex: "ID",
+    key: "ID",
   },
   {
     title: "Group ID",
@@ -50,17 +53,41 @@ const columns: ColumnsType<TASK> = [
   },
   {
     title: "Update at",
-    dataIndex: "update_at",
-    key: "update_at",
+    dataIndex: "updated_at",
+    key: "updated_at",
     render: (item) => {
       return formatDateString(item);
     },
   },
 ];
-const DataGrid: React.FC = () => {
+type DataGridProps = {
+  timeRange?: string[];
+  search?: { field: string; operator: string; value: string }[];
+};
+const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
   const [tasks, setTaskList] = useState<TASK[]>([] as TASK[]);
   const [loading, setLoading] = useState(false);
-  const [filter, setFilter] = useState({ page_no: 1, page_size: 100 });
+  const [totalCount, setTotalCount] = useState(0);
+  const [filter, setFilter] = useState<any>(CONSTANT_DATA.PAGINATION);
+  if (timeRange) {
+    const filterInTimeRage = [
+      {
+        field: "created_at",
+        operator: ">=",
+        value: timeRange[0],
+      },
+      {
+        field: "created_at",
+        operator: "<=",
+        value: timeRange[1],
+      },
+    ];
+    filter["filter"] = filterInTimeRage;
+  }
+  if (search) {
+    filter["filter"] = [...filter["filter"], ...search]; //Add filter time range and search
+  }
+  Object.assign(filter, CONSTANT_DATA.REQUIRED_TOTAL);
   useEffect(() => {
     let url = API_URL.TASKS.GET_TASKS;
     let getData = async () => {
@@ -68,14 +95,26 @@ const DataGrid: React.FC = () => {
       let resData: {
         success: boolean;
         tasks: TASK[];
-      } = await customAxiosGet(url, filter);
+        count: number;
+      } = await customAxiosPost(url, filter);
       if (resData.success) {
-        setTaskList(resData.tasks);
+        setTotalCount(resData.count);
+        setTaskList(
+          resData.tasks.map((data, index) => {
+            return {
+              ID:
+                (filter.page_no - 1) * CONSTANT_DATA.PAGINATION.page_size +
+                index +
+                1,
+              ...data,
+            };
+          })
+        );
         setLoading(false);
       }
     };
     getData();
-  }, []);
+  }, [timeRange, search, filter]);
   return (
     <>
       <Table
@@ -83,11 +122,13 @@ const DataGrid: React.FC = () => {
         className="dark:border-strokedark dark:bg-boxdark"
         columns={columns}
         dataSource={tasks}
+        scroll={{ y: getHeightScroll(), x: 1000 }}
         pagination={{
-          pageSize: 40,
-          total: 100, //response first filter require total
+          hideOnSinglePage: true,
+          pageSize: CONSTANT_DATA.PAGINATION.page_size,
+          total: totalCount, //response first filter require total
           onChange: (page, pageSize) => {
-            // fetchRecords(page, pageSize);
+            setFilter({ ...filter, page_no: page });
           },
         }}
       ></Table>

@@ -356,3 +356,6 @@ aside > div {
 .dark .ant-table-thead .ant-table-cell.ant-table-cell-fix-right {
   background-color: #24303f !important;
 }
+.ant-space-item button.ant-btn-dangerous {
+  background-color: #ff4d4f !important;
+}

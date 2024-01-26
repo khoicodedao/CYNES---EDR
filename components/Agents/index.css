@@ -30,9 +30,7 @@
   .ant-table-row-expand-icon::after {
   background: black !important;
 }
-.ant-space-item button {
-  background-color: #ff4d4f !important;
-}
+
 .ant-drawer .ant-drawer-body {
   padding: 0px;
 }
@@ -64,15 +62,16 @@
 .dark .ant-empty-description {
   color: white;
 }
-.dark  .ant-list-item{color: white;  border-block-end-color: rgba(248, 246, 246, 0.16);}
-.dark .ant-table-thead .ant-table-cell{
-  background-color: #888a8d40 !important;
-
-
+.dark .ant-list-item {
+  color: white;
+  border-block-end-color: rgba(248, 246, 246, 0.16);
 }
-.dark .ant-pagination-item:not(.ant-pagination-item-active)  a{
+.dark .ant-table-thead .ant-table-cell {
+  background-color: #888a8d40 !important;
+}
+.dark .ant-pagination-item:not(.ant-pagination-item-active) a {
   color: white !important;
 }
-.dark .ant-pagination-item-ellipsis{
+.dark .ant-pagination-item-ellipsis {
   color: white !important;
 }
