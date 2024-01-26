@@ -11,8 +11,8 @@ export type AGENT = {
   hotfix?: string;
   manufacturer?: string;
   model?: string;
-  network_cards?: string;
-  software_info?: string;
+  network_cards?: Object[];
+  software_info?: Object[];
   boot_time?: string;
   local_time?: string;
   tags?: string;

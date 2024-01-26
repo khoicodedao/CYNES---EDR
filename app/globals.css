@@ -335,8 +335,8 @@ aside > div {
   color: rgb(131, 121, 121) !important;
 }
 
-.dark .ant-tag,
-.dark .ant-tag-close-icon {
+.dark .ant-tag-close-icon,
+.ant-tag.filter {
   color: white;
 }
 
@@ -345,4 +345,14 @@ aside > div {
 }
 .ant-tag.filter {
   cursor: pointer !important ;
+}
+.dark .ant-select-selection-item {
+  color: white !important;
+}
+
+.dark .ant-select-item-option-selected:not(.ant-select-item-option-disabled) {
+  background-color: rgb(109, 21, 21) !important;
+}
+.dark .ant-table-thead .ant-table-cell.ant-table-cell-fix-right {
+  background-color: #24303f !important;
 }

@@ -9,8 +9,10 @@ import { DeleteOutlined } from "@ant-design/icons";
 import { AGENT } from "@/types/agent";
 import { customAxiosPost } from "@/helpers/custom-axios";
 import "./index.css";
+import getHeightScroll from "@/helpers/get-height-scroll";
 import API_URL from "@/helpers/api-url";
 import formatDateString from "@/helpers/format-date";
+import CONSTANT_DATA from "../common/constant";
 const checkOnline = (lastSeen: string) => {
   const inputTime = new Date(lastSeen);
   const currentTime = new Date();
@@ -42,11 +44,36 @@ function extractNumericValue(inputString: string) {
     return 0;
   }
 }
-const DataGrid: React.FC = () => {
+type DataGridProps = {
+  timeRange?: string[];
+  search?: { field: string; operator: string; value: string }[];
+};
+const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [agentList, setAgentList] = useState<AGENT[]>([]);
+  const [totalCount, setTotalCount] = useState(0);
   const [agentDrawer, setAgentDrawer] = useState<AGENT>({} as AGENT); //set data when dupble click in table row
+  const [filter, setFilter] = useState<any>(CONSTANT_DATA.PAGINATION);
+  if (timeRange) {
+    const filterInTimeRage = [
+      {
+        field: "created_at",
+        operator: ">=",
+        value: timeRange[0],
+      },
+      {
+        field: "created_at",
+        operator: "<=",
+        value: timeRange[1],
+      },
+    ];
+    filter["filter"] = filterInTimeRage;
+  }
+  if (search) {
+    filter["filter"] = [...filter["filter"], ...search]; //Add filter time range and search
+  }
+  Object.assign(filter, CONSTANT_DATA.REQUIRED_TOTAL);
   // === Drawer ====
   const showDrawer = () => {
     setOpen(true);
@@ -56,29 +83,58 @@ const DataGrid: React.FC = () => {
   };
   //=== End ====
   const columns: TableColumnsType<AGENT> = [
-    { title: "ID", dataIndex: "id", key: "id" },
-    { title: "MAC", dataIndex: "mac", key: "mac" },
+    {
+      title: "ID",
+      dataIndex: "ID",
+      key: "ID",
+      width: 150,
+    },
+    { title: "MAC", dataIndex: "mac", key: "mac", width: 180 },
 
-    { title: "Local IP", dataIndex: "local_ip", key: "local_ip" },
-    { title: "Public IP", dataIndex: "public_ip", key: "public_ip" },
+    { title: "Local IP", dataIndex: "local_ip", key: "local_ip", width: 150 },
+    {
+      title: "Public IP",
+      dataIndex: "public_ip",
+      key: "public_ip",
+      width: 120,
+    },
     {
       title: "Computer Name",
       dataIndex: "computer_name",
       key: "computer_name",
+      width: 200,
     },
-    { title: "OS", dataIndex: "os", key: "os" },
-    { title: "RAM", dataIndex: "ram", key: "ram" },
-    { title: "CPU", dataIndex: "cpu", key: "cpu" },
-    { title: "Version", dataIndex: "agent_version", key: "agent_version" },
+    { title: "OS", dataIndex: "os", key: "os", width: 120 },
+    { title: "RAM", dataIndex: "ram", key: "ram", width: 250 },
+    { title: "CPU", dataIndex: "cpu", key: "cpu", width: 350 },
+    {
+      title: "Version",
+      dataIndex: "agent_version",
+      key: "agent_version",
+      width: 120,
+    },
     {
       title: "Agent install",
       dataIndex: "agent_first_install",
       key: "agent_first_install",
+      width: 120,
     },
     {
       title: "User",
       dataIndex: "agent_user",
       key: "agent_user",
+      width: 120,
+    },
+
+    {
+      title: "Time",
+      dataIndex: "created_at",
+      key: "created_at",
+      fixed: "right",
+      width: 200,
+      render: (item) => {
+        return formatDateString(item);
+      },
     },
   ];
 
@@ -90,15 +146,26 @@ const DataGrid: React.FC = () => {
       let resData: {
         success: boolean;
         data: { agents: AGENT[] };
-      } = await customAxiosPost(url, {});
-
+        count: number;
+      } = await customAxiosPost(url, filter);
+      console.log(resData);
       if (resData.success) {
-        setAgentList(resData.data.agents);
+        setAgentList(
+          resData.data.agents.map((data, index) => {
+            return {
+              ID:
+                (filter.page_no - 1) * CONSTANT_DATA.PAGINATION.page_size +
+                index +
+                1,
+              ...data,
+            };
+          })
+        );
         setLoading(false);
       }
     };
     getData();
-  }, []);
+  }, [timeRange, search, filter]);
   //
 
   return (
@@ -198,7 +265,7 @@ const DataGrid: React.FC = () => {
                 children: (
                   <Table
                     bordered
-                    dataSource={JSON.parse(agentDrawer.network_cards || "{}")}
+                    dataSource={agentDrawer.network_cards}
                     columns={[
                       {
                         title: "MAC",
@@ -225,7 +292,7 @@ const DataGrid: React.FC = () => {
                 children: (
                   <Table
                     bordered
-                    dataSource={JSON.parse(agentDrawer.software_info || "{}")}
+                    dataSource={agentDrawer.software_info}
                     columns={[
                       {
                         title: "Software name",
@@ -283,6 +350,15 @@ const DataGrid: React.FC = () => {
         }}
         columns={columns} //column name and title
         dataSource={agentList} //dataSource from useEffect
+        scroll={{ y: getHeightScroll(), x: 1000 }}
+        pagination={{
+          hideOnSinglePage: true,
+          pageSize: CONSTANT_DATA.PAGINATION.page_size,
+          total: totalCount, //response first filter require total
+          onChange: (page, pageSize) => {
+            setFilter({ ...filter, page_no: page });
+          },
+        }}
       />
       {/* ================ */}
     </>

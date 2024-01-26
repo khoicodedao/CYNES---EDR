@@ -9,48 +9,52 @@ import API_URL from "@/helpers/api-url";
 import { customAxiosPost } from "@/helpers/custom-axios";
 import formatDateString from "@/helpers/format-date";
 import ReactJson from "react-json-view";
+import CONSTANT_DATA from "../common/constant";
 const columns: ColumnsType<ALERT> = [
   {
     title: "ID",
-    dataIndex: "id",
-    key: "id",
+    dataIndex: "ID",
+    key: "ID",
+    width: 150,
   },
   {
     title: "Agent",
     dataIndex: "agent_id",
     key: "agent_id",
+    width: 120,
   },
   {
     title: "MAC",
     dataIndex: "mac",
     key: "mac",
+    width: 180,
   },
   {
     title: "Local IP ",
     dataIndex: "local_ip",
     key: "local_ip",
+    width: 120,
   },
   {
     title: "Alert Type",
     dataIndex: "alert_type",
     key: "alert_type",
+    width: 120,
   },
-  {
-    title: "Event Name",
-    dataIndex: "event_name",
-    key: "event_name",
-  },
+
   {
     title: "Alert Name",
     dataIndex: "alert_name",
     key: "alert_name",
+    width: 120,
   },
   {
     title: "Alert level",
     dataIndex: "alert_level",
     key: "alert_level",
-    render: (event_level) => {
-      switch (event_level) {
+    width: 120,
+    render: (alert_level) => {
+      switch (alert_level) {
         case 1:
           return <Tag color="success">Low</Tag>;
         case 2:
@@ -70,15 +74,43 @@ const columns: ColumnsType<ALERT> = [
     title: "Time",
     dataIndex: "created_at",
     key: "created_at",
+    fixed: "right",
+    width: 200,
     render: (item) => {
       return formatDateString(item);
     },
   },
 ];
 
-const DataGrid: React.FC = () => {
-  const [events, setEventList] = useState<ALERT[]>([] as ALERT[]);
+type DataGridProps = {
+  timeRange?: string[];
+  search?: { field: string; operator: string; value: string }[];
+};
+
+const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
+  const [alerts, setAlertList] = useState<ALERT[]>([] as ALERT[]);
   const [loading, setLoading] = useState(false);
+  const [totalCount, setTotalCount] = useState(0);
+  const [filter, setFilter] = useState<any>(CONSTANT_DATA.PAGINATION);
+  if (timeRange) {
+    const filterInTimeRage = [
+      {
+        field: "created_at",
+        operator: ">=",
+        value: timeRange[0],
+      },
+      {
+        field: "created_at",
+        operator: "<=",
+        value: timeRange[1],
+      },
+    ];
+    filter["filter"] = filterInTimeRage;
+  }
+  if (search) {
+    filter["filter"] = [...filter["filter"], ...search]; //Add filter time range and search
+  }
+  Object.assign(filter, CONSTANT_DATA.REQUIRED_TOTAL);
   useEffect(() => {
     let url = API_URL.ALERTS.GET_ALERTS;
     let getData = async () => {
@@ -86,23 +118,31 @@ const DataGrid: React.FC = () => {
       let resData: {
         success: boolean;
         alerts: ALERT[];
-      } = await customAxiosPost(url, {
-        page_no: 1,
-        page_size: 100,
-      });
+        count: number;
+      } = await customAxiosPost(url, filter);
 
       if (resData.success) {
-        setEventList(resData.alerts);
+        setTotalCount(resData.count);
+        setAlertList(
+          resData.alerts.map((data, index) => {
+            return {
+              ID:
+                (filter.page_no - 1) * CONSTANT_DATA.PAGINATION.page_size +
+                index +
+                1,
+              ...data,
+            };
+          })
+        );
         setLoading(false);
       }
     };
     getData();
-  }, []);
+  }, [timeRange, search, filter]);
   return (
     <Table
-      rowKey="id"
+      rowKey="ID"
       loading={loading}
-      scroll={{ y: getHeightScroll() }}
       expandable={{
         expandedRowRender: (record) => (
           <Tabs
@@ -147,7 +187,16 @@ const DataGrid: React.FC = () => {
       }}
       className="dark:border-strokedark dark:bg-boxdark"
       columns={columns}
-      dataSource={events}
+      dataSource={alerts}
+      scroll={{ y: getHeightScroll(), x: 1000 }}
+      pagination={{
+        hideOnSinglePage: true,
+        pageSize: CONSTANT_DATA.PAGINATION.page_size,
+        total: totalCount, //response first filter require total
+        onChange: (page, pageSize) => {
+          setFilter({ ...filter, page_no: page });
+        },
+      }}
     />
   );
 };

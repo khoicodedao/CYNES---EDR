@@ -142,6 +142,7 @@ const FunctionBar: React.FC<FunctionBarProps> = ({
           <div className="flex flex-col w-1/3">
             <span> Field:</span>
             <Select
+              showSearch
               onSelect={(value: string) =>
                 setFilterData({ ...filterData, field: value })
               }
@@ -154,6 +155,7 @@ const FunctionBar: React.FC<FunctionBarProps> = ({
             <span> Operator:</span>
 
             <Select
+              showSearch
               onSelect={(value: string) =>
                 setFilterData({ ...filterData, operator: value })
               }
@@ -187,7 +189,6 @@ const FunctionBar: React.FC<FunctionBarProps> = ({
               key={key}
               onClick={() => {
                 search.splice(key, 1); //remove element when click x
-                console.log("sliceSearch", search);
                 if (setSearch) {
                   setSearch([...search]);
                 }
@@ -217,7 +218,6 @@ const FunctionBar: React.FC<FunctionBarProps> = ({
                 key={key}
                 onClick={() => {
                   search.splice(key, 1); //remove element when click x
-                  console.log("sliceSearch", search);
                   if (setSearch) {
                     setSearch([...search]);
                   }

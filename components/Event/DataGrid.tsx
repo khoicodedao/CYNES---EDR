@@ -48,12 +48,6 @@ const columns: ColumnsType<EVENT> = [
     width: 120,
   },
   {
-    title: "Event Name",
-    dataIndex: "event_name",
-    key: "event_name",
-    width: 120,
-  },
-  {
     title: "Event level",
     dataIndex: "event_level",
     key: "event_level",
@@ -86,7 +80,6 @@ const columns: ColumnsType<EVENT> = [
     },
   },
 ];
-
 type DataGridProps = {
   timeRange?: string[];
   search?: { field: string; operator: string; value: string }[];
@@ -113,9 +106,8 @@ const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
     filter["filter"] = filterInTimeRage;
   }
   if (search) {
-    filter["filter"] = [...filter["filter"], ...search];
+    filter["filter"] = [...filter["filter"], ...search]; //Add filter time range and search
   }
-  // filter["require_total"]=
   Object.assign(filter, CONSTANT_DATA.REQUIRED_TOTAL);
 
   useEffect(() => {
