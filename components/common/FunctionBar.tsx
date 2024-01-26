@@ -204,10 +204,32 @@ const FunctionBar: React.FC<FunctionBarProps> = ({
       </Drawer>
       <div className="flex  justify-start items-center w-2/3 md:w-2/3">
         <Button
+          className="mr-2"
           type="primary"
           icon={<FilterOutlined />}
           onClick={showDrawer}
         ></Button>
+        <div>
+          {search.map((item, key) => {
+            return (
+              <Tag
+                className="filter p-1"
+                key={key}
+                onClick={() => {
+                  search.splice(key, 1); //remove element when click x
+                  console.log("sliceSearch", search);
+                  if (setSearch) {
+                    setSearch([...search]);
+                  }
+                }}
+                // closeIcon={<CloseCircleOutlined />}
+                icon={<CloseCircleOutlined />}
+              >
+                {Object.values(item).toString().replaceAll(",", "")}
+              </Tag>
+            );
+          })}
+        </div>
       </div>
       <div className=" justify-end items-center flex w-1/3 md:w-1/3  ">
         {/* Export dashboard to PDF */}

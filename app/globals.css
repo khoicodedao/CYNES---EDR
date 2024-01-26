@@ -343,6 +343,6 @@ aside > div {
 .ant-notification {
   z-index: 999999999999 !important;
 }
-.ant-tag.filter{
+.ant-tag.filter {
   cursor: pointer !important ;
 }
