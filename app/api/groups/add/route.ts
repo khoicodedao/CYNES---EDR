@@ -4,16 +4,15 @@ import { API_BACKEND } from "@/helpers/api-url";
 import { GROUP } from "@/types/group";
 
 export async function POST(request: NextRequest) {
-  let searchParams = await request.json();
-  const url = API_BACKEND.GROUP.GET_GROUPS;
+  let dataParams = await request.json();
+  const url = API_BACKEND.GROUP.ADD_GROUP;
   try {
-    const res: { count: number; error: boolean; groups: GROUP[] } =
-      await customAxiosPost(url, searchParams);
+    const res: {   error: boolean; msg:string } =
+      await customAxiosPost(url, dataParams);
     if (res.error === false) {
       const response = NextResponse.json({
-        success: true,
-        groups: res.groups,
-        count: res.count,
+        error: res.error,
+        msg: res.msg,
       });
       return response;
     } else return "Error";

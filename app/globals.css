@@ -9,6 +9,10 @@
     @apply font-satoshi font-normal text-base text-body bg-whiten relative z-1;
   }
 }
+:root {
+  --main-dark-bg-color: #23303f; 
+  --color-light--text:rgba(0, 0, 0, 0.88)
+}
 .ant-btn-primary {
   color: #fff;
   background-color: #1677ff !important;
@@ -336,7 +340,7 @@ aside > div {
 }
 
 .dark .ant-tag-close-icon,
-.ant-tag.filter {
+.dark .ant-tag.filter {
   color: white;
 }
 
@@ -358,4 +362,25 @@ aside > div {
 }
 .ant-space-item button.ant-btn-dangerous {
   background-color: #ff4d4f !important;
+}
+.dark .ant-modal-content, .dark .ant-modal-header{
+  background-color: var(--main-dark-bg-color);
+}
+.dark .ant-modal-content label{
+  color:white;
+}
+.dark .ant-modal-title{
+  color:white;
+}
+.dark .ant-modal-content svg{
+  fill: white;
+}
+.dark .ant-modal-footer button{
+  color: white;
+}
+.ant-form-item-control-input .ant-select{
+  padding:0 !important;
+}
+.dark .ant-form-item-control-input-content .ant-btn{
+  color: white !important;
 }

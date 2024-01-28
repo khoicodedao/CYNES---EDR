@@ -20,6 +20,10 @@ const API_URL = {
   },
   GROUPS: {
     GET_GROUPS: "/api/groups",
+    ADD_GROUP: "/api/groups/add",
+    UPDATE_GROUP: "/api/groups/update",
+    DELETE_GROUP: "/api/groups/delete",
+
   },
   TASKS: {
     GET_TASKS: "/api/tasks",
@@ -46,7 +50,8 @@ export const API_BACKEND = {
   },
   GROUP: {
     GET_GROUPS: BACK_END_URL + "/api/v1/group/list",
-  },
+    ADD_GROUP: BACK_END_URL + "/api/v1/group",
+  }, 
   TASK: {
     GET_TASKS: BACK_END_URL + "/api/v1/task/list",
   },

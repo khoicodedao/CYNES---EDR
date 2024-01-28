@@ -25,7 +25,28 @@ const customAxiosDelete = async <T>(
     return "Error" as T;
   }
 };
+const customAxiosPut = async <T>(
+  url: string,
+  data?: any,
+  token?: string
+): Promise<T> => {
+  try {
+    const response = await fetch(url, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: token ? `Bearer ${token}` : "",
+      },
+      body: data ? JSON.stringify(data) : "",
+    });
 
+    const responseData: T = await response.json();
+    return responseData;
+  } catch (error: any) {
+    console.error(error?.message);
+    return error?.message as T;
+  }
+};
 /**
  * Sends a POST request using Axios.
  *
@@ -89,4 +110,4 @@ const customAxiosGet = async <T>(
   }
 };
 
-export { customAxiosPost, customAxiosGet, customAxiosDelete };
+export { customAxiosPost, customAxiosGet, customAxiosDelete ,customAxiosPut};

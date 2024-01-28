@@ -35,10 +35,10 @@ filterOperator.forEach((item) => {
 });
 //=============================================
 const rangePresets: TimeRangePickerProps["presets"] = [
-  { label: "Last 7 Days", value: [dayjs().add(-7, "d"), dayjs()] },
-  { label: "Last 14 Days", value: [dayjs().add(-14, "d"), dayjs()] },
-  { label: "Last 30 Days", value: [dayjs().add(-30, "d"), dayjs()] },
-  { label: "Last 90 Days", value: [dayjs().add(-90, "d"), dayjs()] },
+  { label: "Last 7 Days", value: [dayjs().add(-7, "d"), dayjs().endOf("d")] },
+  { label: "Last 14 Days", value: [dayjs().add(-14, "d"), dayjs().endOf("d")] },
+  { label: "Last 30 Days", value: [dayjs().add(-30, "d"), dayjs().endOf("d")] },
+  { label: "Last 90 Days", value: [dayjs().add(-90, "d"), dayjs().endOf("d")] },
 ];
 type FunctionBarProps = {
   setTimeRange?: React.Dispatch<React.SetStateAction<string[]>>;
@@ -57,11 +57,9 @@ const FunctionBar: React.FC<FunctionBarProps> = ({
   setSearch, // getValue from Search bar to parent component
   storedValue,
   setStoredValue,
-  placeHolder = "Search by queries",
   filterKey,
   search = [{ field: "string", operator: "string", value: "string" }],
 }) => {
-  console.log(search);
   //<============Notification api===========>
   const [api, contextHolder] = notification.useNotification();
   const openNotificationWithIcon = (data: string) => {
@@ -87,7 +85,6 @@ const FunctionBar: React.FC<FunctionBarProps> = ({
   const [open, setOpen] = useState(false);
   const handleFilter = () => {
     const fieldEmpty = findKeysWithEmptyStringValue(filterData);
-
     if (fieldEmpty.length > 0) {
       openNotificationWithIcon(fieldEmpty.toString());
     } else {
