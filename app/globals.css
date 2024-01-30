@@ -388,3 +388,13 @@ aside > div {
 .dark .ant-table-cell {
   background: var(--main-dark-bg-color) !important;
 }
+
+.ant-table-body{
+  max-height: calc(100vh - 365px) !important;
+}
+.dark button[role="switch"] .ant-switch-inner{
+ border: 1px solid white;
+}
+button[role="switch"] .ant-switch-inner{
+  border: 1px solid black;
+ }

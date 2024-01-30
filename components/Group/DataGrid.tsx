@@ -192,6 +192,7 @@ const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
         type={type}
         setReload={setReload}
         dataEdit={dataEdit}
+        openNotificationWithIcon={openNotificationWithIcon}
       ></ModalCRUD>
       <Table
         loading={loading}

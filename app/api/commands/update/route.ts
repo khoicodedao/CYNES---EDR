@@ -3,9 +3,8 @@ import { customAxiosPut} from "@/helpers/custom-axios";
 import { API_BACKEND } from "@/helpers/api-url";
 
 export async function POST(request: NextRequest) {
-  console.log("put")
   let dataParams = await request.json();
-  const url = API_BACKEND.GROUP.ADD_GROUP;
+  const url = API_BACKEND.COMMAND.ADD_COMMAND;
   try {
     const res: {   error: boolean; msg:string } =
       await customAxiosPut(url, dataParams);

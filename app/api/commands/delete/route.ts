@@ -4,7 +4,7 @@ import { API_BACKEND } from "@/helpers/api-url";
 
 export async function POST(request: NextRequest) {
   let dataParams = await request.json();
-  const url = API_BACKEND.GROUP.ADD_GROUP+`/${dataParams.id}`;
+  const url = API_BACKEND.COMMAND.ADD_COMMAND+`/${dataParams.id}`;
   try {
     const res: {   error: boolean; msg:string } =
       await customAxiosDelete(url);

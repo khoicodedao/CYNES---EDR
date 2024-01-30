@@ -1,16 +1,19 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { Table, Tag } from "antd";
+import { Table, Tag, notification, Popconfirm } from "antd";
 import type { ColumnsType } from "antd/es/table";
 import "./index.css";
 import { COMMAND } from "@/types/command";
 import API_URL from "@/helpers/api-url";
 import { customAxiosPost } from "@/helpers/custom-axios";
 import formatDateString from "@/helpers/format-date";
-import ReactJson from "react-json-view";
 import CONSTANT_DATA from "../common/constant";
-import objectToArrayString from "@/helpers/object-to-array-string";
-
+import objectToArrayString, {
+  objectToArray,
+} from "@/helpers/object-to-array-string";
+import { PlusOutlined, EditOutlined, DeleteOutlined } from "@ant-design/icons";
+import ModalCRUD from "./ModalCRUD";
+type NotificationType = "success" | "info" | "warning" | "error";
 type DataGridProps = {
   timeRange?: string[];
   search?: { field: string; operator: string; value: string }[];
@@ -39,7 +42,7 @@ const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
       title: "Command Info",
       dataIndex: "command_info",
       key: "command_info",
-      width: "400",
+      width: 400,
       render: (item) => {
         let arrayObject = objectToArrayString(item);
         return (
@@ -66,7 +69,6 @@ const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
     },
     {
       width: 200,
-      fixed: "right",
       title: "Created At",
       dataIndex: "created_at",
       key: "created_at",
@@ -74,12 +76,103 @@ const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
         return formatDateString(item);
       },
     },
+    {
+      title: "Action",
+      key: "operation",
+      fixed: "right",
+      width: 200,
+      render: (item) => {
+        return (
+          <div className="flex justify-center items-center">
+            <PlusOutlined
+              onClick={() => {
+                showModal("create");
+                setDataEdit({
+                  id: 0,
+                  command_type: "",
+                  command_name: "",
+                  is_show: true,
+                  command_info: [],
+                });
+              }}
+              className="w-1/3"
+            />
+            <EditOutlined
+              onClick={() => {
+                showModal("edit");
+                setDataEdit({
+                  ...item,
+                  command_info: objectToArray(item.command_info),
+                });
+              }}
+              className="w-1/3"
+            />
+            <Popconfirm
+              title="Delete the command"
+              description="Are you sure to delete this command?"
+              onConfirm={async () => {
+                let urlDelete = API_URL.COMMANDS.DELETE_COMMAND;
+                let res: { error: boolean; msg: string } =
+                  await customAxiosPost(urlDelete, { id: item.id });
+                if (res.error) {
+                  openNotificationWithIcon("error", res.msg);
+                } else {
+                  openNotificationWithIcon("success", res.msg);
+                  setReload(!reload);
+                }
+              }}
+              okText="Yes"
+              cancelText="No"
+            >
+              <DeleteOutlined className="w-1/3" />
+            </Popconfirm>
+          </div>
+        );
+      },
+    },
   ];
+  const [api, contextHolder] = notification.useNotification();
+  const openNotificationWithIcon = (type: NotificationType, data: string) => {
+    api[type]({
+      message: type,
+      description: data,
+      placement: "bottomRight",
+    });
+  };
   const [groups, setGroupList] = useState<COMMAND[]>([] as COMMAND[]);
   const [loading, setLoading] = useState(false);
   const [filter, setFilter] = useState<any>(CONSTANT_DATA.PAGINATION);
   const [totalCount, setTotalCount] = useState(0);
-
+  const [reload, setReload] = useState(false);
+  const showModal = (type: "create" | "edit" | "delete") => {
+    setType(type);
+    if (type == "edit") {
+    }
+    setIsModalOpen(true);
+  };
+  const handleOk = () => {
+    setIsModalOpen(false);
+  };
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
+  const [type, setType] = useState<"create" | "edit" | "delete">("create");
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [dataEdit, setDataEdit] = useState<{
+    id: number;
+    command_type: string;
+    command_name: string;
+    is_show: boolean;
+    command_info: any[];
+  }>(
+    {} as {
+      id: number;
+      command_type: string;
+      command_name: string;
+      is_show: boolean;
+      command_info: [];
+    }
+  );
   if (timeRange) {
     const filterInTimeRage = [
       {
@@ -115,9 +208,19 @@ const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
       }
     };
     getData();
-  }, [timeRange, search, filter]);
+  }, [timeRange, search, filter, reload]);
   return (
     <>
+      {contextHolder}
+      <ModalCRUD
+        open={isModalOpen}
+        onOk={handleOk}
+        onCancel={handleCancel}
+        type={type}
+        setReload={setReload}
+        dataEdit={dataEdit}
+        openNotificationWithIcon={openNotificationWithIcon}
+      ></ModalCRUD>
       <Table
         loading={loading}
         className="dark:border-strokedark dark:bg-boxdark"

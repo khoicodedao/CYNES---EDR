@@ -1,11 +1,10 @@
 "use client";
-import { Modal, Form, Input, Button, Space, Alert, notification } from "antd";
+import { Modal, Form, Input, Button, Space, Switch } from "antd";
 import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
 import React from "react";
 import { customAxiosPost } from "@/helpers/custom-axios";
 import API_URL from "@/helpers/api-url";
-import { GROUP_FILTER } from "@/types/group";
-
+import arrayToObject from "@/helpers/array-to-object";
 type DataGridProps = {
   open: boolean;
   type: "create" | "edit" | "delete";
@@ -13,12 +12,13 @@ type DataGridProps = {
   onOk: () => void;
   dataEdit: {
     id: number;
-    group_name: string;
-    group_filter: GROUP_FILTER[];
+    command_type: string;
+    command_name: string;
+    is_show: boolean;
+    command_info: any[];
   };
-  openNotificationWithIcon: (type: NotificationType, data: string) => void;
-
   setReload: React.Dispatch<React.SetStateAction<boolean>>;
+  openNotificationWithIcon: (type: NotificationType, data: string) => void;
 };
 type NotificationType = "success" | "info" | "warning" | "error";
 
@@ -36,14 +36,16 @@ const ModalCRUD: React.FC<DataGridProps> = ({
   openNotificationWithIcon,
 }) => {
   const [form] = Form.useForm();
-
   const onFinish = async (values: any) => {
+    console.log(values);
     if (type == "create") {
-      let urlAdd = API_URL.GROUPS.ADD_GROUP;
-      let res: { error: boolean; msg: string } = await customAxiosPost(
-        urlAdd,
-        values
-      );
+      let urlAdd = API_URL.COMMANDS.ADD_COMMAND;
+      let { command_info, ...restData } = values;
+      command_info = arrayToObject(command_info);
+      let res: { error: boolean; msg: string } = await customAxiosPost(urlAdd, {
+        ...restData,
+        command_info,
+      });
       if (res.error === false) {
         openNotificationWithIcon("success", res.msg);
         setReload((previous) => {
@@ -53,10 +55,13 @@ const ModalCRUD: React.FC<DataGridProps> = ({
         openNotificationWithIcon("error", res.msg);
       }
     } else {
-      let urlEdit = API_URL.GROUPS.UPDATE_GROUP;
+      let urlEdit = API_URL.COMMANDS.UPDATE_COMMAND;
+      let { command_info, ...restData } = values;
+      command_info = arrayToObject(command_info);
+      console.log({ ...restData, command_info });
       let res: { error: boolean; msg: string } = await customAxiosPost(
         urlEdit,
-        { ...values, id: dataEdit.id }
+        { ...restData, command_info, id: dataEdit.id }
       );
       if (res.error === false) {
         openNotificationWithIcon("success", res.msg);
@@ -68,12 +73,12 @@ const ModalCRUD: React.FC<DataGridProps> = ({
       }
     }
   };
-  let title = type == "create" ? "Create Group" : "Edit Group";
+  let title = type == "create" ? "Create Command" : "Edit Command";
 
-  form.setFieldValue("group_name", dataEdit.group_name);
-  form.setFieldsValue({
-    group_filter: dataEdit.group_filter,
-  });
+  form.setFieldValue("command_name", dataEdit.command_name);
+  form.setFieldValue("command_type", dataEdit.command_type);
+  form.setFieldValue("is_show", dataEdit.is_show);
+  form.setFieldValue("command_info", dataEdit.command_info);
   return (
     <Modal title={title} onCancel={onCancel} open={open}>
       <Form
@@ -87,15 +92,28 @@ const ModalCRUD: React.FC<DataGridProps> = ({
         autoComplete="off"
       >
         <Form.Item
-          label="Group name"
-          name="group_name"
-          rules={[{ required: true, message: "Please input your Group name!" }]}
+          label="Command Name"
+          name="command_name"
+          rules={[
+            { required: true, message: "Please input your Command Name!" },
+          ]}
         >
           <Input />
         </Form.Item>
-
+        <Form.Item
+          label="Command Type"
+          name="command_type"
+          rules={[
+            { required: true, message: "Please input your Command Type!" },
+          ]}
+        >
+          <Input />
+        </Form.Item>
+        <Form.Item name="is_show" label="Show" valuePropName="checked">
+          <Switch />
+        </Form.Item>
         <Form.List
-          name="group_filter"
+          name="command_info"
           rules={[
             {
               validator: async (_, fields) => {
@@ -108,8 +126,9 @@ const ModalCRUD: React.FC<DataGridProps> = ({
         >
           {(fields, { add, remove }, { errors }) => (
             <>
-              <p className="dark:text-white text-sm">Enter your filter here:</p>
-
+              <p className="dark:text-white text-sm">
+                Enter your Command Info here:
+              </p>
               {fields.map(({ key, name, ...restField }) => (
                 <Space
                   key={key}
@@ -123,13 +142,7 @@ const ModalCRUD: React.FC<DataGridProps> = ({
                   >
                     <Input placeholder="Field" />
                   </Form.Item>
-                  <Form.Item
-                    {...restField}
-                    name={[name, "operator"]}
-                    rules={[{ required: true, message: "Missing operator" }]}
-                  >
-                    <Input placeholder="Operator" />
-                  </Form.Item>
+
                   <Form.Item
                     {...restField}
                     name={[name, "value"]}

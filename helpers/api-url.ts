@@ -58,7 +58,7 @@ export const API_BACKEND = {
   },
   COMMAND: {
     GET_COMMAND: BACK_END_URL + "/api/v1/command/list",
-    ADD_COMMAND: BACK_END_URL + "/api/v1/command/",
+    ADD_COMMAND: BACK_END_URL + "/api/v1/command",
   },
 };
 export default API_URL;
