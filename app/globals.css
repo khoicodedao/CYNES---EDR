@@ -10,8 +10,8 @@
   }
 }
 :root {
-  --main-dark-bg-color: #23303f; 
-  --color-light--text:rgba(0, 0, 0, 0.88)
+  --main-dark-bg-color: #23303f;
+  --color-light--text: rgba(0, 0, 0, 0.88);
 }
 .ant-btn-primary {
   color: #fff;
@@ -363,24 +363,28 @@ aside > div {
 .ant-space-item button.ant-btn-dangerous {
   background-color: #ff4d4f !important;
 }
-.dark .ant-modal-content, .dark .ant-modal-header{
+.dark .ant-modal-content,
+.dark .ant-modal-header {
   background-color: var(--main-dark-bg-color);
 }
-.dark .ant-modal-content label{
-  color:white;
-}
-.dark .ant-modal-title{
-  color:white;
-}
-.dark .ant-modal-content svg{
-  fill: white;
-}
-.dark .ant-modal-footer button{
+.dark .ant-modal-content label {
   color: white;
 }
-.ant-form-item-control-input .ant-select{
-  padding:0 !important;
+.dark .ant-modal-title {
+  color: white;
 }
-.dark .ant-form-item-control-input-content .ant-btn{
+.dark .ant-modal-content svg {
+  fill: white;
+}
+.dark .ant-modal-footer button {
+  color: white;
+}
+.ant-form-item-control-input .ant-select {
+  padding: 0 !important;
+}
+.dark .ant-form-item-control-input-content .ant-btn {
   color: white !important;
+}
+.dark .ant-table-cell {
+  background: var(--main-dark-bg-color) !important;
 }

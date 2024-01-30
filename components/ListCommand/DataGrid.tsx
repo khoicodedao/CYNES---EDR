@@ -1,68 +1,104 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { Space, Table, Select } from "antd";
+import { Table, Tag } from "antd";
 import type { ColumnsType } from "antd/es/table";
 import "./index.css";
 import { COMMAND } from "@/types/command";
 import API_URL from "@/helpers/api-url";
-import { customAxiosGet } from "@/helpers/custom-axios";
+import { customAxiosPost } from "@/helpers/custom-axios";
 import formatDateString from "@/helpers/format-date";
 import ReactJson from "react-json-view";
+import CONSTANT_DATA from "../common/constant";
+import objectToArrayString from "@/helpers/object-to-array-string";
 
-const columns: ColumnsType<COMMAND> = [
-  {
-    title: "ID",
-    dataIndex: "id",
-    key: "id",
-  },
-  {
-    title: "Command Name",
-    dataIndex: "command_name",
-    key: "command_name",
-  },
-  {
-    title: "Command Type",
-    dataIndex: "command_type",
-    key: "command_type",
-  },
-  {
-    title: "Command Info",
-    dataIndex: "command_info",
-    key: "command_info",
-    width: "40%",
-    render: (item) => {
-      return (
-        <ReactJson
-          quotesOnKeys={false}
-          displayDataTypes={false}
-          name="Command Info"
-          src={item}
-          theme="ocean"
-        />
-      );
+type DataGridProps = {
+  timeRange?: string[];
+  search?: { field: string; operator: string; value: string }[];
+};
+const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
+  const columns: ColumnsType<COMMAND> = [
+    {
+      title: "ID",
+      dataIndex: "id",
+      key: "id",
+      width: 120,
     },
-  },
-  {
-    title: "Update at",
-    dataIndex: "update_at",
-    key: "update_at",
-    render: (item) => {
-      return formatDateString(item);
+    {
+      title: "Command Name",
+      dataIndex: "command_name",
+      key: "command_name",
+      width: 200,
     },
-  },
-  {
-    title: "Created At",
-    dataIndex: "created_at",
-    key: "created_at",
-    render: (item) => {
-      return formatDateString(item);
+    {
+      title: "Command Type",
+      dataIndex: "command_type",
+      key: "command_type",
+      width: 200,
     },
-  },
-];
-const DataGrid: React.FC = () => {
+    {
+      title: "Command Info",
+      dataIndex: "command_info",
+      key: "command_info",
+      width: "400",
+      render: (item) => {
+        let arrayObject = objectToArrayString(item);
+        return (
+          <div className="flex">
+            {arrayObject.map((item, index: number) => {
+              return (
+                <Tag key={index} className="filter">
+                  {Object.values(item).toString().replaceAll(",", "")}
+                </Tag>
+              );
+            })}
+          </div>
+        );
+      },
+    },
+    {
+      title: "Update at",
+      dataIndex: "update_at",
+      key: "update_at",
+      width: 120,
+      render: (item) => {
+        return formatDateString(item);
+      },
+    },
+    {
+      width: 200,
+      fixed: "right",
+      title: "Created At",
+      dataIndex: "created_at",
+      key: "created_at",
+      render: (item) => {
+        return formatDateString(item);
+      },
+    },
+  ];
   const [groups, setGroupList] = useState<COMMAND[]>([] as COMMAND[]);
   const [loading, setLoading] = useState(false);
-  const [filter, setFilter] = useState({ page_no: 1, page_size: 100 });
+  const [filter, setFilter] = useState<any>(CONSTANT_DATA.PAGINATION);
+  const [totalCount, setTotalCount] = useState(0);
+
+  if (timeRange) {
+    const filterInTimeRage = [
+      {
+        field: "created_at",
+        operator: ">=",
+        value: timeRange[0],
+      },
+      {
+        field: "created_at",
+        operator: "<=",
+        value: timeRange[1],
+      },
+    ];
+    filter["filter"] = filterInTimeRage;
+  }
+  if (search) {
+    filter["filter"] = [...filter["filter"], ...search]; //Add filter time range and search
+  }
+  Object.assign(filter, CONSTANT_DATA.REQUIRED_TOTAL);
   useEffect(() => {
     let url = API_URL.COMMANDS.GET_COMMANDS;
     let getData = async () => {
@@ -70,14 +106,16 @@ const DataGrid: React.FC = () => {
       let resData: {
         success: boolean;
         commands: COMMAND[];
-      } = await customAxiosGet(url, filter);
+        total_count: number;
+      } = await customAxiosPost(url, filter);
       if (resData.success) {
+        setTotalCount(resData.total_count);
         setGroupList(resData.commands);
         setLoading(false);
       }
     };
     getData();
-  }, []);
+  }, [timeRange, search, filter]);
   return (
     <>
       <Table
@@ -86,10 +124,11 @@ const DataGrid: React.FC = () => {
         columns={columns}
         dataSource={groups}
         pagination={{
-          pageSize: 40,
-          total: 100, //response first filter require total
+          hideOnSinglePage: true,
+          pageSize: CONSTANT_DATA.PAGINATION.page_size,
+          total: totalCount, //response first filter require total
           onChange: (page, pageSize) => {
-            // fetchRecords(page, pageSize);
+            setFilter({ ...filter, page_no: page });
           },
         }}
       ></Table>

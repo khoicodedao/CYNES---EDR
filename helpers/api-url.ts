@@ -1,4 +1,3 @@
-import { GROUP } from "@/types/group";
 let BACK_END_URL = process.env.BACK_END_URL;
 const API_URL = {
   LOGIN: "/api/users/login",
@@ -23,13 +22,15 @@ const API_URL = {
     ADD_GROUP: "/api/groups/add",
     UPDATE_GROUP: "/api/groups/update",
     DELETE_GROUP: "/api/groups/delete",
-
   },
   TASKS: {
     GET_TASKS: "/api/tasks",
   },
   COMMANDS: {
     GET_COMMANDS: "/api/commands",
+    ADD_COMMAND: "/api/commands/add",
+    UPDATE_COMMAND: "/api/commands/update",
+    DELETE_COMMAND: "/api/commands/delete",
   },
 };
 
@@ -51,12 +52,13 @@ export const API_BACKEND = {
   GROUP: {
     GET_GROUPS: BACK_END_URL + "/api/v1/group/list",
     ADD_GROUP: BACK_END_URL + "/api/v1/group",
-  }, 
+  },
   TASK: {
     GET_TASKS: BACK_END_URL + "/api/v1/task/list",
   },
   COMMAND: {
     GET_COMMAND: BACK_END_URL + "/api/v1/command/list",
+    ADD_COMMAND: BACK_END_URL + "/api/v1/command/",
   },
 };
 export default API_URL;

@@ -1,19 +1,19 @@
 import { NextRequest, NextResponse } from "next/server";
 import { customAxiosPost } from "@/helpers/custom-axios";
 import { API_BACKEND } from "@/helpers/api-url";
-import { COMMAND } from "@/types/command";
 
 export async function POST(request: NextRequest) {
-  let searchParams = await request.json();
-  const url = API_BACKEND.COMMAND.GET_COMMAND;
+  let dataParams = await request.json();
+  const url = API_BACKEND.COMMAND.ADD_COMMAND;
   try {
-    const res: { count: number; error: boolean; commands: COMMAND[] } =
-      await customAxiosPost(url, searchParams);
+    const res: { error: boolean; msg: string } = await customAxiosPost(
+      url,
+      dataParams
+    );
     if (res.error === false) {
       const response = NextResponse.json({
-        success: true,
-        commands: res.commands,
-        count: res.count,
+        error: res.error,
+        msg: res.msg,
       });
       return response;
     } else return "Error";
