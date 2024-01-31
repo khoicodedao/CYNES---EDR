@@ -25,6 +25,9 @@ const API_URL = {
   },
   TASKS: {
     GET_TASKS: "/api/tasks",
+    ADD_TASK: "/api/tasks/add",
+    UPDATE_TASK: "/api/tasks/update",
+    DELETE_TASK: "/api/tasks/delete",
   },
   COMMANDS: {
     GET_COMMANDS: "/api/commands",
@@ -55,6 +58,7 @@ export const API_BACKEND = {
   },
   TASK: {
     GET_TASKS: BACK_END_URL + "/api/v1/task/list",
+    ADD_TASK: BACK_END_URL + "/api/v1/task",
   },
   COMMAND: {
     GET_COMMAND: BACK_END_URL + "/api/v1/command/list",

@@ -12,9 +12,12 @@ type DataGridProps = {
   onCancel: () => void;
   onOk: () => void;
   dataEdit: {
-    id: number;
+    id: string;
+    group_id: number;
     group_name: string;
-    group_filter: GROUP_FILTER[];
+    command_id: number;
+    command_name: string;
+    is_active: boolean;
   };
   openNotificationWithIcon: (type: NotificationType, data: string) => void;
 
@@ -70,10 +73,10 @@ const ModalCRUD: React.FC<DataGridProps> = ({
   };
   let title = type == "create" ? "Create Group" : "Edit Group";
 
-  form.setFieldValue("group_name", dataEdit.group_name);
-  form.setFieldsValue({
-    group_filter: dataEdit.group_filter,
-  });
+  // form.setFieldValue("group_name", dataEdit.group_name);
+  // form.setFieldsValue({
+  //   group_filter: dataEdit.group_filter,
+  // });
   return (
     <Modal title={title} onCancel={onCancel} open={open}>
       <Form
@@ -94,66 +97,6 @@ const ModalCRUD: React.FC<DataGridProps> = ({
           <Input />
         </Form.Item>
 
-        <Form.List
-          name="group_filter"
-          rules={[
-            {
-              validator: async (_, fields) => {
-                if (!fields || fields.length < 1) {
-                  return Promise.reject(new Error("At least 1 passengers"));
-                }
-              },
-            },
-          ]}
-        >
-          {(fields, { add, remove }, { errors }) => (
-            <>
-              <p className="dark:text-white text-sm">Enter your filter here:</p>
-
-              {fields.map(({ key, name, ...restField }) => (
-                <Space
-                  key={key}
-                  style={{ display: "flex", marginBottom: 8 }}
-                  align="baseline"
-                >
-                  <Form.Item
-                    {...restField}
-                    name={[name, "field"]}
-                    rules={[{ required: true, message: "Missing field" }]}
-                  >
-                    <Input placeholder="Field" />
-                  </Form.Item>
-                  <Form.Item
-                    {...restField}
-                    name={[name, "operator"]}
-                    rules={[{ required: true, message: "Missing operator" }]}
-                  >
-                    <Input placeholder="Operator" />
-                  </Form.Item>
-                  <Form.Item
-                    {...restField}
-                    name={[name, "value"]}
-                    rules={[{ required: true, message: "Missing value" }]}
-                  >
-                    <Input placeholder="Value" />
-                  </Form.Item>
-                  <MinusCircleOutlined onClick={() => remove(name)} />
-                </Space>
-              ))}
-              <Form.Item>
-                <Button
-                  type="dashed"
-                  onClick={() => add()}
-                  block
-                  icon={<PlusOutlined />}
-                >
-                  Add field
-                </Button>
-                <Form.ErrorList errors={errors} />
-              </Form.Item>
-            </>
-          )}
-        </Form.List>
         <Form.Item>
           <Button type="primary" htmlType="submit">
             Submit

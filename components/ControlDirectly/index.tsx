@@ -24,6 +24,7 @@ const ControlDirectly = () => {
 
       <div className=" mt-1 w-full max-w-full rounded-sm border border-stroke bg-white  dark:border-strokedark dark:bg-boxdark shadow-default">
         <Terminal
+          height="200"
           name="React Terminal Usage Example"
           colorMode={ColorMode.Dark}
           onInput={(terminalInput) => {

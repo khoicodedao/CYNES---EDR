@@ -29,13 +29,7 @@ const Tasks = () => {
           setSearch={setSearch}
           search={search}
           placeHolder="Search by query (mac='AA-DC-2F-4A-AD-F5')"
-          filterKey={[
-            "mac",
-            "local_ip",
-            "computer_name",
-            "event_name",
-            "event_type",
-          ]}
+          filterKey={["group_name", "command_id"]}
         ></FunctionBar>
       </div>
       {/* <!-- ====== FunctionBar Section End ====== --> */}
