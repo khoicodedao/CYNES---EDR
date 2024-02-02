@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { Space, Table, Select, Tag, notification, Popconfirm } from "antd";
+import { Table, Tag, notification, Popconfirm } from "antd";
 import type { ColumnsType } from "antd/es/table";
 import "./index.css";
 import { TASK } from "@/types/task";
@@ -11,6 +11,9 @@ import CONSTANT_DATA from "../common/constant";
 import getHeightScroll from "@/helpers/get-height-scroll";
 import { PlusOutlined, EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import ModalCRUD from "./ModalCRUD";
+import { GROUP } from "@/types/group";
+import { COMMAND } from "@/types/command";
+
 type NotificationType = "success" | "info" | "warning" | "error";
 type DataGridProps = {
   timeRange?: string[];
@@ -92,6 +95,7 @@ const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
             <PlusOutlined
               onClick={() => {
                 showModal("create");
+                getListData();
                 setDataEdit({
                   id: "0",
                   group_id: 0,
@@ -178,6 +182,39 @@ const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
       is_active: boolean;
     }
   );
+  const [dataCreate, setDataCreate] = useState<{
+    groupList: { value: string; id: number }[];
+    commandList: { value: string; id: number }[];
+  }>(
+    {} as {
+      groupList: { value: string; id: number }[];
+      commandList: { value: string; id: number }[];
+    }
+  );
+  //get list data for create group_id, command_id
+  const getListData = async () => {
+    let groupListRes: { count: number; error: boolean; groups: GROUP[] } =
+      await customAxiosPost(
+        API_URL.GROUPS.GET_GROUPS,
+        CONSTANT_DATA.PAGINATION
+      );
+    let groupList =
+      groupListRes.groups.map((item) => {
+        return { label: item.group_name, value: item.id };
+      }) || [];
+
+    let commandListRes: { count: number; error: boolean; commands: COMMAND[] } =
+      await customAxiosPost(
+        API_URL.COMMANDS.GET_COMMANDS,
+        CONSTANT_DATA.PAGINATION
+      );
+    let commandList =
+      commandListRes.commands.map((item) => {
+        return { label: item.command_name, value: item.id };
+      }) || [];
+    setDataCreate({ groupList, commandList });
+  };
+
   if (timeRange) {
     const filterInTimeRage = [
       {
@@ -228,6 +265,7 @@ const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
     <>
       {contextHolder}
       <ModalCRUD
+        dataCreate={dataCreate}
         open={isModalOpen}
         onOk={handleOk}
         onCancel={handleCancel}

@@ -1,16 +1,17 @@
 "use client";
-import { Modal, Form, Input, Button, Space } from "antd";
-import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
+import { Modal, Form, Button, Space, Select, Switch } from "antd";
 import React from "react";
 import { customAxiosPost } from "@/helpers/custom-axios";
 import API_URL from "@/helpers/api-url";
-import { GROUP_FILTER } from "@/types/group";
-
 type DataGridProps = {
   open: boolean;
   type: "create" | "edit" | "delete";
   onCancel: () => void;
   onOk: () => void;
+  dataCreate: {
+    groupList: object[];
+    commandList: object[];
+  };
   dataEdit: {
     id: string;
     group_id: number;
@@ -37,39 +38,44 @@ const ModalCRUD: React.FC<DataGridProps> = ({
   setReload,
   dataEdit,
   openNotificationWithIcon,
+  dataCreate,
 }) => {
   const [form] = Form.useForm();
 
   const onFinish = async (values: any) => {
-    if (type == "create") {
-      let urlAdd = API_URL.GROUPS.ADD_GROUP;
-      let res: { error: boolean; msg: string } = await customAxiosPost(
-        urlAdd,
-        values
-      );
-      if (res.error === false) {
-        openNotificationWithIcon("success", res.msg);
-        setReload((previous) => {
-          return !previous;
-        });
-      } else {
-        openNotificationWithIcon("error", res.msg);
-      }
-    } else {
-      let urlEdit = API_URL.GROUPS.UPDATE_GROUP;
-      let res: { error: boolean; msg: string } = await customAxiosPost(
-        urlEdit,
-        { ...values, id: dataEdit.id }
-      );
-      if (res.error === false) {
-        openNotificationWithIcon("success", res.msg);
-        setReload((previous) => {
-          return !previous;
-        });
-      } else {
-        openNotificationWithIcon("error", res.msg);
-      }
-    }
+    // let groupName = dataCreate.groupList.filter(
+    //   (item) => item.id === values.group_id
+    // );
+    console.log(values);
+    // if (type == "create") {
+    //   let urlAdd = API_URL.TASKS.ADD_TASK;
+    //   let res: { error: boolean; msg: string } = await customAxiosPost(
+    //     urlAdd,
+    //     values
+    //   );
+    //   if (res.error === false) {
+    //     openNotificationWithIcon("success", res.msg);
+    //     setReload((previous) => {
+    //       return !previous;
+    //     });
+    //   } else {
+    //     openNotificationWithIcon("error", res.msg);
+    //   }
+    // } else {
+    //   let urlEdit = API_URL.GROUPS.UPDATE_GROUP;
+    //   let res: { error: boolean; msg: string } = await customAxiosPost(
+    //     urlEdit,
+    //     { ...values, id: dataEdit.id }
+    //   );
+    //   if (res.error === false) {
+    //     openNotificationWithIcon("success", res.msg);
+    //     setReload((previous) => {
+    //       return !previous;
+    //     });
+    //   } else {
+    //     openNotificationWithIcon("error", res.msg);
+    //   }
+    // }
   };
   let title = type == "create" ? "Create Group" : "Edit Group";
 
@@ -89,14 +95,15 @@ const ModalCRUD: React.FC<DataGridProps> = ({
         onFinishFailed={onFinishFailed}
         autoComplete="off"
       >
-        <Form.Item
-          label="Group name"
-          name="group_name"
-          rules={[{ required: true, message: "Please input your Group name!" }]}
-        >
-          <Input />
+        <Form.Item name="group_id" label="Select Group" required>
+          <Select options={dataCreate.groupList}></Select>
         </Form.Item>
-
+        <Form.Item name="command_id" label="Select Command" required>
+          <Select options={dataCreate.commandList}></Select>
+        </Form.Item>
+        <Form.Item name="is_active" label="Active" valuePropName="checked">
+          <Switch />
+        </Form.Item>
         <Form.Item>
           <Button type="primary" htmlType="submit">
             Submit
