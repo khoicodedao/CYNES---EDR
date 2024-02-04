@@ -95,7 +95,7 @@ const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
             <PlusOutlined
               onClick={() => {
                 showModal("create");
-                getListData();
+
                 setDataEdit({
                   id: "0",
                   group_id: 0,
@@ -110,7 +110,7 @@ const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
             <EditOutlined
               onClick={() => {
                 showModal("edit");
-                setDataEdit(item);
+                setDataEdit({ ...item });
               }}
               className="w-1/3"
             />
@@ -183,12 +183,12 @@ const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
     }
   );
   const [dataCreate, setDataCreate] = useState<{
-    groupList: { value: string; id: number }[];
-    commandList: { value: string; id: number }[];
+    groupList: { label: string; value: string }[];
+    commandList: { label: string; value: string }[];
   }>(
     {} as {
-      groupList: { value: string; id: number }[];
-      commandList: { value: string; id: number }[];
+      groupList: { label: string; value: string }[];
+      commandList: { label: string; value: string }[];
     }
   );
   //get list data for create group_id, command_id
@@ -200,7 +200,7 @@ const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
       );
     let groupList =
       groupListRes.groups.map((item) => {
-        return { label: item.group_name, value: item.id };
+        return { label: item.group_name, value: item.id.toString() };
       }) || [];
 
     let commandListRes: { count: number; error: boolean; commands: COMMAND[] } =
@@ -234,6 +234,9 @@ const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
     filter["filter"] = [...filter["filter"], ...search]; //Add filter time range and search
   }
   Object.assign(filter, CONSTANT_DATA.REQUIRED_TOTAL);
+  useEffect(() => {
+    getListData();
+  }, []);
   useEffect(() => {
     let url = API_URL.TASKS.GET_TASKS;
     let getData = async () => {

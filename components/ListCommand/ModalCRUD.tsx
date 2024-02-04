@@ -80,7 +80,7 @@ const ModalCRUD: React.FC<DataGridProps> = ({
   form.setFieldValue("is_show", dataEdit.is_show);
   form.setFieldValue("command_info", dataEdit.command_info);
   return (
-    <Modal title={title} onCancel={onCancel} open={open}>
+    <Modal width={600} title={title} onCancel={onCancel} open={open}>
       <Form
         form={form}
         name="basic"
