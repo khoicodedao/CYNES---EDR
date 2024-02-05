@@ -26,10 +26,6 @@ type DataGridProps = {
 };
 type NotificationType = "success" | "info" | "warning" | "error";
 
-const onFinishFailed = (errorInfo: any) => {
-  console.log("Failed:", errorInfo);
-};
-
 const ModalCRUD: React.FC<DataGridProps> = ({
   open,
   type,
@@ -41,7 +37,9 @@ const ModalCRUD: React.FC<DataGridProps> = ({
   dataCreate,
 }) => {
   const [form] = Form.useForm();
-
+  const onFinishFailed = (errorInfo: any) => {
+    openNotificationWithIcon("error", errorInfo.msg);
+  };
   const onFinish = async (values: any) => {
     let groupName =
       dataCreate.groupList.find((item) => item.value === values.group_id)
@@ -66,19 +64,47 @@ const ModalCRUD: React.FC<DataGridProps> = ({
         openNotificationWithIcon("error", res.msg);
       }
     } else {
-      // let urlEdit = API_URL.GROUPS.UPDATE_GROUP;
-      // let res: { error: boolean; msg: string } = await customAxiosPost(
-      //   urlEdit,
-      //   { ...values, id: dataEdit.id }
-      // );
-      // if (res.error === false) {
-      //   openNotificationWithIcon("success", res.msg);
-      //   setReload((previous) => {
-      //     return !previous;
-      //   });
-      // } else {
-      //   openNotificationWithIcon("error", res.msg);
-      // }
+      let urlEdit = API_URL.COMMANDS.UPDATE_COMMAND;
+      // console.log(dataEdit);
+      let { command_id, group_id } = values;
+      let listCommandLabel = dataCreate.commandList.map((item) => item.label);
+      let listGroupLabel = dataCreate.groupList.map((item) => item.label);
+      if (listCommandLabel.includes(command_id)) {
+        command_id =
+          dataCreate.commandList.find((item) => item.label == command_id)
+            ?.value || command_id;
+      }
+      if (listGroupLabel.includes(group_id)) {
+        group_id =
+          dataCreate.groupList.find((item) => item.label == group_id)?.value ||
+          group_id;
+      }
+      let command_name = dataCreate.commandList.find(
+        (item) => item.value == command_id
+      )?.label;
+      let group_name = dataCreate.groupList.find(
+        (item) => item.value == group_id
+      )?.label;
+
+      let res: { error: boolean; msg: string } = await customAxiosPost(
+        urlEdit,
+        {
+          is_active: values.is_active,
+          command_name,
+          group_name,
+          command_id: Number(command_id),
+          group_id: Number(group_id),
+          id: dataEdit.id,
+        }
+      );
+      if (res.error === false) {
+        openNotificationWithIcon("success", res.msg);
+        setReload((previous) => {
+          return !previous;
+        });
+      } else {
+        openNotificationWithIcon("error", res.msg);
+      }
       console.log(values);
     }
   };

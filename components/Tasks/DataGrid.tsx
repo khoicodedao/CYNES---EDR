@@ -95,7 +95,6 @@ const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
             <PlusOutlined
               onClick={() => {
                 showModal("create");
-
                 setDataEdit({
                   id: "0",
                   group_id: 0,
