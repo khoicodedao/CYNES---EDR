@@ -35,6 +35,12 @@ const API_URL = {
     UPDATE_COMMAND: "/api/commands/update",
     DELETE_COMMAND: "/api/commands/delete",
   },
+  DATABASE: {
+    GET_DATABASE: "/api/database",
+    ADD_DATABASE: "/api/database/add",
+    UPDATE_DATABASE: "/api/database/update",
+    DELETE_DATABASE: "/api/database/delete",
+  },
 };
 
 export const API_BACKEND = {
@@ -63,6 +69,10 @@ export const API_BACKEND = {
   COMMAND: {
     GET_COMMAND: BACK_END_URL + "/api/v1/command/list",
     ADD_COMMAND: BACK_END_URL + "/api/v1/command",
+  },
+  DATABASE: {
+    GET_DATABASE: BACK_END_URL + "/api/v1/db/list",
+    ADD_DATABASE: BACK_END_URL + "/api/v1/db",
   },
 };
 export default API_URL;
