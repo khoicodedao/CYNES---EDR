@@ -3,9 +3,7 @@ import StatisticAgents from "./StatisticControl";
 import Terminal, { ColorMode, TerminalOutput } from "react-terminal-ui";
 import { useState } from "react";
 const ControlDirectly = () => {
-  const [terminalLineData, setTerminalLineData] = useState([
-    "Welcome to the React Terminal UI Demo!",
-  ]);
+  const [terminalLineData, setTerminalLineData] = useState([""]);
   return (
     <>
       {/* <!-- ====== FunctionBar Section Start ====== --> */}
@@ -25,12 +23,12 @@ const ControlDirectly = () => {
       <div className=" mt-1 w-full max-w-full rounded-sm border border-stroke bg-white  dark:border-strokedark dark:bg-boxdark shadow-default">
         <Terminal
           height="200"
-          name="React Terminal Usage Example"
+          name="Terminal"
           colorMode={ColorMode.Dark}
           onInput={(terminalInput) => {
             console.log(`New terminal input received: '${terminalInput}'`);
-            // terminalLineData.push(terminalInput);
-            // setTerminalLineData([...terminalLineData]);
+            terminalLineData.push(`${terminalInput}\n`);
+            setTerminalLineData([...terminalLineData]);
           }}
         >
           {terminalLineData}
