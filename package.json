@@ -16,6 +16,7 @@
     "@types/node": "20.4.8",
     "@types/react": "18.2.18",
     "@types/react-dom": "18.2.7",
+    "@types/socket.io-client": "^3.0.0",
     "antd": "^5.10.3",
     "apexcharts": "^3.41.1",
     "autoprefixer": "10.4.14",
