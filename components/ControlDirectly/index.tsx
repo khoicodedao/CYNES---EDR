@@ -5,8 +5,8 @@ import { useState, useEffect } from "react";
 const io = require("socket.io-client/dist/socket.io");
 const ControlDirectly = () => {
   const [terminalLineData, setTerminalLineData] = useState([""]);
+  const socket = io("http://localhost:8000");
   useEffect(() => {
-    const socket = io("http://localhost:8000");
     socket.on("connect", () => {
       console.log("Connected to Socket.IO server");
     });
@@ -35,6 +35,16 @@ const ControlDirectly = () => {
           name="Terminal"
           colorMode={ColorMode.Dark}
           onInput={(terminalInput) => {
+            socket.emit("message", {
+              //reqire token, client (id) in header when connect
+              // "from":"user1",
+              to: "test",
+              command_type: terminalInput,
+              command_info: {
+                dir: "c:\\windows\\",
+                cmd: "dir",
+              },
+            });
             console.log(`New terminal input received: '${terminalInput}'`);
             terminalLineData.push(`${terminalInput}\n`);
             setTerminalLineData([...terminalLineData]);
