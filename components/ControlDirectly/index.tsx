@@ -2,7 +2,7 @@
 import StatisticAgents from "./StatisticControl";
 import Terminal, { ColorMode, TerminalOutput } from "react-terminal-ui";
 import { useState, useEffect } from "react";
-import io from "socket.io-client";
+const io = require("socket.io-client/dist/socket.io");
 const ControlDirectly = () => {
   const [terminalLineData, setTerminalLineData] = useState([""]);
   useEffect(() => {
