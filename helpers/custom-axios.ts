@@ -5,6 +5,7 @@
  * @param token - Optional token for authorization.
  * @returns A promise that resolves to the response data.
  */
+
 const customAxiosDelete = async <T>(
   url: string,
   token?: string
@@ -73,7 +74,7 @@ const customAxiosPost = async <T>(
     const responseData: T = await response.json();
     return responseData;
   } catch (error: any) {
-    console.error(error?.message);
+    console.error(error);
     return error?.message as T;
   }
 };
@@ -110,4 +111,4 @@ const customAxiosGet = async <T>(
   }
 };
 
-export { customAxiosPost, customAxiosGet, customAxiosDelete ,customAxiosPut};
+export { customAxiosPost, customAxiosGet, customAxiosDelete, customAxiosPut };
