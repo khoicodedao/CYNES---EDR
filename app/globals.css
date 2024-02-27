@@ -404,3 +404,22 @@ button[role="switch"] .ant-switch-inner {
 .react-terminal {
   height: calc(100vh - 322px) !important;
 }
+@keyframes blink {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.blink {
+  animation: blink 2s infinite;
+  background-color: red;
+  font-size: 14px;
+  padding: 5px;
+  border-radius: 5px;
+}

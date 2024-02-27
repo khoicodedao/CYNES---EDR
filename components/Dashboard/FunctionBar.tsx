@@ -27,9 +27,7 @@ const rangePresets: TimeRangePickerProps["presets"] = [
 const FunctionBar = () => {
   return (
     <div className=" justify-between flex  rounded-sm border border-stroke bg-white py-6 px-7.5 shadow-default dark:border-strokedark dark:bg-boxdark">
-      <div>
-        <p>Organization Dashboard!</p>
-      </div>
+      <div>{/* <p>Organization Dashboard!</p> */}</div>
       <div className=" justify-end items-center flex w-2/3 md:w-2/4 xl:w-2/3 ">
         {/* Export dashboard to PDF */}
         <Popover

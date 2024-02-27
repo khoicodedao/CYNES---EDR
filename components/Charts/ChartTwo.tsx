@@ -109,7 +109,7 @@ const ChartTwo: React.FC = () => {
             Statistic
           </h4>
         </div>
-        <div>
+        {/* <div>
           <div className="relative z-20 inline-block">
             <select
               name="#"
@@ -140,7 +140,7 @@ const ChartTwo: React.FC = () => {
               </svg>
             </span>
           </div>
-        </div>
+        </div> */}
       </div>
 
       <div>

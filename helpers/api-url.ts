@@ -74,5 +74,8 @@ export const API_BACKEND = {
     GET_DATABASE: BACK_END_URL + "/api/v1/db/list",
     ADD_DATABASE: BACK_END_URL + "/api/v1/db",
   },
+  DASHBOARD: {
+    GET_DASHBOARD: BACK_END_URL + "/api/v1/dashboard",
+  },
 };
 export default API_URL;
