@@ -1,9 +1,9 @@
-"use client";
+// "use client";
 import { ApexOptions } from "apexcharts";
-import React, { useState } from "react";
+import React from "react";
 import dynamic from "next/dynamic";
-const ApexCharts = dynamic(() => import("react-apexcharts"), { ssr: false });
 
+const ApexCharts = dynamic(() => import("react-apexcharts"), { ssr: false });
 const options: ApexOptions = {
   colors: ["#2846A7", "#FAAE11", "#AB0A00"],
   chart: {
@@ -68,39 +68,29 @@ const options: ApexOptions = {
     opacity: 1,
   },
 };
-
-interface ChartTwoState {
-  series: {
-    name: string;
-    data: number[];
-  }[];
-}
-
-const ChartTwo: React.FC = () => {
-  const [state, setState] = useState<ChartTwoState>({
-    series: [
-      {
-        name: "Low",
-        data: [44, 55, 41, 67, 22, 43, 65],
-      },
-      {
-        name: "Medium",
-        data: [13, 23, 20, 8, 13, 27, 15],
-      },
-      {
-        name: "Hight",
-        data: [13, 23, 20, 8, 13, 27, 15],
-      },
-    ],
-  });
-
-  const handleReset = () => {
-    setState((prevState) => ({
-      ...prevState,
-    }));
-  };
-  handleReset;
-
+const ChartTwo: React.FC = async () => {
+  function fetchDataWithDelay() {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        const sampleData = [
+          {
+            name: "Low",
+            data: [44, 55, 41, 67, 22, 43, 65],
+          },
+          {
+            name: "Medium",
+            data: [13, 23, 20, 8, 13, 27, 15],
+          },
+          {
+            name: "Hight",
+            data: [13, 23, 20, 8, 13, 27, 15],
+          },
+        ];
+        resolve(sampleData);
+      }, 3000); // Delay response by 3 seconds
+    });
+  }
+  let series = await fetchDataWithDelay();
   return (
     <div className="col-span-12 rounded-sm border border-stroke bg-white p-7.5 shadow-default dark:border-strokedark dark:bg-boxdark xl:col-span-4">
       <div className="mb-4 justify-between gap-4 sm:flex">
@@ -147,7 +137,12 @@ const ChartTwo: React.FC = () => {
         <div id="chartTwo" className="-ml-5 -mb-9">
           <ApexCharts
             options={options}
-            series={state.series}
+            series={
+              series as {
+                name: string;
+                data: number[];
+              }[]
+            }
             type="bar"
             height={350}
           />

@@ -6,6 +6,8 @@ import ChartTwo from "../Charts/ChartTwo";
 import CardDataStats from "../CardDataStats";
 import FunctionBar from "./FunctionBar";
 import { WarningOutlined } from "@ant-design/icons";
+import { Suspense } from "react";
+import { Skeleton } from "antd";
 import Link from "next/link";
 // import Map from "../Maps/TestMap";
 import dynamic from "next/dynamic";
@@ -50,7 +52,6 @@ function formatNumberWithDots(number: number) {
     return numStr;
   }
 }
-
 function calculateRatios(number1: number, number2: number, number3?: number) {
   // Check if any of the numbers is zero
   if (number1 === 0 || number2 === 0) {
@@ -165,7 +166,9 @@ const DashBoard: React.FC = () => {
         <ChartOne />
         {/* End chart */}
         {/* Column chart by time */}
-        <ChartTwo />
+        <Suspense fallback={<Skeleton active></Skeleton>}>
+          <ChartTwo />
+        </Suspense>
         {/* End chart */}
         {/* Pie chart */}
         <ChartThree />
