@@ -7,8 +7,8 @@ import CardDataStats from "../CardDataStats";
 import FunctionBar from "./FunctionBar";
 import { WarningOutlined } from "@ant-design/icons";
 import { Suspense } from "react";
-import { Skeleton } from "antd";
 import Link from "next/link";
+import FallbackChartTwo from "./FallbackChartTwo";
 // import Map from "../Maps/TestMap";
 import dynamic from "next/dynamic";
 const MapOne = dynamic(() => import("../Maps/MapOne"), {
@@ -166,7 +166,7 @@ const DashBoard: React.FC = () => {
         <ChartOne />
         {/* End chart */}
         {/* Column chart by time */}
-        <Suspense fallback={<Skeleton active></Skeleton>}>
+        <Suspense fallback={<FallbackChartTwo />}>
           <ChartTwo />
         </Suspense>
         {/* End chart */}

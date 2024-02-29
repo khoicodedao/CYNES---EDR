@@ -87,7 +87,7 @@ const ChartTwo: React.FC = async () => {
           },
         ];
         resolve(sampleData);
-      }, 3000); // Delay response by 3 seconds
+      }, 1000); // Delay response by 3 seconds
     });
   }
   let series = await fetchDataWithDelay();
@@ -133,20 +133,18 @@ const ChartTwo: React.FC = async () => {
         </div> */}
       </div>
 
-      <div>
-        <div id="chartTwo" className="-ml-5 -mb-9">
-          <ApexCharts
-            options={options}
-            series={
-              series as {
-                name: string;
-                data: number[];
-              }[]
-            }
-            type="bar"
-            height={350}
-          />
-        </div>
+      <div id="chartTwo" className="-ml-5 -mb-9">
+        <ApexCharts
+          options={options}
+          series={
+            series as {
+              name: string;
+              data: number[];
+            }[]
+          }
+          type="bar"
+          height={350}
+        />
       </div>
     </div>
   );
