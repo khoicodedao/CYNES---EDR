@@ -76,7 +76,8 @@ export const API_BACKEND = {
   },
   DASHBOARD: {
     GET_DASHBOARD: BACK_END_URL + "/api/v1/dashboard",
-    GET_ALERT_CHART_DAY: BACK_END_URL + "/api/v1/alert/count",
+    GET_ALERT_COUNT: BACK_END_URL + "/api/v1/alert/count",
+    GET_AGENT_COUNT: BACK_END_URL + "/api/v1/agent/count",
   },
 };
 export default API_URL;
