@@ -201,12 +201,14 @@ const FunctionBar: React.FC<FunctionBarProps> = ({
         {/* ===================================== */}
       </Drawer>
       <div className="flex  justify-start items-center w-2/3 md:w-2/3">
-        <Button
-          className="mr-2"
-          type="primary"
-          icon={<FilterOutlined />}
-          onClick={showDrawer}
-        ></Button>
+        {filterKey && (
+          <Button
+            className="mr-2"
+            type="primary"
+            icon={<FilterOutlined />}
+            onClick={showDrawer}
+          ></Button>
+        )}
         <div>
           {search.map((item, key) => {
             return (

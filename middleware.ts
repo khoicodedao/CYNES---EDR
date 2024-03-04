@@ -24,7 +24,6 @@ export function middleware(request: NextRequest) {
   if (!isPublicPath && !token) {
     return NextResponse.redirect(new URL(API_URL.PAGES.LOGIN, request.nextUrl));
   }
-  console.log(request);
 }
 
 // See "Matching Paths" below to learn more

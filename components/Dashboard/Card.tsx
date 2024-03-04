@@ -1,8 +1,6 @@
-"use client";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import CardDataStats from "../CardDataStats";
 import { WarningOutlined } from "@ant-design/icons";
-import { Suspense } from "react";
 import Link from "next/link";
 type CARD = {
   agents: {
@@ -55,22 +53,22 @@ function calculateRatios(number1: number, number2: number, number3?: number) {
   const ratio2 = (number2 / sum) * 100;
   return [Number(ratio1.toFixed(0)), Number(ratio2.toFixed(0))];
 }
+type DataGridProps = {
+  timeRange?: string[];
+};
+const Card: React.FC<DataGridProps> = async ({ timeRange }) => {
+  let card = {
+    agents: {
+      online: 2314,
+      offline: 400,
+    },
+    alerts: {
+      hight: 10341,
+      medium: 80023,
+      low: 1251,
+    },
+  };
 
-const Card: React.FC = () => {
-  useEffect(() => {
-    setCard({
-      agents: {
-        online: 2314,
-        offline: 400,
-      },
-      alerts: {
-        hight: 10341,
-        medium: 80023,
-        low: 1251,
-      },
-    });
-  }, []);
-  const [card, setCard] = useState<CARD>(cardInit);
   return (
     <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 xl:grid-cols-2 2xl:gap-7.5 mt-7.5">
       <Link href="/agents">

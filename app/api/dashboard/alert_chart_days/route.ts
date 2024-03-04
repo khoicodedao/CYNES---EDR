@@ -20,10 +20,10 @@ function formatDate(date: Date) {
   const year = date.getFullYear();
   const month = String(date.getMonth() + 1).padStart(2, "0");
   const day = String(date.getDate()).padStart(2, "0");
-  const hours = String(date.getHours()).padStart(2, "0");
-  const minutes = String(date.getMinutes()).padStart(2, "0");
-  const seconds = String(date.getSeconds()).padStart(2, "0");
-  return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+  // const hours = String(date.getHours()).padStart(2, "0");
+  // const minutes = String(date.getMinutes()).padStart(2, "0");
+  // const seconds = String(date.getSeconds()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
 }
 
 async function queryByDay(startDate: string, url: string, alertLevel: string) {
@@ -49,15 +49,46 @@ async function queryByDay(startDate: string, url: string, alertLevel: string) {
 
     return res;
   } catch (error: any) {
-    return { error: error.message };
+    return { count: 0, error: true, msg: error.message };
   }
 }
 
 export async function POST() {
   const url = API_BACKEND.DASHBOARD.GET_ALERT_COUNT;
+  //-- list days of week in this week
+  let listDays = getDatesOfWeek();
+  let lv1OnWeek: number[] = [];
+  let lv2OnWeek: number[] = [];
+  let lv3OnWeek: number[] = [];
   try {
-    let data = await queryByDay("2023-12-03", url, "1"); // test data
-    return NextResponse.json({ data: data }, { status: 200 });
+    for (const element of listDays) {
+      let lv1 = await queryByDay(element, url, "1");
+      let lv2 = await queryByDay(element, url, "2");
+      let lv3 = await queryByDay(element, url, "3");
+      !lv1.error && lv1OnWeek.push(lv1.count);
+      !lv2.error && lv2OnWeek.push(lv1.count);
+      !lv3.error && lv3OnWeek.push(lv1.count);
+    }
+
+    return NextResponse.json(
+      {
+        data: [
+          {
+            name: "Low",
+            data: lv1OnWeek,
+          },
+          {
+            name: "Medium",
+            data: lv2OnWeek,
+          },
+          {
+            name: "Hight",
+            data: lv3OnWeek,
+          },
+        ],
+      },
+      { status: 200 }
+    );
   } catch (error: any) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }

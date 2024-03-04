@@ -2,7 +2,9 @@
 import { ApexOptions } from "apexcharts";
 import React from "react";
 import dynamic from "next/dynamic";
-
+type DataGridProps = {
+  timeRange?: string[];
+};
 const ApexCharts = dynamic(() => import("react-apexcharts"), { ssr: false });
 const options: ApexOptions = {
   colors: ["#2846A7", "#FAAE11", "#AB0A00"],
@@ -68,7 +70,7 @@ const options: ApexOptions = {
     opacity: 1,
   },
 };
-const ChartTwo: React.FC = async () => {
+const ChartTwo: React.FC<DataGridProps> = async ({ timeRange }) => {
   function fetchDataWithDelay() {
     return new Promise((resolve) => {
       setTimeout(() => {

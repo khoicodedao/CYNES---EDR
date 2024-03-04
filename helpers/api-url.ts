@@ -41,6 +41,9 @@ const API_URL = {
     UPDATE_DATABASE: "/api/database/update",
     DELETE_DATABASE: "/api/database/delete",
   },
+  DASHBOARD: {
+    GET_ALERT_CHART_DAYS: "/api/dashboard/alert_chart_days",
+  },
 };
 
 export const API_BACKEND = {
