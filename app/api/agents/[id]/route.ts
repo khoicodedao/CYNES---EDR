@@ -9,10 +9,11 @@ export async function DELETE(
   request: NextRequest,
   { params }: { params: { id: string } }
 ) {
+  let token = request.cookies.get("token")?.value || "";
   const id = params.id;
   const url = API_BACKEND.AGENT.DELETE_AGENT + `/${id}`;
   try {
-    const res: { res: DEL_RESPONSE } = await customAxiosDelete(url);
+    const res: { res: DEL_RESPONSE } = await customAxiosDelete(url, token);
     const response = NextResponse.json(res);
     return response;
   } catch (error: any) {

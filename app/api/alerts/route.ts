@@ -5,10 +5,11 @@ import { ALERT } from "@/types/alert";
 export async function POST(request: NextRequest) {
   const url = API_BACKEND.ALERTS.GET_ALERTS;
   let searchParams = await request.json();
+  let token = request.cookies.get("token")?.value || "";
 
   try {
     const res: { count: number; error: boolean; alerts: ALERT[] } =
-      await customAxiosPost(url, searchParams);
+      await customAxiosPost(url, searchParams, token);
     if (res.error === false) {
       const response = NextResponse.json({
         success: true,

@@ -56,7 +56,7 @@ function calculateRatios(number1: number, number2: number, number3?: number) {
 type DataGridProps = {
   timeRange?: string[];
 };
-const Card: React.FC<DataGridProps> = async ({ timeRange }) => {
+const Card: React.FC<DataGridProps> = ({ timeRange }) => {
   let card = {
     agents: {
       online: 2314,

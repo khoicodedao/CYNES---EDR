@@ -5,7 +5,6 @@
  * @param token - Optional token for authorization.
  * @returns A promise that resolves to the response data.
  */
-
 const customAxiosDelete = async <T>(
   url: string,
   token?: string
@@ -56,6 +55,7 @@ const customAxiosPut = async <T>(
  * @param token - Optional token for authorization.
  * @returns A promise that resolves to the response data.
  */
+
 const customAxiosPost = async <T>(
   url: string,
   data?: any,

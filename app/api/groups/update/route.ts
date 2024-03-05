@@ -1,14 +1,17 @@
 import { NextRequest, NextResponse } from "next/server";
-import { customAxiosPut} from "@/helpers/custom-axios";
+import { customAxiosPut } from "@/helpers/custom-axios";
 import { API_BACKEND } from "@/helpers/api-url";
 
 export async function POST(request: NextRequest) {
-  console.log("put")
+  let token = request.cookies.get("token")?.value || "";
   let dataParams = await request.json();
   const url = API_BACKEND.GROUP.ADD_GROUP;
   try {
-    const res: {   error: boolean; msg:string } =
-      await customAxiosPut(url, dataParams);
+    const res: { error: boolean; msg: string } = await customAxiosPut(
+      url,
+      dataParams,
+      token
+    );
     if (res.error === false) {
       const response = NextResponse.json({
         error: res.error,

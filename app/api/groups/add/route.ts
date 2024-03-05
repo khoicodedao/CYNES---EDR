@@ -5,10 +5,14 @@ import { GROUP } from "@/types/group";
 
 export async function POST(request: NextRequest) {
   let dataParams = await request.json();
+  let token = request.cookies.get("token")?.value || "";
   const url = API_BACKEND.GROUP.ADD_GROUP;
   try {
-    const res: {   error: boolean; msg:string } =
-      await customAxiosPost(url, dataParams);
+    const res: { error: boolean; msg: string } = await customAxiosPost(
+      url,
+      dataParams,
+      token
+    );
     if (res.error === false) {
       const response = NextResponse.json({
         error: res.error,

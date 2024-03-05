@@ -6,9 +6,10 @@ import { COMMAND } from "@/types/command";
 export async function POST(request: NextRequest) {
   let searchParams = await request.json();
   const url = API_BACKEND.COMMAND.GET_COMMAND;
+  let token = request.cookies.get("token")?.value || "";
   try {
     const res: { count: number; error: boolean; commands: COMMAND[] } =
-      await customAxiosPost(url, searchParams);
+      await customAxiosPost(url, searchParams, token);
     if (res.error === false) {
       const response = NextResponse.json({
         success: true,

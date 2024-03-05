@@ -6,10 +6,10 @@ import { DATABASE } from "@/types/database";
 export async function POST(request: NextRequest) {
   let searchParams = await request.json();
   const url = API_BACKEND.DATABASE.GET_DATABASE;
-
+  let token = request.cookies.get("token")?.value || "";
   try {
     const res: { count: number; error: boolean; dbs: DATABASE[] } =
-      await customAxiosPost(url, searchParams);
+      await customAxiosPost(url, searchParams, token);
     console.log(res);
     if (res.error === false) {
       const response = NextResponse.json({

@@ -26,7 +26,12 @@ function formatDate(date: Date) {
   return `${year}-${month}-${day}`;
 }
 
-async function queryByDay(startDate: string, url: string, alertLevel: string) {
+async function queryByDay(
+  startDate: string,
+  url: string,
+  alertLevel: string,
+  token: string
+) {
   //filter record by day with level
   const filter = {
     filter: [
@@ -45,7 +50,7 @@ async function queryByDay(startDate: string, url: string, alertLevel: string) {
 
   try {
     const res: { count: number; error: boolean; msg: string | null } =
-      await customAxiosPost(url, filter);
+      await customAxiosPost(url, filter, token);
 
     return res;
   } catch (error: any) {
@@ -53,7 +58,8 @@ async function queryByDay(startDate: string, url: string, alertLevel: string) {
   }
 }
 
-export async function POST() {
+export async function POST(request: NextRequest) {
+  let token = request.cookies.get("token")?.value || "";
   const url = API_BACKEND.DASHBOARD.GET_ALERT_COUNT;
   //-- list days of week in this week
   let listDays = getDatesOfWeek();
@@ -62,9 +68,9 @@ export async function POST() {
   let lv3OnWeek: number[] = [];
   try {
     for (const element of listDays) {
-      let lv1 = await queryByDay(element, url, "1");
-      let lv2 = await queryByDay(element, url, "2");
-      let lv3 = await queryByDay(element, url, "3");
+      let lv1 = await queryByDay(element, url, "1", token);
+      let lv2 = await queryByDay(element, url, "2", token);
+      let lv3 = await queryByDay(element, url, "3", token);
       !lv1.error && lv1OnWeek.push(lv1.count);
       !lv2.error && lv2OnWeek.push(lv1.count);
       !lv3.error && lv3OnWeek.push(lv1.count);

@@ -4,10 +4,13 @@ import { API_BACKEND } from "@/helpers/api-url";
 
 export async function POST(request: NextRequest) {
   let dataParams = await request.json();
-  const url = API_BACKEND.COMMAND.ADD_COMMAND+`/${dataParams.id}`;
+  let token = request.cookies.get("token")?.value || "";
+  const url = API_BACKEND.COMMAND.ADD_COMMAND + `/${dataParams.id}`;
   try {
-    const res: {   error: boolean; msg:string } =
-      await customAxiosDelete(url);
+    const res: { error: boolean; msg: string } = await customAxiosDelete(
+      url,
+      token
+    );
     return NextResponse.json({
       error: res.error,
       msg: res.msg,

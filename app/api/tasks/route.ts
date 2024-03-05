@@ -6,10 +6,10 @@ import { TASK } from "@/types/task";
 export async function POST(request: NextRequest) {
   let searchParams = await request.json();
   const url = API_BACKEND.TASK.GET_TASKS;
-
+  let token = request.cookies.get("token")?.value || "";
   try {
     const res: { count: number; error: boolean; tasks: TASK[] } =
-      await customAxiosPost(url, searchParams);
+      await customAxiosPost(url, searchParams, token);
     if (res.error === false) {
       const response = NextResponse.json({
         success: true,

@@ -5,10 +5,13 @@ import { API_BACKEND } from "@/helpers/api-url";
 export async function POST(request: NextRequest) {
   let dataParams = await request.json();
   const url = API_BACKEND.COMMAND.ADD_COMMAND;
+  let token = request.cookies.get("token")?.value || "";
+
   try {
     const res: { error: boolean; msg: string } = await customAxiosPost(
       url,
-      dataParams
+      dataParams,
+      token
     );
     if (res.error === false) {
       const response = NextResponse.json({

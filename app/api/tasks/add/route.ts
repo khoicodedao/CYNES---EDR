@@ -4,11 +4,13 @@ import { API_BACKEND } from "@/helpers/api-url";
 
 export async function POST(request: NextRequest) {
   let dataParams = await request.json();
+  let token = request.cookies.get("token")?.value || "";
   const url = API_BACKEND.TASK.ADD_TASK;
   try {
     const res: { error: boolean; msg: string } = await customAxiosPost(
       url,
-      dataParams
+      dataParams,
+      token
     );
     if (res.error === false) {
       const response = NextResponse.json({
