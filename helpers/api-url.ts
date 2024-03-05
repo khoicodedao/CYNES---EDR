@@ -13,6 +13,7 @@ const API_URL = {
   },
   EVENTS: {
     GET_EVENTS: "/api/events",
+    COUNT_EVENTS: "/api/events/statistic_events",
   },
   ALERTS: {
     GET_ALERTS: "/api/alerts",
@@ -57,6 +58,7 @@ export const API_BACKEND = {
   },
   EVENTS: {
     GET_EVENTS: BACK_END_URL + "/api/v1/event/list",
+    COUNT_EVENTS: BACK_END_URL + "/api/v1/event/count",
   },
   ALERTS: {
     GET_ALERTS: BACK_END_URL + "/api/v1/alert/list",
