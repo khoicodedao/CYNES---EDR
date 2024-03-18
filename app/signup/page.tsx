@@ -2,7 +2,17 @@
 import React from "react";
 import Link from "next/link";
 import API_URL from "@/helpers/api-url";
+function clearAllCookies() {
+  const cookies = document.cookie.split(";");
+  for (let i = 0; i < cookies.length; i++) {
+    const cookie = cookies[i];
+    const eqPos = cookie.indexOf("=");
+    const name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+    document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/";
+  }
+}
 const SignUp: React.FC = () => {
+  clearAllCookies();
   return (
     <>
       <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-3/4">

@@ -44,7 +44,7 @@ const Agent = () => {
 
       {/* <!-- ====== StatisticEvent Section Start ====== --> */}
       <div className=" mt-1 w-full max-w-full rounded-sm border border-stroke bg-white  dark:border-strokedark dark:bg-boxdark shadow-default">
-        <StatisticAgents></StatisticAgents>
+        <StatisticAgents timeRange={timeRange}></StatisticAgents>
       </div>
 
       {/* <!-- ====== Event Section End ====== --> */}

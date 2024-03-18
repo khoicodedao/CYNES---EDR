@@ -10,6 +10,7 @@ const API_URL = {
   },
   AGENT: {
     GET_AGENTS: "/api/agents",
+    COUNT_AGENTS: "/api/agents/statistic_agents",
   },
   EVENTS: {
     GET_EVENTS: "/api/events",
@@ -17,6 +18,7 @@ const API_URL = {
   },
   ALERTS: {
     GET_ALERTS: "/api/alerts",
+    COUNT_ALERTS: "/api/alerts/statistic_alerts",
   },
   GROUPS: {
     GET_GROUPS: "/api/groups",
@@ -55,6 +57,7 @@ export const API_BACKEND = {
   AGENT: {
     GET_AGENTS: BACK_END_URL + "/api/v1/agent/list",
     DELETE_AGENT: BACK_END_URL + "/api/v1/agent",
+    COUNT_AGENTS: BACK_END_URL + "/api/v1/agent/count",
   },
   EVENTS: {
     GET_EVENTS: BACK_END_URL + "/api/v1/event/list",
@@ -62,6 +65,7 @@ export const API_BACKEND = {
   },
   ALERTS: {
     GET_ALERTS: BACK_END_URL + "/api/v1/alert/list",
+    COUNT_ALERTS: BACK_END_URL + "/api/v1/alert/count",
   },
   GROUP: {
     GET_GROUPS: BACK_END_URL + "/api/v1/group/list",

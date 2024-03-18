@@ -81,14 +81,11 @@ const columns: ColumnsType<ALERT> = [
     },
   },
 ];
-
 type DataGridProps = {
   timeRange?: string[];
   search?: { field: string; operator: string; value: string }[];
 };
-
 const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
-  console.log(timeRange);
   const [alerts, setAlertList] = useState<ALERT[]>([] as ALERT[]);
   const [loading, setLoading] = useState(false);
   const [totalCount, setTotalCount] = useState(0);
