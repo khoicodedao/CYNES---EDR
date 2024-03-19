@@ -4,7 +4,6 @@ import { API_BACKEND } from "@/helpers/api-url";
 export async function POST(request: NextRequest) {
   let token = request.cookies.get("token")?.value || "";
   let searchParams = await request.json();
-  console.log(searchParams);
   let online = {
     filter: [
       {

@@ -40,19 +40,12 @@ const DashBoard: React.FC = () => {
       ></FunctionBar>
       <Card timeRange={timeRange}></Card>
       <div className="mt-4 grid grid-cols-12 gap-4 md:mt-6 md:gap-6 2xl:mt-7.5 2xl:gap-7.5">
-        {/* Line chart for Alert and */}
         <ChartOne />
-        {/* End chart */}
-        {/* Column chart by time */}
         <Suspense fallback={<FallbackChartTwo />}>
           <ChartTwo timeRange={timeRange} />
         </Suspense>
-        {/* End chart */}
-        {/* Pie chart */}
-        <ChartThree />
-        {/* Pie chart */}
-
-        <MapOne />
+        <ChartThree title="Alerts" />
+        <ChartThree title="Events" />
       </div>
     </>
   );

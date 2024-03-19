@@ -1,7 +1,10 @@
-import React from "react";
+"use client";
+import React, { useState, useEffect } from "react";
 import CardDataStats from "../CardDataStats";
 import { WarningOutlined } from "@ant-design/icons";
+import { customAxiosPost } from "@/helpers/custom-axios";
 import Link from "next/link";
+import API_URL from "@/helpers/api-url";
 type CARD = {
   agents: {
     online: number;
@@ -13,7 +16,7 @@ type CARD = {
     low: number;
   };
 };
-const cardInit = {
+const cardInit: CARD = {
   agents: {
     online: 0,
     offline: 0,
@@ -42,8 +45,11 @@ function formatNumberWithDots(number: number) {
 }
 function calculateRatios(number1: number, number2: number, number3?: number) {
   // Check if any of the numbers is zero
-  if (number1 === 0 || number2 === 0) {
-    return [0, 0];
+  if (number1 === 0) {
+    return [0, 100];
+  }
+  if (number2 == 0) {
+    return [100, 0];
   }
   let sum = number1 + number2;
   if (number3) {
@@ -56,19 +62,65 @@ function calculateRatios(number1: number, number2: number, number3?: number) {
 type DataGridProps = {
   timeRange?: string[];
 };
+type AgentStatus = {
+  online: number;
+  offline: number;
+};
+type AlertLevel = {
+  hight: number;
+  medium: number;
+  low: number;
+};
 const Card: React.FC<DataGridProps> = ({ timeRange }) => {
-  let card = {
-    agents: {
-      online: 2314,
-      offline: 400,
-    },
-    alerts: {
-      hight: 10341,
-      medium: 80023,
-      low: 1251,
-    },
-  };
-
+  const [card, setCard] = useState<CARD>(cardInit);
+  let startDate = "";
+  let filter: any = {};
+  if (timeRange) {
+    startDate = timeRange[0];
+    const filterInTimeRage = [
+      {
+        field: "created_at",
+        operator: ">=",
+        value: timeRange[0],
+      },
+      {
+        field: "created_at",
+        operator: "<=",
+        value: timeRange[1],
+      },
+    ];
+    filter["filter"] = filterInTimeRage;
+  }
+  useEffect(() => {
+    let urlAgent = API_URL.AGENT.COUNT_AGENTS;
+    let urlAlert = API_URL.ALERTS.COUNT_ALERTS;
+    let getDataAgent = async () => {
+      let resData: { success: boolean; data: AgentStatus } =
+        await customAxiosPost(urlAgent, startDate);
+      if (resData.success) {
+        setCard((prevState) => {
+          return {
+            ...prevState,
+            agents: resData.data,
+          };
+        });
+      }
+    };
+    let getDataAlert = async () => {
+      let resData: { success: boolean; data: AlertLevel } =
+        await customAxiosPost(urlAlert, filter);
+      if (resData.success) {
+        setCard((prevState) => {
+          return {
+            ...prevState,
+            alerts: resData.data,
+          };
+        });
+      }
+    };
+    getDataAlert();
+    getDataAgent();
+  }, [timeRange, startDate]);
   return (
     <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 xl:grid-cols-2 2xl:gap-7.5 mt-7.5">
       <Link href="/agents">
