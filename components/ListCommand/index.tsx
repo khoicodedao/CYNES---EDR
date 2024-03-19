@@ -36,9 +36,9 @@ const ListCommand = () => {
       {/* <!-- ====== FunctionBar Section End ====== --> */}
 
       {/* <!-- ====== StatisticEvent Section Start ====== --> */}
-      <div className=" mt-1 w-full max-w-full rounded-sm border border-stroke bg-white  dark:border-strokedark dark:bg-boxdark shadow-default">
+      {/* <div className=" mt-1 w-full max-w-full rounded-sm border border-stroke bg-white  dark:border-strokedark dark:bg-boxdark shadow-default">
         <StatisticAgents></StatisticAgents>
-      </div>
+      </div> */}
 
       {/* <!-- ====== Event Section End ====== --> */}
       {/* <!-- ====== DataGrid Section Start ====== --> */}

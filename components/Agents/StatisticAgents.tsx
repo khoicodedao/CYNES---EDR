@@ -28,7 +28,7 @@ const StatisticAgents: React.FC<DataGridProps> = ({ timeRange }) => {
       }
     };
     getData();
-  }, [timeRange]);
+  }, [timeRange, startDate]);
   return (
     <div className="">
       <Row gutter={16}>

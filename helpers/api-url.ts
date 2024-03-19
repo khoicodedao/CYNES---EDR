@@ -31,6 +31,7 @@ const API_URL = {
     ADD_TASK: "/api/tasks/add",
     UPDATE_TASK: "/api/tasks/update",
     DELETE_TASK: "/api/tasks/delete",
+    COUNT_TASKS: "/api/tasks/statistic_tasks",
   },
   COMMANDS: {
     GET_COMMANDS: "/api/commands",
