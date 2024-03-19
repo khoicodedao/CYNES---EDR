@@ -48,12 +48,18 @@ const API_URL = {
   DASHBOARD: {
     GET_ALERT_CHART_DAYS: "/api/dashboard/alert_chart_days",
   },
+  USER: {
+    GET_USERS: "/api/users/list",
+    SIGN_UP: "/api/users/signup",
+    DELETE_USER: "/api/users/delete",
+  },
 };
 
 export const API_BACKEND = {
   USER: {
     LOGIN: BACK_END_URL + "/api/v1/user/signin",
     GET_USERS: BACK_END_URL + "/api/v1/user",
+    SIGN_UP: BACK_END_URL + "/api/v1/user/signup",
   },
   AGENT: {
     GET_AGENTS: BACK_END_URL + "/api/v1/agent/list",

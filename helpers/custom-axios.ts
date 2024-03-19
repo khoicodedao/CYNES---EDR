@@ -90,6 +90,7 @@ const customAxiosPost = async <T>(
 const customAxiosGet = async <T>(
   url: string,
   params?: any,
+  token?: string,
   cache?: Object
 ): Promise<T> => {
   try {
@@ -102,7 +103,13 @@ const customAxiosGet = async <T>(
         .join("&");
       url = `${url}?${queryString}`;
     }
-    const response = await fetch(url, cache);
+    const response = await fetch(url, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: token ? `Bearer ${token}` : "",
+      },
+    });
     const responseData: T = await response.json();
     return responseData;
   } catch (error: any) {

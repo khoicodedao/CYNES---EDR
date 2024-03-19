@@ -45,6 +45,7 @@ export const config = {
     "/events",
     "/alerts",
     "/tasks",
+    "/users",
     "/control-directly",
     "/list-command",
   ],

@@ -3,16 +3,19 @@ import { customAxiosGet, customAxiosPost } from "@/helpers/custom-axios";
 import { API_BACKEND } from "@/helpers/api-url";
 import { USER } from "@/types/user";
 export async function POST(request: NextRequest) {
-  const url = API_BACKEND.USER.GET_USERS;
+  let dataParams = await request.json();
+  const url = API_BACKEND.USER.SIGN_UP;
   let token = request.cookies.get("token")?.value || "";
   try {
-    const users: { users: USER[]; count: number; error: boolean } =
-      await customAxiosGet(url, {}, token);
+    const users: { user: USER; error: boolean } = await customAxiosPost(
+      url,
+      dataParams,
+      token
+    );
     if (!users.error) {
       const response = NextResponse.json({
-        success: true,
-        users: users.users,
-        count: users.count,
+        error: false,
+        user: users.user,
       });
       return response;
     }
