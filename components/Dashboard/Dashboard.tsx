@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import ChartOne from "../Charts/ChartOne";
 import ChartThree from "../Charts/ChartThree";
 import ChartTwo from "../Charts/ChartTwo";
@@ -8,13 +8,26 @@ import { Suspense } from "react";
 import FallbackChartTwo from "./FallbackChartTwo";
 import useLocalStorage from "@/hooks/useLocalStorage";
 import dayjs from "dayjs";
-import dynamic from "next/dynamic";
 import FunctionBar from "@/components/common/FunctionBar";
-const MapOne = dynamic(() => import("../Maps/MapOne"), {
-  ssr: false,
-});
+import API_URL from "@/helpers/api-url";
+import { customAxiosPost } from "@/helpers/custom-axios";
 
+type Level = {
+  hight: number;
+  medium: number;
+  low: number;
+};
 const DashBoard: React.FC = () => {
+  const [alertLevel, setAlertLevel] = useState<Level>({
+    hight: 0,
+    medium: 0,
+    low: 0,
+  });
+  const [eventLevel, setEventLevel] = useState<Level>({
+    hight: 0,
+    medium: 0,
+    low: 0,
+  });
   const [storedValue, setStoredValue] = useLocalStorage("local-time", [
     dayjs().toISOString(),
     dayjs().endOf("day").toISOString(),
@@ -27,7 +40,51 @@ const DashBoard: React.FC = () => {
   const [search, setSearch] = useState<
     { field: string; operator: string; value: string }[]
   >([]);
+  let filter: any = {};
 
+  useEffect(() => {
+    if (timeRange) {
+      const filterInTimeRage = [
+        {
+          field: "created_at",
+          operator: ">=",
+          value: timeRange[0],
+        },
+        {
+          field: "created_at",
+          operator: "<=",
+          value: timeRange[1],
+        },
+      ];
+      filter["filter"] = filterInTimeRage;
+    }
+    let urlEvent = API_URL.EVENTS.COUNT_EVENTS;
+    let getDataEvent = async () => {
+      let resData: { success: boolean; data: Level } = await customAxiosPost(
+        urlEvent,
+        filter
+      );
+      console.log(resData);
+      if (resData.success) {
+        setEventLevel(resData.data);
+      }
+    };
+    //======Get Alert data
+    let urlAlert = API_URL.ALERTS.COUNT_ALERTS;
+    let getDataAlert = async () => {
+      let resData: { success: boolean; data: Level } = await customAxiosPost(
+        urlAlert,
+        filter
+      );
+      console.log(resData);
+      if (resData.success) {
+        setAlertLevel(resData.data);
+      }
+    };
+    //==========fetch data
+    getDataAlert();
+    getDataEvent();
+  }, [timeRange]);
   return (
     <>
       <FunctionBar
@@ -44,8 +101,8 @@ const DashBoard: React.FC = () => {
         <Suspense fallback={<FallbackChartTwo />}>
           <ChartTwo timeRange={timeRange} />
         </Suspense>
-        <ChartThree title="Alerts" />
-        <ChartThree title="Events" />
+        <ChartThree title="Alerts" data={Object.values(alertLevel)} />
+        <ChartThree title="Events" data={Object.values(eventLevel)} />
       </div>
     </>
   );

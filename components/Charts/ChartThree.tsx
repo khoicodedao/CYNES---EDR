@@ -16,7 +16,7 @@ const options: ApexOptions = {
     type: "donut",
   },
   colors: ["#10B981", "#375E83", "#FFA70B"],
-  labels: ["Low", "Medium", "Hight"],
+  labels: ["Hight", "Medium", "Low"],
   legend: {
     show: true,
     position: "bottom",
@@ -54,12 +54,9 @@ const options: ApexOptions = {
 };
 type ChartThreeProps = {
   title: string;
+  data: number[];
 };
-const ChartThree: React.FC<ChartThreeProps> = ({ title }) => {
-  const [state, setState] = useState<ChartThreeState>({
-    series: [65, 34, 12],
-  });
-
+const ChartThree: React.FC<ChartThreeProps> = ({ title, data }) => {
   return (
     <div className="col-span-12 rounded-sm border border-stroke bg-white px-5 pt-7.5 pb-5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-6 xl:col-span-6">
       <div className="mb-3 justify-between gap-4 sm:flex">
@@ -104,11 +101,7 @@ const ChartThree: React.FC<ChartThreeProps> = ({ title }) => {
 
       <div className="mb-2">
         <div id="chartThree" className="mx-auto flex justify-center">
-          <ReactApexChart
-            options={options}
-            series={state.series}
-            type="donut"
-          />
+          <ReactApexChart options={options} series={data} type="donut" />
         </div>
       </div>
 
