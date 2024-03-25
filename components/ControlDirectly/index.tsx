@@ -16,7 +16,15 @@ const data = [
 ];
 const ControlDirectly = () => {
   const [terminalLineData, setTerminalLineData] = useState<any[]>([""]);
-
+  const headers = {
+    client: "client2",
+  };
+  const socket = io("https://socket-edr.onrender.com/agent", {
+    extraHeaders: headers,
+  });
+  socket.on("connect", () => {
+    console.log("Connected to Socket.IO server");
+  });
   // useEffect(() => {
   //   const socket = io("https://socket-edr.onrender.com/user");
   //   socket.on("connect", () => {
