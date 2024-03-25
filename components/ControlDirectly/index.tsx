@@ -26,7 +26,6 @@ const ControlDirectly = () => {
     console.log("Connected to Socket.IO server");
   });
   // useEffect(() => {
-  //   const socket = io("https://socket-edr.onrender.com/user");
   //   socket.on("connect", () => {
   //     console.log("Connected to Socket.IO server");
   //   });
