@@ -5,9 +5,8 @@
   color: white;
 }
 
-:where(.css-dev-only-do-not-override-qgg3xn).ant-badge.ant-badge-status
-  .ant-badge-status-dot {
-  width: 29px !important;
+#control-page .ant-badge-status-dot {
+  width: 6px !important;
 
   border-radius: 2px !important;
 }

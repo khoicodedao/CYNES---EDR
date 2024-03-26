@@ -1,8 +1,9 @@
 "use client";
+import "./index.css";
 import Terminal, { ColorMode, TerminalOutput } from "react-terminal-ui";
 import { useState, useEffect } from "react";
-import { Avatar, List } from "antd";
-const io = require("socket.io-client/dist/socket.io");
+import { Avatar, List, Badge } from "antd";
+const io = require("socket.io-client");
 const data = [
   {
     title: "Agent 1",
@@ -15,17 +16,22 @@ const data = [
   },
 ];
 const ControlDirectly = () => {
+  const [clientID, setClientID] = useState("");
   const [terminalLineData, setTerminalLineData] = useState<any[]>([""]);
   const headers = {
+    autoConnect: false,
     client: "client2",
+    token:
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjcmVkZW50aWFscyI6WyJhbGw6YWxsIl0sImV4cGlyZXMiOjE3MTIzNTM1ODAsImlkIjoiMDk4YTUxMTYtNDFmYi00ZTgxLTk4MzItZTgyYjZiZDU4MjI2IiwidXNlcm5hbWUiOiJtb25pdG9yIn0.28T3TVBqHfqiWvdKZWFOkhyE5EFuHIyXUxCYYZKkONA",
   };
-  const socket = io("https://socket-edr.onrender.com/agent", {
+  const socket = io("https://socket-edr.onrender.com/user", {
     extraHeaders: headers,
   });
-  socket.on("connect", () => {
-    console.log("Connected to Socket.IO server");
-  });
+
   // useEffect(() => {
+  //   socket.on("connect", () => {
+  //     console.log("Connected to Socket.IO server");
+  //   });
   //   socket.on("connect", () => {
   //     console.log("Connected to Socket.IO server");
   //   });
@@ -43,7 +49,7 @@ const ControlDirectly = () => {
   // }, [terminalLineData.length]);
   return (
     <>
-      <div className="flex">
+      <div id="control-page" className="flex">
         <div className="w-1/4 ">
           <div
             id="scrollableDiv"
@@ -54,18 +60,29 @@ const ControlDirectly = () => {
               border: "1px solid rgba(140, 140, 140, 0.35)",
             }}
           >
+            <h3 className="ml-2 pb-2 pt-2 opacity-70 font-bold border-b border-gray-400">
+              Agent Online
+            </h3>
             <List
               itemLayout="horizontal"
               dataSource={data}
               renderItem={(item, index) => (
-                <List.Item>
+                <List.Item className="hover:bg-red-200">
                   <List.Item.Meta
-                    avatar={
-                      <Avatar
-                        src={`https://api.dicebear.com/7.x/miniavs/svg?seed=${index}`}
-                      />
+                    avatar={<Badge status="success" />}
+                    title={
+                      <div
+                        className="dark:text-white cursor-pointer "
+                        onClick={() => {
+                          setClientID(item.title);
+                        }}
+                      >
+                        <div className="font-bold">ID: {item.title}</div>
+                        <div className="opacity-25">
+                          Time online: 2024.03.26 09:29:31
+                        </div>
+                      </div>
                     }
-                    title={<p className="dark:text-white">{item.title}</p>}
                   />
                 </List.Item>
               )}
