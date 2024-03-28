@@ -58,3 +58,11 @@
 #scrollableDiv {
   height: calc(100vh - 200px) !important;
 }
+
+.ant-list-items li:hover {
+  background-color: #45454587;
+}
+
+.ant-list-items li.active {
+  background-color: #8b808087;
+}

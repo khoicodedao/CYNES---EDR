@@ -4,19 +4,36 @@ import Terminal, { ColorMode, TerminalOutput } from "react-terminal-ui";
 import { useState, useEffect } from "react";
 import { Avatar, List, Badge } from "antd";
 const io = require("socket.io-client");
-const data = [
-  {
-    title: "Agent 1",
-  },
-  {
-    title: "Agent 2",
-  },
-  {
-    title: "Agent 3",
-  },
-];
+
 const ControlDirectly = () => {
   const [clientID, setClientID] = useState("");
+  const [listAgent, setListAgent] = useState([
+    {
+      title: "Agent 1",
+      active: false,
+    },
+    {
+      title: "Agent 2",
+      active: false,
+    },
+    {
+      title: "Agent 3",
+      active: false,
+    },
+  ]);
+  const [active, setActive] = useState(false);
+  const activeAgent = (index: number) => {
+    let newListAgent = listAgent.map((item, i) => {
+      if (i == index) {
+        return { ...item, active: !item.active };
+      } else {
+        return { ...item, active: false };
+      }
+    });
+
+    setListAgent(newListAgent);
+  };
+
   const [terminalLineData, setTerminalLineData] = useState<any[]>([""]);
   const headers = {
     autoConnect: false,
@@ -24,9 +41,9 @@ const ControlDirectly = () => {
     token:
       "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjcmVkZW50aWFscyI6WyJhbGw6YWxsIl0sImV4cGlyZXMiOjE3MTIzNTM1ODAsImlkIjoiMDk4YTUxMTYtNDFmYi00ZTgxLTk4MzItZTgyYjZiZDU4MjI2IiwidXNlcm5hbWUiOiJtb25pdG9yIn0.28T3TVBqHfqiWvdKZWFOkhyE5EFuHIyXUxCYYZKkONA",
   };
-  const socket = io("https://socket-edr.onrender.com/user", {
-    extraHeaders: headers,
-  });
+  // const socket = io("https://socket-edr.onrender.com/user", {
+  //   extraHeaders: headers,
+  // });
 
   // useEffect(() => {
   //   socket.on("connect", () => {
@@ -56,7 +73,7 @@ const ControlDirectly = () => {
             style={{
               height: "calc(100vh - 200px)",
               overflow: "auto",
-              padding: "0 16px",
+              // padding: "0 16px",
               border: "1px solid rgba(140, 140, 140, 0.35)",
             }}
           >
@@ -65,14 +82,20 @@ const ControlDirectly = () => {
             </h3>
             <List
               itemLayout="horizontal"
-              dataSource={data}
+              dataSource={listAgent}
               renderItem={(item, index) => (
-                <List.Item className="hover:bg-red-200">
+                <List.Item
+                  style={{ padding: "5px" }}
+                  className={`cursor-pointer ${item.active ? "active" : ""}`}
+                  onClick={() => {
+                    activeAgent(index);
+                  }}
+                >
                   <List.Item.Meta
                     avatar={<Badge status="success" />}
                     title={
                       <div
-                        className="dark:text-white cursor-pointer "
+                        className="dark:text-white cursor-pointer  "
                         onClick={() => {
                           setClientID(item.title);
                         }}
