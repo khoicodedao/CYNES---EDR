@@ -36,7 +36,7 @@ function extractNumericValue(inputString: string) {
   if (inputString == "") {
     return 0;
   }
-  var match = inputString.match(/\((\d+)%\)/);
+  var match = inputString.match(/\(([^)]+)\)$/);
   if (match) {
     var numericValue = parseInt(match[1], 10);
     return numericValue;
@@ -87,7 +87,7 @@ const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
       title: "ID",
       dataIndex: "ID",
       key: "ID",
-      width: 150,
+      width: 90,
     },
     { title: "MAC", dataIndex: "mac", key: "mac", width: 180 },
 
