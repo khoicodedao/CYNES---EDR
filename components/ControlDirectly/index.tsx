@@ -41,29 +41,22 @@ const ControlDirectly = () => {
     token:
       "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjcmVkZW50aWFscyI6WyJhbGw6YWxsIl0sImV4cGlyZXMiOjE3MTIzNTM1ODAsImlkIjoiMDk4YTUxMTYtNDFmYi00ZTgxLTk4MzItZTgyYjZiZDU4MjI2IiwidXNlcm5hbWUiOiJtb25pdG9yIn0.28T3TVBqHfqiWvdKZWFOkhyE5EFuHIyXUxCYYZKkONA",
   };
-  // const socket = io("https://socket-edr.onrender.com/user", {
-  //   extraHeaders: headers,
-  // });
+  const socket = io("http://localhost:4000", {
+    extraHeaders: headers,
+  });
 
-  // useEffect(() => {
-  //   socket.on("connect", () => {
-  //     console.log("Connected to Socket.IO server");
-  //   });
-  //   socket.on("connect", () => {
-  //     console.log("Connected to Socket.IO server");
-  //   });
-  //   socket.emit("message", {
-  //     to: "test",
-  //     command_type: "CMD",
-  //     command_info: {
-  //       dir: "c:\\windows\\",
-  //       cmd: "dir",
-  //     },
-  //   });
-  //   return () => {
-  //     socket.disconnect();
-  //   };
-  // }, [terminalLineData.length]);
+  useEffect(() => {
+    socket.on("connect", () => {
+      console.log("Connected to Socket.IO server");
+    });
+    socket.on("connect", () => {
+      console.log("Connected to Socket.IO server");
+    });
+
+    return () => {
+      socket.disconnect();
+    };
+  }, [terminalLineData.length]);
   return (
     <>
       <div id="control-page" className="flex">
@@ -118,14 +111,14 @@ const ControlDirectly = () => {
             name="Terminal"
             colorMode={ColorMode.Dark}
             onInput={(terminalInput) => {
-              // socket.emit("message", {
-              //   to: "test",
-              //   command_type: terminalInput,
-              //   command_info: {
-              //     dir: "c:\\windows\\",
-              //     cmd: "dir",
-              //   },
-              // });
+              socket.emit("msg", {
+                to: clientID,
+                command_type: terminalInput,
+                command_info: {
+                  dir: "c:\\windows\\",
+                  cmd: terminalInput,
+                },
+              });
               if (terminalInput === "clear") setTerminalLineData([""]);
               else {
                 terminalLineData.push(
