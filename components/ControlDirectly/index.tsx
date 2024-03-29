@@ -2,14 +2,14 @@
 import "./index.css";
 import Terminal, { ColorMode, TerminalOutput } from "react-terminal-ui";
 import { useState, useEffect } from "react";
-import { Avatar, List, Badge } from "antd";
-const io = require("socket.io-client");
+import { List, Badge } from "antd";
 
 const ControlDirectly = () => {
   const [clientID, setClientID] = useState("");
+  const [directory, setDirectory] = useState("");
   const [listAgent, setListAgent] = useState([
     {
-      title: "Agent 1",
+      title: "client1",
       active: false,
     },
     {
@@ -21,7 +21,16 @@ const ControlDirectly = () => {
       active: false,
     },
   ]);
-  const [active, setActive] = useState(false);
+  const headers = {
+    client: "userMonitor",
+    token:
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjcmVkZW50aWFscyI6WyJhbGw6YWxsIl0sImV4cGlyZXMiOjE3MTI1OTM5OTUsImlkIjoiMDk4YTUxMTYtNDFmYi00ZTgxLTk4MzItZTgyYjZiZDU4MjI2IiwidXNlcm5hbWUiOiJtb25pdG9yIn0.MrfTNR5f4aTfS_AKHMJfrcZ-4VLAVSsiG7IG1cE6MJo",
+  };
+  const io = require("socket.io-client");
+  const socket = io("https://socket-edr.onrender.com/user", {
+    extraHeaders: headers,
+  });
+  // const [active, setActive] = useState(false);
   const activeAgent = (index: number) => {
     let newListAgent = listAgent.map((item, i) => {
       if (i == index) {
@@ -35,22 +44,17 @@ const ControlDirectly = () => {
   };
 
   const [terminalLineData, setTerminalLineData] = useState<any[]>([""]);
-  const headers = {
-    autoConnect: false,
-    client: "client2",
-    token:
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjcmVkZW50aWFscyI6WyJhbGw6YWxsIl0sImV4cGlyZXMiOjE3MTIzNTM1ODAsImlkIjoiMDk4YTUxMTYtNDFmYi00ZTgxLTk4MzItZTgyYjZiZDU4MjI2IiwidXNlcm5hbWUiOiJtb25pdG9yIn0.28T3TVBqHfqiWvdKZWFOkhyE5EFuHIyXUxCYYZKkONA",
-  };
-  const socket = io("http://localhost:4000", {
-    extraHeaders: headers,
-  });
 
   useEffect(() => {
     socket.on("connect", () => {
       console.log("Connected to Socket.IO server");
     });
-    socket.on("connect", () => {
-      console.log("Connected to Socket.IO server");
+    socket.on("msg", (msg: any) => {
+      terminalLineData.push(
+        <TerminalOutput>{`${directory} ${msg.command_info.ouput}`}</TerminalOutput>
+      );
+      setTerminalLineData([...terminalLineData]);
+      setDirectory(msg.command_info.dir);
     });
 
     return () => {
@@ -107,13 +111,16 @@ const ControlDirectly = () => {
         </div>
         <div className="w-3/4 bg-gray-300 p-6 pt-0 pb-0">
           <Terminal
+            prompt={`$ ${directory}`}
             height="calc(100vh - 100px)"
             name="Terminal"
             colorMode={ColorMode.Dark}
             onInput={(terminalInput) => {
+              console.log("clientID", clientID);
               socket.emit("msg", {
+                from: "userMonitor",
                 to: clientID,
-                command_type: terminalInput,
+                command_type: "cmd",
                 command_info: {
                   dir: "c:\\windows\\",
                   cmd: terminalInput,
@@ -122,7 +129,7 @@ const ControlDirectly = () => {
               if (terminalInput === "clear") setTerminalLineData([""]);
               else {
                 terminalLineData.push(
-                  <TerminalOutput>{terminalInput}</TerminalOutput>
+                  <TerminalOutput>{`${directory} ${terminalInput}`}</TerminalOutput>
                 );
                 setTerminalLineData([...terminalLineData]);
               }
