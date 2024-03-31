@@ -3,30 +3,36 @@ import "./index.css";
 import Terminal, { ColorMode, TerminalOutput } from "react-terminal-ui";
 import { useState, useEffect } from "react";
 import { List, Badge } from "antd";
-
+import { jwtDecode } from "jwt-decode";
+const io = require("socket.io-client");
+const parseCookies = () => {
+  return document.cookie.split(";").reduce((cookies: any, cookie) => {
+    const [name, value] = cookie.split("=").map((c) => c.trim());
+    cookies[name] = value;
+    return cookies;
+  }, {});
+};
+//!error don't update msg when run command
 const ControlDirectly = () => {
+  const cookies = parseCookies();
+  let userName: {
+    expires: number;
+    id: string;
+    username: string;
+  } = jwtDecode(cookies.token);
   const [clientID, setClientID] = useState("");
   const [directory, setDirectory] = useState("");
-  const [listAgent, setListAgent] = useState([
+  const [listAgent, setListAgent] = useState<
     {
-      title: "client1",
-      active: false,
-    },
-    {
-      title: "Agent 2",
-      active: false,
-    },
-    {
-      title: "Agent 3",
-      active: false,
-    },
-  ]);
+      title: string;
+      time: any;
+      active: boolean;
+    }[]
+  >([]);
   const headers = {
-    client: "userMonitor",
-    token:
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjcmVkZW50aWFscyI6WyJhbGw6YWxsIl0sImV4cGlyZXMiOjE3MTI1OTM5OTUsImlkIjoiMDk4YTUxMTYtNDFmYi00ZTgxLTk4MzItZTgyYjZiZDU4MjI2IiwidXNlcm5hbWUiOiJtb25pdG9yIn0.MrfTNR5f4aTfS_AKHMJfrcZ-4VLAVSsiG7IG1cE6MJo",
+    client: userName.username,
+    token: cookies.token,
   };
-  const io = require("socket.io-client");
   const socket = io("https://socket-edr.onrender.com/user", {
     extraHeaders: headers,
   });
@@ -44,23 +50,52 @@ const ControlDirectly = () => {
   };
 
   const [terminalLineData, setTerminalLineData] = useState<any[]>([""]);
-
   useEffect(() => {
     socket.on("connect", () => {
       console.log("Connected to Socket.IO server");
     });
+
+    socket.on("list_agents", (msg: any) => {
+      console.log("list_agents", msg);
+      const transformedArray: {
+        title: string;
+        time: string | unknown;
+        active: boolean;
+      }[] = Object.entries(msg).map(([key, value]) => ({
+        title: key,
+        time: value,
+        active: false,
+      }));
+
+      // Use a Set to keep track of unique titles
+      const uniqueTitles = new Set();
+
+      // Filter the merged array to include only objects with unique titles
+      const resultArray = transformedArray.filter((obj) => {
+        if (!uniqueTitles.has(obj.title)) {
+          uniqueTitles.add(obj.title);
+          return true;
+        }
+        return false;
+      });
+
+      setListAgent((prevList) => [...prevList, ...resultArray]);
+    });
+
     socket.on("msg", (msg: any) => {
-      terminalLineData.push(
-        <TerminalOutput>{`${directory} ${msg.command_info.ouput}`}</TerminalOutput>
-      );
-      setTerminalLineData([...terminalLineData]);
-      setDirectory(msg.command_info.dir);
+      console.log("msg", msg);
+      // terminalLineData.push(
+      //   <TerminalOutput>{`${directory} ${msg.command_info.ouput}`}</TerminalOutput>
+      // );
+      // setTerminalLineData([...terminalLineData]);
+      // setDirectory(msg.command_info.dir);
     });
 
     return () => {
       socket.disconnect();
     };
-  }, [terminalLineData.length]);
+  }, []);
+
   return (
     <>
       <div id="control-page" className="flex">
@@ -98,9 +133,7 @@ const ControlDirectly = () => {
                         }}
                       >
                         <div className="font-bold">ID: {item.title}</div>
-                        <div className="opacity-25">
-                          Time online: 2024.03.26 09:29:31
-                        </div>
+                        <div className="opacity-25">{item.time}</div>
                       </div>
                     }
                   />
@@ -118,7 +151,7 @@ const ControlDirectly = () => {
             onInput={(terminalInput) => {
               console.log("clientID", clientID);
               socket.emit("msg", {
-                from: "userMonitor",
+                from: userName.username,
                 to: clientID,
                 command_type: "cmd",
                 command_info: {
