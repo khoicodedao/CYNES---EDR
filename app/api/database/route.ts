@@ -10,7 +10,6 @@ export async function POST(request: NextRequest) {
   try {
     const res: { count: number; error: boolean; dbs: DATABASE[] } =
       await customAxiosPost(url, searchParams, token);
-    console.log(res);
     if (res.error === false) {
       const response = NextResponse.json({
         success: true,
