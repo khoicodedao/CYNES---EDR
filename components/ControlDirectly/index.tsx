@@ -3,23 +3,9 @@ import "./index.css";
 import Terminal, { ColorMode, TerminalOutput } from "react-terminal-ui";
 import { useState, useEffect } from "react";
 import { List, Badge } from "antd";
-import { jwtDecode } from "jwt-decode";
-const io = require("socket.io-client");
-const parseCookies = () => {
-  return document.cookie.split(";").reduce((cookies: any, cookie) => {
-    const [name, value] = cookie.split("=").map((c) => c.trim());
-    cookies[name] = value;
-    return cookies;
-  }, {});
-};
+import socket, { userName } from "./socket";
 //!error don't update msg when run command
 const ControlDirectly = () => {
-  const cookies = parseCookies();
-  let userName: {
-    expires: number;
-    id: string;
-    username: string;
-  } = jwtDecode(cookies.token);
   const [clientID, setClientID] = useState("");
   const [directory, setDirectory] = useState("");
   const [listAgent, setListAgent] = useState<
@@ -29,13 +15,7 @@ const ControlDirectly = () => {
       active: boolean;
     }[]
   >([]);
-  const headers = {
-    client: userName.username,
-    token: cookies.token,
-  };
-  const socket = io("https://socket-edr.onrender.com/user", {
-    extraHeaders: headers,
-  });
+
   // const [active, setActive] = useState(false);
   const activeAgent = (index: number) => {
     let newListAgent = listAgent.map((item, i) => {
@@ -48,13 +28,11 @@ const ControlDirectly = () => {
 
     setListAgent(newListAgent);
   };
-
   const [terminalLineData, setTerminalLineData] = useState<any[]>([""]);
   useEffect(() => {
     socket.on("connect", () => {
       console.log("Connected to Socket.IO server");
     });
-
     socket.on("list_agents", (msg: any) => {
       console.log("list_agents", msg);
       const transformedArray: {
@@ -81,16 +59,14 @@ const ControlDirectly = () => {
 
       setListAgent((prevList) => [...prevList, ...resultArray]);
     });
-
     socket.on("msg", (msg: any) => {
       console.log("msg", msg);
-      // terminalLineData.push(
-      //   <TerminalOutput>{`${directory} ${msg.command_info.ouput}`}</TerminalOutput>
-      // );
-      // setTerminalLineData([...terminalLineData]);
-      // setDirectory(msg.command_info.dir);
+      terminalLineData.push(
+        <TerminalOutput>{`${directory} ${msg.command_info.ouput}`}</TerminalOutput>
+      );
+      setTerminalLineData([...terminalLineData]);
+      setDirectory(msg.command_info.dir);
     });
-
     return () => {
       socket.disconnect();
     };
@@ -129,6 +105,8 @@ const ControlDirectly = () => {
                       <div
                         className="dark:text-white cursor-pointer  "
                         onClick={() => {
+                          setTerminalLineData([]);
+                          setDirectory("");
                           setClientID(item.title);
                         }}
                       >
