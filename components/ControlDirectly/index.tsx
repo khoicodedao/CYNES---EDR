@@ -7,7 +7,7 @@ import socket, { userName } from "./socket";
 //!error don't update msg when run command
 const ControlDirectly = () => {
   const [clientID, setClientID] = useState("");
-  const [directory, setDirectory] = useState("");
+  const [directory, setDirectory] = useState("c:\\");
   const [listAgent, setListAgent] = useState<
     {
       title: string;
@@ -34,7 +34,7 @@ const ControlDirectly = () => {
       console.log("Connected to Socket.IO server");
     });
     socket.on("list_agents", (msg: any) => {
-      console.log("list_agents", msg);
+      console.log("Listen to: list_agents", msg);
       const transformedArray: {
         title: string;
         time: string | unknown;
@@ -57,15 +57,19 @@ const ControlDirectly = () => {
         return false;
       });
 
-      setListAgent((prevList) => [...prevList, ...resultArray]);
+      setListAgent([...resultArray]);
     });
     socket.on("msg", (msg: any) => {
       console.log("msg", msg);
       terminalLineData.push(
-        <TerminalOutput>{`${directory} ${msg.command_info.ouput}`}</TerminalOutput>
+        <TerminalOutput>{`${directory} ${msg.command_info.output}`}</TerminalOutput>
       );
       setTerminalLineData([...terminalLineData]);
-      setDirectory(msg.command_info.dir);
+      if (msg.command_info.dir === "") {
+        setDirectory("c:\\");
+      } else {
+        setDirectory(msg.command_info.dir);
+      }
     });
     return () => {
       socket.disconnect();
@@ -128,12 +132,13 @@ const ControlDirectly = () => {
             colorMode={ColorMode.Dark}
             onInput={(terminalInput) => {
               console.log("clientID", clientID);
+              console.log("directory", directory);
               socket.emit("msg", {
                 from: userName.username,
                 to: clientID,
                 command_type: "cmd",
                 command_info: {
-                  dir: "c:\\windows\\",
+                  dir: directory,
                   cmd: terminalInput,
                 },
               });
