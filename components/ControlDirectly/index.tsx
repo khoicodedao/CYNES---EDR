@@ -2,10 +2,11 @@
 import "./index.css";
 import Terminal, { ColorMode, TerminalOutput } from "react-terminal-ui";
 import { useState, useEffect } from "react";
-import { List, Badge } from "antd";
+import { List, Badge, Alert } from "antd";
 import socket, { userName } from "./socket";
 //!error don't update msg when run command
 const ControlDirectly = () => {
+  const [isConnected, setIsConnected] = useState(socket.connected);
   const [clientID, setClientID] = useState("");
   const [directory, setDirectory] = useState("c:\\");
   const [listAgent, setListAgent] = useState<
@@ -29,9 +30,14 @@ const ControlDirectly = () => {
     setListAgent(newListAgent);
   };
   const [terminalLineData, setTerminalLineData] = useState<any[]>([""]);
+
   useEffect(() => {
     socket.on("connect", () => {
+      setIsConnected(true);
       console.log("Connected to Socket.IO server");
+    });
+    socket.on("disconnect", () => {
+      setIsConnected(false);
     });
     socket.on("list_agents", (msg: any) => {
       console.log("Listen to: list_agents", msg);
@@ -75,9 +81,11 @@ const ControlDirectly = () => {
       socket.disconnect();
     };
   }, []);
-
+  useEffect(() => {});
   return (
     <>
+      {" "}
+      {isConnected && <Alert message="Success Tips" type="success" showIcon />}
       <div id="control-page" className="flex">
         <div className="w-1/4 ">
           <div
@@ -110,7 +118,7 @@ const ControlDirectly = () => {
                         className="dark:text-white cursor-pointer  "
                         onClick={() => {
                           setTerminalLineData([]);
-                          setDirectory("");
+                          setDirectory("c:\\");
                           setClientID(item.title);
                         }}
                       >
@@ -155,7 +163,6 @@ const ControlDirectly = () => {
           </Terminal>
         </div>
       </div>
-
       {/* <!-- ====== DataGrid Section End ====== --> */}
     </>
   );
