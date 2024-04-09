@@ -2,8 +2,30 @@
 import "./index.css";
 import Terminal, { ColorMode, TerminalOutput } from "react-terminal-ui";
 import { useState, useEffect } from "react";
-import { List, Badge, Alert } from "antd";
-import socket, { userName } from "./socket";
+import { List, Badge } from "antd";
+// import socket, { userName } from "./socket";
+import { io } from "socket.io-client";
+import { jwtDecode } from "jwt-decode";
+const parseCookies = () => {
+  return document.cookie.split(";").reduce((cookies: any, cookie) => {
+    const [name, value] = cookie.split("=").map((c) => c.trim());
+    cookies[name] = value;
+    return cookies;
+  }, {});
+};
+const cookies = parseCookies();
+let userName: {
+  expires: number;
+  id: string;
+  username: string;
+} = jwtDecode(cookies.token);
+const headers = {
+  client: userName.username,
+  token: cookies.token,
+};
+const socket = io("https://socket-edr.onrender.com/user", {
+  extraHeaders: headers,
+});
 //!error don't update msg when run command
 const ControlDirectly = () => {
   const [isConnected, setIsConnected] = useState(socket.connected);
@@ -81,11 +103,15 @@ const ControlDirectly = () => {
       socket.disconnect();
     };
   }, []);
-  useEffect(() => {});
+
   return (
     <>
       {" "}
-      {isConnected && <Alert message="Success Tips" type="success" showIcon />}
+      {!isConnected && (
+        <div className="indeterminate-progress-bar">
+          <div className="indeterminate-progress-bar__progress"></div>
+        </div>
+      )}
       <div id="control-page" className="flex">
         <div className="w-1/4 ">
           <div

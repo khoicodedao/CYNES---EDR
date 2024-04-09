@@ -1,4 +1,5 @@
-const io = require("socket.io-client");
+"use client";
+import { io } from "socket.io-client";
 import { jwtDecode } from "jwt-decode";
 const parseCookies = () => {
   return document.cookie.split(";").reduce((cookies: any, cookie) => {
