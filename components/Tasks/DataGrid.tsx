@@ -117,7 +117,7 @@ const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
               title="Delete the command"
               description="Are you sure to delete this command?"
               onConfirm={async () => {
-                let urlDelete = API_URL.COMMANDS.DELETE_COMMAND;
+                let urlDelete = API_URL.TASKS.DELETE_TASK;
                 let res: { error: boolean; msg: string } =
                   await customAxiosPost(urlDelete, { id: item.id });
                 if (res.error) {

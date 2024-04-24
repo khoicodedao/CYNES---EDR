@@ -4,6 +4,7 @@ import { API_BACKEND } from "@/helpers/api-url";
 
 export async function POST(request: NextRequest) {
   let dataParams = await request.json();
+  console.log(dataParams);
   let token = request.cookies.get("token")?.value || "";
   const url = API_BACKEND.TASK.ADD_TASK;
   try {

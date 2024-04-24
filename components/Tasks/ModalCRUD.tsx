@@ -54,6 +54,7 @@ const ModalCRUD: React.FC<DataGridProps> = ({
         command_id: Number(values.command_id),
         group_name: groupName,
         command_name: commandName,
+        is_active: values.is_active,
       });
       if (res.error === false) {
         openNotificationWithIcon("success", res.msg);
@@ -64,7 +65,7 @@ const ModalCRUD: React.FC<DataGridProps> = ({
         openNotificationWithIcon("error", res.msg);
       }
     } else {
-      let urlEdit = API_URL.COMMANDS.UPDATE_COMMAND;
+      let urlEdit = API_URL.TASKS.UPDATE_TASK;
       // console.log(dataEdit);
       let { command_id, group_id } = values;
       let listCommandLabel = dataCreate.commandList.map((item) => item.label);
