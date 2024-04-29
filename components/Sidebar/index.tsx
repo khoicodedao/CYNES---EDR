@@ -79,10 +79,14 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
           <Image
             width={50}
             height={32}
-            src={"/images/logo/logonew.svg"}
+            src={"/images/logo/logonew.png"}
             alt="Logo"
           />
-          {sidebarOpen && <p>CYNES-EDR</p>}
+          {sidebarOpen && (
+            <p>
+              CYNES <span style={{ color: "#19CAFF" }}>EDR</span>
+            </p>
+          )}
         </div>
 
         <button
