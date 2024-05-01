@@ -3,9 +3,9 @@ import React, { useState, useEffect } from "react";
 import { DownOutlined, SettingOutlined, MenuOutlined } from "@ant-design/icons";
 import type { TableColumnsType } from "antd";
 import { Select, List } from "antd";
-import { Badge, Dropdown, Space, Table, Tag, Tabs, Progress } from "antd";
+import { Space, Table, Tag, Tabs, Progress } from "antd";
 import { Button, Drawer, Divider } from "antd";
-import { DeleteOutlined } from "@ant-design/icons";
+import { ApiOutlined } from "@ant-design/icons";
 import { AGENT } from "@/types/agent";
 import { customAxiosPost } from "@/helpers/custom-axios";
 import "./index.css";
@@ -51,6 +51,7 @@ type DataGridProps = {
 const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [loadingRemote, setLoadingRemote] = useState<boolean>(false);
   const [agentList, setAgentList] = useState<AGENT[]>([]);
   const [totalCount, setTotalCount] = useState(0);
   const [agentDrawer, setAgentDrawer] = useState<AGENT>({} as AGENT); //set data when dupble click in table row
@@ -138,9 +139,24 @@ const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
     },
   ];
 
+  const remote = async (id: string) => {
+    let url = API_URL.AGENT.REMOTE_AGENT;
+    let params = {
+      id: id,
+      require_remote: true,
+    };
+    setLoadingRemote(true);
+    let resData: {
+      success: boolean;
+      msg: string;
+    } = await customAxiosPost(url, params);
+    setLoadingRemote(false);
+    if (resData.success) {
+      window.open("/control-directly", "_blank", "noopener,noreferrer");
+    }
+  };
   useEffect(() => {
     let url = API_URL.AGENT.GET_AGENTS;
-
     let getData = async () => {
       setLoading(true);
       let resData: {
@@ -148,7 +164,6 @@ const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
         data: { agents: AGENT[] };
         count: number;
       } = await customAxiosPost(url, filter);
-      console.log(resData);
       if (resData.success) {
         setAgentList(
           resData.data.agents.map((data, index) => {
@@ -181,11 +196,13 @@ const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
           <Space>
             <Button
               type="primary"
-              icon={<DeleteOutlined />}
+              icon={<ApiOutlined />}
+              loading={loadingRemote}
               size={"large"}
               danger
+              onClick={() => setLoadingRemote((prev) => !prev)}
             >
-              Uninstall
+              Remote
             </Button>
           </Space>
         }

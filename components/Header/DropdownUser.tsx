@@ -16,11 +16,15 @@ const parseCookies = () => {
 
 const DropdownUser = () => {
   const cookies = parseCookies();
-  let userName: {
-    expires: number;
-    id: string;
-    username: string;
-  } = jwtDecode(cookies.token);
+  let userName: { expires: number; id: string; username: string } = {
+    expires: 0,
+    id: "",
+    username: "",
+  };
+  if (cookies.token) {
+    userName = jwtDecode(cookies.token);
+  }
+
   const router = useRouter();
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const trigger = useRef<any>(null);

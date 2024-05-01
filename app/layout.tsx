@@ -36,7 +36,9 @@ export default function RootLayout({
             <div className="flex h-screen overflow-hidden">
               {/* <!-- ===== Sidebar Start ===== --> */}
 
-              <Sidebar sidebarOpen={true} setSidebarOpen={setSidebarOpen} />
+              {showHeader && (
+                <Sidebar sidebarOpen={true} setSidebarOpen={setSidebarOpen} />
+              )}
 
               {/* <!-- ===== Sidebar End ===== --> */}
 
@@ -44,7 +46,9 @@ export default function RootLayout({
               <div className="relative flex flex-1 flex-col overflow-y-auto overflow-x-hidden">
                 {/* <!-- ===== Header Start ===== --> */}
 
-                <Header sidebarOpen={true} setSidebarOpen={setSidebarOpen} />
+                {showHeader && (
+                  <Header sidebarOpen={true} setSidebarOpen={setSidebarOpen} />
+                )}
 
                 {/* <!-- ===== Header End ===== --> */}
 

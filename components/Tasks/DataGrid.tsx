@@ -127,8 +127,6 @@ const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
                   setReload(!reload);
                 }
               }}
-              okText="Yes"
-              cancelText="No"
             >
               <DeleteOutlined className="w-1/3" />
             </Popconfirm>

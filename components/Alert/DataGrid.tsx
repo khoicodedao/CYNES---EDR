@@ -39,7 +39,7 @@ const columns: ColumnsType<ALERT> = [
     title: "Alert Type",
     dataIndex: "alert_type",
     key: "alert_type",
-    width: 120,
+    width: 200,
   },
 
   {
@@ -58,9 +58,9 @@ const columns: ColumnsType<ALERT> = [
         case 1:
           return <Tag color="success">Low</Tag>;
         case 2:
-          return <Tag color="warning">Hight</Tag>;
+          return <Tag color="warning">Medium</Tag>;
         default:
-          return <Tag color="error">Critical</Tag>;
+          return <Tag color="error">Hight</Tag>;
       }
     },
   },
@@ -74,7 +74,7 @@ const columns: ColumnsType<ALERT> = [
     title: "Time",
     dataIndex: "created_at",
     key: "created_at",
-    fixed: "right",
+
     width: 200,
     render: (item) => {
       return formatDateString(item);
@@ -141,6 +141,7 @@ const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
     <Table
       rowKey="ID"
       loading={loading}
+      bordered
       expandable={{
         expandedRowRender: (record) => (
           <Tabs

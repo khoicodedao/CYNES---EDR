@@ -135,7 +135,7 @@ const ModalCRUD: React.FC<DataGridProps> = ({
         <Form.Item name="is_active" label="Active" valuePropName="checked">
           <Switch />
         </Form.Item>
-        <Form.Item>
+        <Form.Item className="flex justify-end">
           <Button type="primary" htmlType="submit">
             Submit
           </Button>

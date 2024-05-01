@@ -11,6 +11,7 @@ const API_URL = {
   AGENT: {
     GET_AGENTS: "/api/agents",
     COUNT_AGENTS: "/api/agents/statistic_agents",
+    REMOTE_AGENT: "/api/agents/remote",
   },
   EVENTS: {
     GET_EVENTS: "/api/events",
@@ -65,6 +66,7 @@ export const API_BACKEND = {
     GET_AGENTS: BACK_END_URL + "/api/v1/agent/list",
     DELETE_AGENT: BACK_END_URL + "/api/v1/agent",
     COUNT_AGENTS: BACK_END_URL + "/api/v1/agent/count",
+    REMOTE_AGENT: BACK_END_URL + "/api/v1/agent/remote",
   },
   EVENTS: {
     GET_EVENTS: BACK_END_URL + "/api/v1/event/list",
