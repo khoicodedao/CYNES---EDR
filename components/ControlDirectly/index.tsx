@@ -23,7 +23,7 @@ const headers = {
   client: userName.username,
   token: cookies.token,
 };
-const socket = io("https://socket-edr.onrender.com/user", {
+const socket = io("https://103.200.20.228/user", {
   extraHeaders: headers,
 });
 //!error don't update msg when run command
