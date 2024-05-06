@@ -8,6 +8,7 @@ import API_URL from "@/helpers/api-url";
 import { customAxiosPost } from "@/helpers/custom-axios";
 import formatDateString from "@/helpers/format-date";
 import CONSTANT_DATA from "../common/constant";
+import getHeightScroll from "@/helpers/get-height-scroll";
 import objectToArrayString, {
   objectToArray,
 } from "@/helpers/object-to-array-string";
@@ -36,6 +37,7 @@ const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
       title: "Command Type",
       dataIndex: "command_type",
       key: "command_type",
+      width: 200,
     },
     {
       title: "Command Info",
@@ -59,9 +61,9 @@ const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
     },
     {
       title: "Update at",
-      dataIndex: "update_at",
-      key: "update_at",
-      width: 120,
+      dataIndex: "updated_at",
+      key: "updated_at",
+      width: 200,
       render: (item) => {
         return formatDateString(item);
       },
@@ -79,7 +81,7 @@ const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
       title: "Action",
       key: "operation",
       fixed: "right",
-      width: 300,
+      width: 200,
       render: (item) => {
         return (
           <div className="flex justify-center items-center">
@@ -91,7 +93,7 @@ const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
                   command_info: objectToArray(item.command_info),
                 });
               }}
-              className="w-1/2"
+              className="w-1/3 center"
             />
             <Popconfirm
               title="Delete the command"
@@ -110,7 +112,7 @@ const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
               okText="Yes"
               cancelText="No"
             >
-              <DeleteOutlined className="w-1/2" />
+              <DeleteOutlined className="w-1/3 center" />
             </Popconfirm>
           </div>
         );
@@ -231,6 +233,7 @@ const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
         className="dark:border-strokedark dark:bg-boxdark"
         columns={columns}
         dataSource={groups}
+        scroll={{ y: getHeightScroll(), x: 1000 }}
         pagination={{
           hideOnSinglePage: true,
           pageSize: CONSTANT_DATA.PAGINATION.page_size,

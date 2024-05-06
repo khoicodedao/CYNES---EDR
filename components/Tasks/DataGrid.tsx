@@ -91,13 +91,13 @@ const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
       width: 120,
       render: (item) => {
         return (
-          <div className="flex justify-around items-center">
+          <div className="flex justify-center items-center">
             <EditOutlined
               onClick={() => {
                 showModal("edit");
                 setDataEdit({ ...item });
               }}
-              className="w-1/2"
+              className="w-1/3 center"
             />
             <Popconfirm
               title="Delete the command"
@@ -114,7 +114,7 @@ const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
                 }
               }}
             >
-              <DeleteOutlined className="w-1/2" />
+              <DeleteOutlined className="w-1/3 center" />
             </Popconfirm>
           </div>
         );
