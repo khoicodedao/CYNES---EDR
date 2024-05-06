@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { Table, Tag, notification, Popconfirm } from "antd";
+import { Table, Tag, notification, Popconfirm, Button } from "antd";
 import type { ColumnsType } from "antd/es/table";
 import "./index.css";
 import { TASK } from "@/types/task";
@@ -91,27 +91,13 @@ const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
       width: 120,
       render: (item) => {
         return (
-          <div className="flex justify-center items-center">
-            <PlusOutlined
-              onClick={() => {
-                showModal("create");
-                setDataEdit({
-                  id: "0",
-                  group_id: 0,
-                  group_name: "",
-                  command_id: 0,
-                  command_name: "",
-                  is_active: true,
-                });
-              }}
-              className="w-1/3"
-            />
+          <div className="flex justify-around items-center">
             <EditOutlined
               onClick={() => {
                 showModal("edit");
                 setDataEdit({ ...item });
               }}
-              className="w-1/3"
+              className="w-1/2"
             />
             <Popconfirm
               title="Delete the command"
@@ -128,7 +114,7 @@ const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
                 }
               }}
             >
-              <DeleteOutlined className="w-1/3" />
+              <DeleteOutlined className="w-1/2" />
             </Popconfirm>
           </div>
         );
@@ -274,6 +260,27 @@ const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
         dataEdit={dataEdit}
         openNotificationWithIcon={openNotificationWithIcon}
       ></ModalCRUD>
+      <div className=" mt-2 mr-2 flex justify-end">
+        <Button
+          icon={<PlusOutlined />}
+          onClick={() => {
+            showModal("create");
+            setDataEdit({
+              id: "0",
+              group_id: 0,
+              group_name: "",
+              command_id: 0,
+              command_name: "",
+              is_active: true,
+            });
+          }}
+          type="primary"
+          style={{ marginBottom: 16 }}
+        >
+          Add a row
+        </Button>
+      </div>
+
       <Table
         loading={loading}
         className="dark:border-strokedark dark:bg-boxdark"

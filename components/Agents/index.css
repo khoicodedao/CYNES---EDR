@@ -75,3 +75,9 @@
 .dark .ant-pagination-item-ellipsis {
   color: white !important;
 }
+
+:where(.css-dev-only-do-not-override-qgg3xn).ant-switch:hover:not(
+    .ant-switch-disabled
+  ) {
+  background: rgba(0, 0, 0, 0.45) !important;
+}

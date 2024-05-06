@@ -4,6 +4,7 @@ import { Tabs, Table, Tag } from "antd";
 import type { ColumnsType } from "antd/es/table";
 import getHeightScroll from "@/helpers/get-height-scroll";
 import "./index.css";
+import { Drawer } from "antd";
 import { ALERT } from "@/types/alert";
 import API_URL from "@/helpers/api-url";
 import { customAxiosPost } from "@/helpers/custom-axios";
@@ -86,10 +87,19 @@ type DataGridProps = {
   search?: { field: string; operator: string; value: string }[];
 };
 const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
+  const [record, setRecord] = useState<ALERT>({} as ALERT);
+  const [open, setOpen] = useState(false);
   const [alerts, setAlertList] = useState<ALERT[]>([] as ALERT[]);
   const [loading, setLoading] = useState(false);
   const [totalCount, setTotalCount] = useState(0);
   const [filter, setFilter] = useState<any>(CONSTANT_DATA.PAGINATION);
+  const showDrawer = () => {
+    setOpen(true);
+  };
+  const onClose = () => {
+    setOpen(false);
+  };
+  //=== End ====
   if (timeRange) {
     const filterInTimeRage = [
       {
@@ -138,65 +148,81 @@ const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
     getData();
   }, [timeRange, search, filter]);
   return (
-    <Table
-      rowKey="ID"
-      loading={loading}
-      bordered
-      expandable={{
-        expandedRowRender: (record) => (
-          <Tabs
-            type="card"
-            items={[
-              {
-                label: `SUMMARY`,
-                key: "1",
-                children: (
-                  <>
-                    <p className="mt-2">
-                      <Tag color="#87d068"> Alert Description: </Tag>
-                      <span className="dark:text-white">
-                        {record.alert_description}
-                      </span>
-                    </p>
-                    <p className="mt-2">
-                      <Tag color="#87d068">Artifact Name: </Tag>
-                      <span className="dark:text-white">
-                        {record.artifact_name}
-                      </span>
-                    </p>
-                  </>
-                ),
-              },
-              {
-                label: `JSON`,
-                key: "2",
-                children: (
-                  <ReactJson
-                    quotesOnKeys={false}
-                    displayDataTypes={false}
-                    name="Alert Info"
-                    src={record.alert_info}
-                    theme="ocean"
-                  />
-                ),
-              },
-            ]}
-          />
-        ),
-      }}
-      className="dark:border-strokedark dark:bg-boxdark"
-      columns={columns}
-      dataSource={alerts}
-      scroll={{ y: getHeightScroll(), x: 1000 }}
-      pagination={{
-        hideOnSinglePage: true,
-        pageSize: CONSTANT_DATA.PAGINATION.page_size,
-        total: totalCount, //response first filter require total
-        onChange: (page, pageSize) => {
-          setFilter({ ...filter, page_no: page });
-        },
-      }}
-    />
+    <>
+      {" "}
+      <Drawer
+        title="Detail"
+        onClose={onClose}
+        open={open}
+        placement={"right"}
+        width={800}
+      >
+        <Tabs
+          className="mt-4 ml-2"
+          type="card"
+          items={[
+            {
+              label: `SUMMARY`,
+              key: "1",
+              children: (
+                <>
+                  <p className="mt-2">
+                    <Tag color="#87d068"> Alert Description: </Tag>
+                    <span className="dark:text-white">
+                      {record.alert_description}
+                    </span>
+                  </p>
+                  <p className="mt-2">
+                    <Tag color="#87d068">Artifact Name: </Tag>
+                    <span className="dark:text-white">
+                      {record.artifact_name}
+                    </span>
+                  </p>
+                </>
+              ),
+            },
+            {
+              label: `JSON`,
+              key: "2",
+              children: (
+                <ReactJson
+                  quotesOnKeys={false}
+                  displayDataTypes={false}
+                  name="Alert Info"
+                  src={record.alert_info}
+                  theme="ocean"
+                />
+              ),
+            },
+          ]}
+        />
+      </Drawer>
+      <Table
+        onRow={(record, rowIndex) => {
+          return {
+            onDoubleClick: (event) => {
+              showDrawer();
+              setRecord({ ...record });
+            },
+          };
+        }}
+        rowKey="ID"
+        loading={loading}
+        bordered
+        className="dark:border-strokedark dark:bg-boxdark"
+        columns={columns}
+        dataSource={alerts}
+        scroll={{ y: getHeightScroll(), x: 1000 }}
+        pagination={{
+          hideOnSinglePage: true,
+          pageSize: CONSTANT_DATA.PAGINATION.page_size,
+          total: totalCount, //response first filter require total
+          onChange: (page, pageSize) => {
+            setFilter({ ...filter, page_no: page });
+          },
+        }}
+      />
+    </>
   );
 };
 

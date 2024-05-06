@@ -6,6 +6,7 @@ import { List, Badge } from "antd";
 // import socket, { userName } from "./socket";
 import { io } from "socket.io-client";
 import { jwtDecode } from "jwt-decode";
+
 const parseCookies = () => {
   return document.cookie.split(";").reduce((cookies: any, cookie) => {
     const [name, value] = cookie.split("=").map((c) => c.trim());
@@ -23,6 +24,7 @@ const headers = {
   client: userName.username,
   token: cookies.token,
 };
+
 const socket = io("https://103.200.20.228/user", {
   extraHeaders: headers,
 });

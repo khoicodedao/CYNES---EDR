@@ -1,11 +1,11 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { DownOutlined, SettingOutlined, MenuOutlined } from "@ant-design/icons";
+import { SettingOutlined, MenuOutlined } from "@ant-design/icons";
 import type { TableColumnsType } from "antd";
-import { Select, List } from "antd";
+import { List } from "antd";
+import { Switch } from "antd";
 import { Space, Table, Tag, Tabs, Progress } from "antd";
-import { Button, Drawer, Divider } from "antd";
-import { ApiOutlined } from "@ant-design/icons";
+import { Drawer, Divider } from "antd";
 import { AGENT } from "@/types/agent";
 import { customAxiosPost } from "@/helpers/custom-axios";
 import "./index.css";
@@ -51,7 +51,6 @@ type DataGridProps = {
 const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [loadingRemote, setLoadingRemote] = useState<boolean>(false);
   const [agentList, setAgentList] = useState<AGENT[]>([]);
   const [totalCount, setTotalCount] = useState(0);
   const [agentDrawer, setAgentDrawer] = useState<AGENT>({} as AGENT); //set data when dupble click in table row
@@ -139,19 +138,17 @@ const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
     },
   ];
 
-  const remote = async (id: string) => {
+  const remote = async (id: string, checked: boolean) => {
     let url = API_URL.AGENT.REMOTE_AGENT;
     let params = {
       id: id,
-      require_remote: true,
+      require_remote: checked,
     };
-    setLoadingRemote(true);
     let resData: {
       success: boolean;
       msg: string;
     } = await customAxiosPost(url, params);
-    setLoadingRemote(false);
-    if (resData.success) {
+    if (resData.success && checked) {
       window.open("/control-directly", "_blank", "noopener,noreferrer");
     }
   };
@@ -194,16 +191,13 @@ const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
         open={open}
         extra={
           <Space>
-            <Button
-              type="primary"
-              icon={<ApiOutlined />}
-              loading={loadingRemote}
-              size={"large"}
-              danger
-              onClick={() => setLoadingRemote((prev) => !prev)}
-            >
-              Remote
-            </Button>
+            <Switch
+              checkedChildren="Connected"
+              unCheckedChildren="Disconnected"
+              onChange={(checked) => {
+                remote(agentDrawer.id, checked);
+              }}
+            />
           </Space>
         }
       >

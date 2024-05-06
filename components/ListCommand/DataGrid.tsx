@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { Table, Tag, notification, Popconfirm } from "antd";
+import { Table, Tag, notification, Popconfirm, Button } from "antd";
 import type { ColumnsType } from "antd/es/table";
 import "./index.css";
 import { COMMAND } from "@/types/command";
@@ -36,7 +36,6 @@ const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
       title: "Command Type",
       dataIndex: "command_type",
       key: "command_type",
-      width: 200,
     },
     {
       title: "Command Info",
@@ -80,23 +79,10 @@ const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
       title: "Action",
       key: "operation",
       fixed: "right",
-      width: 200,
+      width: 300,
       render: (item) => {
         return (
           <div className="flex justify-center items-center">
-            <PlusOutlined
-              onClick={() => {
-                showModal("create");
-                setDataEdit({
-                  id: 0,
-                  command_type: "",
-                  command_name: "",
-                  is_show: true,
-                  command_info: [],
-                });
-              }}
-              className="w-1/3"
-            />
             <EditOutlined
               onClick={() => {
                 showModal("edit");
@@ -105,7 +91,7 @@ const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
                   command_info: objectToArray(item.command_info),
                 });
               }}
-              className="w-1/3"
+              className="w-1/2"
             />
             <Popconfirm
               title="Delete the command"
@@ -124,7 +110,7 @@ const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
               okText="Yes"
               cancelText="No"
             >
-              <DeleteOutlined className="w-1/3" />
+              <DeleteOutlined className="w-1/2" />
             </Popconfirm>
           </div>
         );
@@ -221,6 +207,25 @@ const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
         dataEdit={dataEdit}
         openNotificationWithIcon={openNotificationWithIcon}
       ></ModalCRUD>
+      <div className=" mt-2 mr-2 flex justify-end">
+        <Button
+          icon={<PlusOutlined />}
+          onClick={() => {
+            showModal("create");
+            setDataEdit({
+              id: 0,
+              command_type: "",
+              command_name: "",
+              is_show: true,
+              command_info: [],
+            });
+          }}
+          type="primary"
+          style={{ marginBottom: 16 }}
+        >
+          Add a row
+        </Button>
+      </div>
       <Table
         loading={loading}
         className="dark:border-strokedark dark:bg-boxdark"

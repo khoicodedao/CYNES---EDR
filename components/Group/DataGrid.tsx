@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { Tag, Table, notification, Popconfirm } from "antd";
+import { Tag, Table, notification, Popconfirm, Button } from "antd";
 import type { ColumnsType } from "antd/es/table";
 import "./index.css";
 import { GROUP, GROUP_FILTER } from "@/types/group";
@@ -67,20 +67,13 @@ const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
       width: 120,
       render: ({ group_name, group_filter, id }) => {
         return (
-          <div className="flex justify-center items-center">
-            <PlusOutlined
-              onClick={() => {
-                showModal("create");
-                setDataEdit({ group_name: "", group_filter: [], id: 0 });
-              }}
-              className="w-1/3"
-            />
+          <div className="flex justify-around items-center">
             <EditOutlined
               onClick={() => {
                 showModal("edit");
                 setDataEdit({ group_name, group_filter, id });
               }}
-              className="w-1/3"
+              className="w-1/2"
             />
             <Popconfirm
               title="Delete the group"
@@ -99,7 +92,7 @@ const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
               okText="Yes"
               cancelText="No"
             >
-              <DeleteOutlined className="w-1/3" />
+              <DeleteOutlined className="w-1/2" />
             </Popconfirm>
           </div>
         );
@@ -194,6 +187,19 @@ const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
         dataEdit={dataEdit}
         openNotificationWithIcon={openNotificationWithIcon}
       ></ModalCRUD>
+      <div className=" mt-2 mr-2 flex justify-end">
+        <Button
+          icon={<PlusOutlined />}
+          onClick={() => {
+            showModal("create");
+            setDataEdit({ group_name: "", group_filter: [], id: 0 });
+          }}
+          type="primary"
+          style={{ marginBottom: 16 }}
+        >
+          Add a row
+        </Button>
+      </div>
       <Table
         loading={loading}
         className="dark:border-strokedark dark:bg-boxdark"
