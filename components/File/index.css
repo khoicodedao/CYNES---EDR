@@ -1,0 +1,83 @@
+.event-range-padding .ant-picker-range {
+  padding: 7px;
+}
+.dark .ant-statistic-content-value-int {
+  color: white;
+}
+
+:where(.css-dev-only-do-not-override-qgg3xn).ant-badge.ant-badge-status
+  .ant-badge-status-dot {
+  width: 29px !important;
+
+  border-radius: 2px !important;
+}
+.dark .ant-table,
+.dark .ant-table-thead .ant-table-cell {
+  background-color: rgb(36 48 63 / var(--tw-bg-opacity));
+  color: rgb(222 228 238 / var(--tw-text-opacity));
+}
+
+.dark .ant-table-cell-row-hover {
+  background-color: #4b576671 !important;
+}
+.dark .ant-pagination-item-link svg {
+  fill: white;
+}
+.dark
+  :where(.css-dev-only-do-not-override-qgg3xn).ant-table-wrapper
+  .ant-table-row-expand-icon::before,
+:where(.css-dev-only-do-not-override-qgg3xn).ant-table-wrapper
+  .ant-table-row-expand-icon::after {
+  background: black !important;
+}
+
+.ant-drawer .ant-drawer-body {
+  padding: 0px;
+}
+
+.dark .ant-select-selector {
+  background-color: rgb(36 48 63 / var(--tw-bg-opacity)) !important;
+  color: rgb(222 228 238 / var(--tw-text-opacity)) !important;
+}
+.dark .ant-tabs-tab {
+  color: white;
+  opacity: 0.8;
+}
+.dark
+  :where(.css-dev-only-do-not-override-qgg3xn).ant-tabs
+  .ant-tabs-tab.ant-tabs-tab-active
+  .ant-tabs-tab-btn {
+  color: white;
+  /* opacity: 0.8; */
+  text-shadow: 0 0 0.25px currentcolor;
+}
+
+.dark .ant-tabs-nav-list div[aria-selected="true"] {
+  color: black !important;
+}
+
+.dark .ant-table-cell {
+  background-color: #24303f !important;
+}
+.dark .ant-empty-description {
+  color: white;
+}
+.dark .ant-list-item {
+  color: white;
+  border-block-end-color: rgba(248, 246, 246, 0.16);
+}
+.dark .ant-table-thead .ant-table-cell {
+  background-color: #888a8d40 !important;
+}
+.dark .ant-pagination-item:not(.ant-pagination-item-active) a {
+  color: white !important;
+}
+.dark .ant-pagination-item-ellipsis {
+  color: white !important;
+}
+
+:where(.css-dev-only-do-not-override-qgg3xn).ant-switch:hover:not(
+    .ant-switch-disabled
+  ) {
+  background: rgba(0, 0, 0, 0.45) !important;
+}

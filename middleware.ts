@@ -48,5 +48,6 @@ export const config = {
     "/users",
     "/control-directly",
     "/list-command",
+    "/files",
   ],
 };

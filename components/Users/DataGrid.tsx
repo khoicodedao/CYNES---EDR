@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { Table, Tag, notification, Popconfirm } from "antd";
+import { Table, Tag, notification, Popconfirm, Button } from "antd";
 import type { ColumnsType } from "antd/es/table";
 import "./index.css";
 import { TASK } from "@/types/task";
@@ -57,19 +57,6 @@ const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
       render: (item) => {
         return (
           <div className="flex justify-center items-center">
-            <PlusOutlined
-              onClick={() => {
-                showModal("create");
-                setDataEdit({
-                  id: "",
-                  user_name: "",
-                  password: "",
-                  role: "admin",
-                  display_name: "",
-                });
-              }}
-              className="w-1/3"
-            />
             {/* <EditOutlined
               onClick={() => {
                 showModal("edit");
@@ -197,6 +184,25 @@ const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
         dataEdit={dataEdit}
         openNotificationWithIcon={openNotificationWithIcon}
       ></ModalCRUD>
+      <div className=" mt-2 mr-2 flex justify-end">
+        <Button
+          icon={<PlusOutlined />}
+          onClick={() => {
+            showModal("create");
+            setDataEdit({
+              id: "",
+              user_name: "",
+              password: "",
+              role: "admin",
+              display_name: "",
+            });
+          }}
+          type="primary"
+          style={{ marginBottom: 16 }}
+        >
+          Add a row
+        </Button>
+      </div>
       <Table
         loading={loading}
         className="dark:border-strokedark dark:bg-boxdark"

@@ -8,6 +8,9 @@ const API_URL = {
     DASHBOARD: "/",
     AGENT: "/agents",
   },
+  FILES: {
+    GET_FILES: "/api/files",
+  },
   AGENT: {
     GET_AGENTS: "/api/agents",
     COUNT_AGENTS: "/api/agents/statistic_agents",
@@ -96,6 +99,9 @@ export const API_BACKEND = {
     GET_DASHBOARD: BACK_END_URL + "/api/v1/dashboard",
     GET_ALERT_COUNT: BACK_END_URL + "/api/v1/alert/count",
     GET_AGENT_COUNT: BACK_END_URL + "/api/v1/agent/count",
+  },
+  FILES: {
+    GET_FILES: BACK_END_URL + "/api/v1/file/show",
   },
 };
 export default API_URL;

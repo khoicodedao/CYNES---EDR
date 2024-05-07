@@ -437,3 +437,7 @@ button[role="switch"] .ant-switch-inner {
 .ant-switch-inner {
   line-height: 20px !important;
 }
+
+.ant-modal-footer {
+  display: none;
+}
