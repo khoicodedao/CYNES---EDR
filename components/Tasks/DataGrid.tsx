@@ -100,8 +100,8 @@ const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
               className="w-1/3 center"
             />
             <Popconfirm
-              title="Delete the command"
-              description="Are you sure to delete this command?"
+              title="Delete the task?"
+              description="Are you sure to delete this task?"
               onConfirm={async () => {
                 let urlDelete = API_URL.TASKS.DELETE_TASK;
                 let res: { error: boolean; msg: string } =

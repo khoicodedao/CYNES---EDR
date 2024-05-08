@@ -1,17 +1,14 @@
 "use client";
-import React, { useState, useEffect } from "react";
-import { Table, Tag, notification, Popconfirm } from "antd";
-import type { ColumnsType } from "antd/es/table";
-import "./index.css";
-import { DATABASE } from "@/types/database";
 import API_URL from "@/helpers/api-url";
 import { customAxiosPost } from "@/helpers/custom-axios";
 import formatDateString from "@/helpers/format-date";
+import { DATABASE } from "@/types/database";
+import { notification, Table, Tag, Button, Popconfirm } from "antd";
+import type { ColumnsType } from "antd/es/table";
+import React, { useEffect, useState } from "react";
 import CONSTANT_DATA from "../common/constant";
-import objectToArrayString, {
-  objectToArray,
-} from "@/helpers/object-to-array-string";
 import { PlusOutlined, EditOutlined, DeleteOutlined } from "@ant-design/icons";
+import "./index.css";
 import ModalCRUD from "./ModalCRUD";
 type NotificationType = "success" | "info" | "warning" | "error";
 type DataGridProps = {
@@ -47,8 +44,8 @@ const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
 
     {
       title: "Update at",
-      dataIndex: "update_at",
-      key: "update_at",
+      dataIndex: "updated_at",
+      key: "updated_at",
       width: 120,
       render: (item) => {
         return formatDateString(item);
@@ -76,60 +73,46 @@ const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
         return formatDateString(item);
       },
     },
-    // {
-    //   title: "Action",
-    //   key: "operation",
-    //   fixed: "right",
-    //   width: 200,
-    //   render: (item) => {
-    //     return (
-    //       <div className="flex justify-center items-center">
-    //         <PlusOutlined
-    //           onClick={() => {
-    //             showModal("create");
-    //             setDataEdit({
-    //               id: 0,
-    //               command_type: "",
-    //               command_name: "",
-    //               is_show: true,
-    //               command_info: [],
-    //             });
-    //           }}
-    //           className="w-1/3"
-    //         />
-    //         <EditOutlined
-    //           onClick={() => {
-    //             showModal("edit");
-    //             setDataEdit({
-    //               ...item,
-    //               command_info: objectToArray(item.command_info),
-    //             });
-    //           }}
-    //           className="w-1/3"
-    //         />
-    //         <Popconfirm
-    //           title="Delete the command"
-    //           description="Are you sure to delete this command?"
-    //           onConfirm={async () => {
-    //             let urlDelete = API_URL.COMMANDS.DELETE_COMMAND;
-    //             let res: { error: boolean; msg: string } =
-    //               await customAxiosPost(urlDelete, { id: item.id });
-    //             if (res.error) {
-    //               openNotificationWithIcon("error", res.msg);
-    //             } else {
-    //               openNotificationWithIcon("success", res.msg);
-    //               setReload(!reload);
-    //             }
-    //           }}
-    //           okText="Yes"
-    //           cancelText="No"
-    //         >
-    //           <DeleteOutlined className="w-1/3" />
-    //         </Popconfirm>
-    //       </div>
-    //     );
-    //   },
-    // },
+    {
+      title: "Action",
+      key: "operation",
+      fixed: "right",
+      width: 200,
+      render: (item) => {
+        return (
+          <div className="flex justify-center items-center">
+            <EditOutlined
+              onClick={() => {
+                showModal("edit");
+                setDataEdit({
+                  ...item,
+                });
+              }}
+              className="w-1/3"
+            />
+            <Popconfirm
+              title="Delete the record?"
+              description="Are you sure to delete this record?"
+              onConfirm={async () => {
+                let urlDelete = API_URL.DATABASE.DELETE_DATABASE;
+                let res: { error: boolean; msg: string } =
+                  await customAxiosPost(urlDelete, { id: item.id });
+                if (res.error) {
+                  openNotificationWithIcon("error", res.msg);
+                } else {
+                  openNotificationWithIcon("success", res.msg);
+                  setReload(!reload);
+                }
+              }}
+              okText="Yes"
+              cancelText="No"
+            >
+              <DeleteOutlined className="w-1/3" />
+            </Popconfirm>
+          </div>
+        );
+      },
+    },
   ];
   const [api, contextHolder] = notification.useNotification();
   const openNotificationWithIcon = (type: NotificationType, data: string) => {
@@ -160,17 +143,17 @@ const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [dataEdit, setDataEdit] = useState<{
     id: number;
-    command_type: string;
-    command_name: string;
-    is_show: boolean;
-    command_info: any[];
+    type: string;
+    description: string;
+    is_active: boolean;
+    content: string;
   }>(
     {} as {
       id: number;
-      command_type: string;
-      command_name: string;
-      is_show: boolean;
-      command_info: [];
+      type: string;
+      description: string;
+      is_active: boolean;
+      content: string;
     }
   );
   if (timeRange) {
@@ -179,11 +162,6 @@ const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
         field: "created_at",
         operator: ">=",
         value: timeRange[0],
-      },
-      {
-        field: "created_at",
-        operator: "<=",
-        value: timeRange[1],
       },
     ];
     filter["filter"] = filterInTimeRage;
@@ -231,6 +209,26 @@ const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
         dataEdit={dataEdit}
         openNotificationWithIcon={openNotificationWithIcon}
       ></ModalCRUD>
+      <div className=" mt-2 mr-2 flex justify-end">
+        <Button
+          icon={<PlusOutlined />}
+          onClick={() => {
+            showModal("create");
+            // setDataEdit({
+            //   id: "0",
+            //   group_id: 0,
+            //   group_name: "",
+            //   command_id: 0,
+            //   command_name: "",
+            //   is_active: true,
+            // });
+          }}
+          type="primary"
+          style={{ marginBottom: 16 }}
+        >
+          Add a row
+        </Button>
+      </div>
       <Table
         loading={loading}
         className="dark:border-strokedark dark:bg-boxdark"
