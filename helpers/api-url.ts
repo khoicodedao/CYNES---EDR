@@ -102,6 +102,8 @@ export const API_BACKEND = {
   },
   FILES: {
     GET_FILES: BACK_END_URL + "/api/v1/file/show",
+    DOWNLOAD_FILE: BACK_END_URL + "/api/v1/file/download",
+    DELETE_FILE: BACK_END_URL + "/api/v1/file",
   },
 };
 export default API_URL;
