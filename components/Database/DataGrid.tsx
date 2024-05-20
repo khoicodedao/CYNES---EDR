@@ -3,6 +3,7 @@ import API_URL from "@/helpers/api-url";
 import { customAxiosPost } from "@/helpers/custom-axios";
 import formatDateString from "@/helpers/format-date";
 import { DATABASE } from "@/types/database";
+import getHeightScroll from "@/helpers/get-height-scroll";
 import { notification, Table, Tag, Button, Popconfirm } from "antd";
 import type { ColumnsType } from "antd/es/table";
 import React, { useEffect, useState } from "react";
@@ -234,6 +235,7 @@ const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
         className="dark:border-strokedark dark:bg-boxdark"
         columns={columns}
         dataSource={database}
+        scroll={{ y: getHeightScroll(), x: 1000 }}
         pagination={{
           hideOnSinglePage: true,
           pageSize: CONSTANT_DATA.PAGINATION.page_size,

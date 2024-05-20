@@ -208,7 +208,6 @@ const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
         }}
         rowKey="ID"
         loading={loading}
-        bordered
         className="dark:border-strokedark dark:bg-boxdark"
         columns={columns}
         dataSource={alerts}

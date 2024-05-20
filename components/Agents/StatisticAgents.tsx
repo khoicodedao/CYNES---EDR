@@ -3,6 +3,8 @@ import React, { useEffect, useState } from "react";
 import "./index.css";
 import { Col, Row, Statistic, Badge } from "antd";
 import { customAxiosPost } from "@/helpers/custom-axios";
+import { Progress } from "antd";
+import calculatePercentages from "@/helpers/caculatePercentages";
 import API_URL from "@/helpers/api-url";
 type DataGridProps = {
   timeRange: string[];
@@ -17,6 +19,10 @@ const StatisticAgents: React.FC<DataGridProps> = ({ timeRange }) => {
   if (timeRange) {
     startDate = timeRange[0];
   }
+  let [dataPercentage, setDataPercentage] = useState<any>({
+    online: 0,
+    offline: 0,
+  });
   useEffect(() => {
     let url = API_URL.AGENT.COUNT_AGENTS;
     let getData = async () => {
@@ -25,43 +31,83 @@ const StatisticAgents: React.FC<DataGridProps> = ({ timeRange }) => {
       console.log(resData);
       if (resData.success) {
         setData(resData.data);
+        setDataPercentage(calculatePercentages(resData.data));
       }
     };
     getData();
   }, [timeRange, startDate]);
   return (
-    <div className="">
-      <Row gutter={16}>
-        <Col
-          className="flex justify-center items-center border-r border-solid border-gray"
-          span={4}
-        >
-          <h4 className="text-xl capitalize text-center">Agent Status</h4>
-        </Col>
-
-        <Col className="border-r border-solid border-gray " span={5}>
-          <Statistic
-            title={
-              <div className="flex">
-                <Badge status="success" />
-                <p className="ml-2 opacity-70 font-bold"> Online</p>
+    <div className="severity">
+      <div className="flex justify-around items-center">
+        <div className="w-1/3">
+          <div className="flex items-center  justify-around flex-row">
+            {/* <div className="w-1/2"></div> */}
+            <div className="w-full">
+              <div className="parent m-auto">
+                <b
+                  style={{ color: "#dceefd", width: "100%", fontSize: "24px" }}
+                >
+                  {Object.values(data)
+                    .reduce((acc, val) => acc + val, 0)
+                    .toLocaleString("en-US")}
+                </b>
+                <div className="total-events">Agents</div>
               </div>
-            }
-            value={data.online}
-          />
-        </Col>
-        <Col span={5}>
-          <Statistic
-            title={
-              <div className="flex">
-                <Badge status="error" />
-                <p className="ml-2 opacity-70 font-bold"> Offline</p>
-              </div>
-            }
-            value={data.offline}
-          />
-        </Col>
-      </Row>
+            </div>
+          </div>
+        </div>
+        <div className="w-1/3">
+          <div className="flex items-center  justify-around flex-row">
+            <p
+              className="font-bold"
+              style={{
+                color: "#2693f5",
+                width: "fit-content",
+                marginRight: "10px",
+                fontSize: "24px",
+              }}
+            >
+              {data.online.toLocaleString("en-US")}
+            </p>
+            <div style={{ width: "90%" }}>
+              <p className="font-bold">Online</p>
+              <Progress
+                strokeColor="#2693f5"
+                status="active"
+                percent={dataPercentage.online}
+              />
+            </div>
+          </div>
+          <div className="flex items-center  justify-around flex-row">
+            <p
+              className="font-bold"
+              style={{
+                color: "#dceefd",
+                width: "fit-content",
+                marginRight: "10px",
+                fontSize: "24px",
+              }}
+            >
+              {data.offline.toLocaleString("en-US")}
+            </p>
+            <div style={{ width: "90%" }}>
+              <p className="font-bold">Offline</p>
+              <Progress
+                percent={dataPercentage.offline}
+                strokeColor="#dceefd"
+                status="active"
+              />
+            </div>
+          </div>
+        </div>
+        <div className="w-1/3">
+          <img
+            className="art-icon float-right"
+            alt=""
+            src="/images/art-agent.png"
+          ></img>
+        </div>
+      </div>
     </div>
   );
 };

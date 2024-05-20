@@ -11,11 +11,6 @@
 
   border-radius: 2px !important;
 }
-.dark .ant-table,
-.dark .ant-table-thead .ant-table-cell {
-  background-color: rgb(36 48 63 / var(--tw-bg-opacity));
-  color: rgb(222 228 238 / var(--tw-text-opacity));
-}
 
 .dark .ant-table-cell-row-hover {
   background-color: #4b576671 !important;
@@ -23,21 +18,18 @@
 .dark .ant-pagination-item-link svg {
   fill: white;
 }
-.dark .react-json-view{
-  background-color: #222F3E !important;
-}
-.dark .react-json-view  .object-key{
-  color: rgb(226, 234, 243) !important;
-}
-.react-json-view {background-color: white !important;}
 
-.react-json-view  .object-key{
-  color: #222F3E !important;
+.react-json-view {
+  background-color: white !important;
 }
-.dark .ant-select-selection-item-content{
+
+.react-json-view .object-key {
+  color: #222f3e !important;
+}
+.dark .ant-select-selection-item-content {
   color: white !important;
 }
-.ant-select-arrow{
+.ant-select-arrow {
   display: none !important;
 }
 /* .dark .object-key {

@@ -115,7 +115,7 @@ const FunctionBar: React.FC<FunctionBarProps> = ({
   };
   // ==========================================
   return (
-    <div className=" justify-start flex  rounded-sm border border-stroke bg-white py-2 px-2 shadow-default dark:border-strokedark dark:bg-boxdark">
+    <div className=" function-bar justify-start flex  rounded-sm border border-stroke bg-white py-2 px-2 shadow-default dark:border-strokedark dark:bg-boxdark">
       {contextHolder}
       <Drawer
         title="Filter"
@@ -257,15 +257,6 @@ const FunctionBar: React.FC<FunctionBarProps> = ({
             format="YYYY-MM-DD HH:mm:ss"
             onChange={onRangeChange}
           />
-        </div>
-        <div className="ml-2">
-          <Popover
-            content={() => {
-              return <div>Reload</div>;
-            }}
-          >
-            <ReloadOutlined style={{ fontSize: "16px", color: "#08c" }} />
-          </Popover>
         </div>
       </div>
     </div>

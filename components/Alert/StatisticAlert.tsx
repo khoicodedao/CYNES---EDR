@@ -1,9 +1,10 @@
 "use client";
+import API_URL from "@/helpers/api-url";
+import calculatePercentages from "@/helpers/caculatePercentages";
+import { customAxiosPost } from "@/helpers/custom-axios";
+import { Progress } from "antd";
 import React, { useEffect, useState } from "react";
 import "./index.css";
-import { Col, Row, Statistic, Badge } from "antd";
-import { customAxiosPost } from "@/helpers/custom-axios";
-import API_URL from "@/helpers/api-url";
 type DataGridProps = {
   timeRange: string[];
 };
@@ -14,6 +15,11 @@ type AlertLevel = {
 };
 const StatisticEvent: React.FC<DataGridProps> = ({ timeRange }) => {
   const [data, setData] = useState<AlertLevel>({ hight: 0, medium: 0, low: 0 });
+  let [dataPercentage, setDataPercentage] = useState<any>({
+    hight: 0,
+    medium: 0,
+    low: 0,
+  });
   let filter: any = {};
   if (timeRange) {
     const filterInTimeRage = [
@@ -38,14 +44,107 @@ const StatisticEvent: React.FC<DataGridProps> = ({ timeRange }) => {
       console.log(resData);
       if (resData.success) {
         setData(resData.data);
+        setDataPercentage(calculatePercentages(resData.data));
       }
     };
 
     getData();
   }, [timeRange]);
   return (
-    <div className="">
-      <Row gutter={15}>
+    <div className="severity">
+      <div className="flex justify-around items-center">
+        <div className="w-1/3">
+          <div className="flex items-center  justify-around flex-row">
+            {/* <div className="w-1/2"></div> */}
+            <div className="w-full">
+              <div className="parent m-auto">
+                <b
+                  style={{ color: "#dceefd", width: "100%", fontSize: "24px" }}
+                >
+                  {Object.values(data)
+                    .reduce((acc, val) => acc + val, 0)
+                    .toLocaleString("en-US")}
+                </b>
+                <div className="total-events">Total alerts</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="w-1/3">
+          <div className="flex items-center  justify-around flex-row">
+            <p
+              className="font-bold"
+              style={{
+                color: "#EF8325",
+                width: "fit-content",
+                marginRight: "10px",
+                fontSize: "24px",
+              }}
+            >
+              {data.hight.toLocaleString("en-US")}
+            </p>
+            <div style={{ width: "90%" }}>
+              <p className="font-bold">High</p>
+              <Progress
+                strokeColor="#EF8325"
+                status="active"
+                percent={dataPercentage.hight}
+              />
+            </div>
+          </div>
+          <div className="flex items-center  justify-around flex-row">
+            <p
+              className="font-bold"
+              style={{
+                color: "#F2B325",
+                width: "fit-content",
+                marginRight: "10px",
+                fontSize: "24px",
+              }}
+            >
+              {data.medium.toLocaleString("en-US")}
+            </p>
+            <div style={{ width: "90%" }}>
+              <p className="font-bold">Medium</p>
+              <Progress
+                percent={dataPercentage.medium}
+                strokeColor="#F2B325"
+                status="active"
+              />
+            </div>
+          </div>
+          <div className="flex items-center  justify-around flex-row">
+            <p
+              className="font-bold"
+              style={{
+                color: "#FBE5B5",
+                width: "fit-content",
+                marginRight: "10px",
+                fontSize: "24px",
+              }}
+            >
+              {data.low.toLocaleString("en-US")}
+            </p>
+            <div style={{ width: "90%" }}>
+              <p className="font-bold">Low</p>
+              <Progress
+                percent={dataPercentage.low}
+                strokeColor="#FBE5B5"
+                status="active"
+              />
+            </div>
+          </div>
+        </div>
+        <div className="w-1/3">
+          <img
+            className="art-icon float-right"
+            alt=""
+            src="/images/art-alert.svg"
+          ></img>
+        </div>
+      </div>
+
+      {/* <Row gutter={15}>
         <Col
           className="flex justify-center items-center border-r border-solid border-gray"
           span={4}
@@ -86,7 +185,7 @@ const StatisticEvent: React.FC<DataGridProps> = ({ timeRange }) => {
             value={data.low}
           />
         </Col>
-      </Row>
+      </Row> */}
     </div>
   );
 };

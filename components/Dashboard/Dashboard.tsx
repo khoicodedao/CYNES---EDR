@@ -1,18 +1,15 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import FunctionBar from "@/components/common/FunctionBar";
+import API_URL from "@/helpers/api-url";
+import { customAxiosPost } from "@/helpers/custom-axios";
+import useLocalStorage from "@/hooks/useLocalStorage";
+import dayjs from "dayjs";
+import React, { Suspense, useEffect, useState } from "react";
 import ChartOne from "../Charts/ChartOne";
 import ChartThree from "../Charts/ChartThree";
 import ChartTwo from "../Charts/ChartTwo";
 import Card from "./Card";
-import { Suspense } from "react";
 import FallbackChartTwo from "./FallbackChartTwo";
-import useLocalStorage from "@/hooks/useLocalStorage";
-import dayjs from "dayjs";
-import FunctionBar from "@/components/common/FunctionBar";
-import API_URL from "@/helpers/api-url";
-import { customAxiosPost } from "@/helpers/custom-axios";
-import styles from "./index.module.css";
-import Image from "next/image";
 type Level = {
   hight: number;
   medium: number;
@@ -88,7 +85,7 @@ const DashBoard: React.FC = () => {
   }, [timeRange]);
   return (
     <>
-      {/* <FunctionBar
+      <FunctionBar
         setStoredValue={setStoredValue}
         storedValue={storedValue}
         setTimeRange={setTimeRange}
@@ -102,10 +99,10 @@ const DashBoard: React.FC = () => {
         <Suspense fallback={<FallbackChartTwo />}>
           <ChartTwo timeRange={timeRange} />
         </Suspense>
-        <ChartThree title="Alerts" data={Object.values(alertLevel)} />
-        <ChartThree title="Events" data={Object.values(eventLevel)} />
-      </div> */}
-      <div className={styles.dashboard}>
+        {/* <ChartThree title="Alerts" data={Object.values(alertLevel)} />
+        <ChartThree title="Events" data={Object.values(eventLevel)} /> */}
+      </div>
+      {/* <div className={styles.dashboard}>
         <div className={styles.content1}>
           <img className={styles.block1Icon} alt="" src="/block-1@2x.png" />
           <img
@@ -646,7 +643,7 @@ const DashBoard: React.FC = () => {
           </div>
         </div>
         <img className={styles.dashboardIcon} alt="" src="/dashboard.svg" />
-      </div>
+      </div> */}
     </>
   );
 };
