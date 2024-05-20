@@ -441,3 +441,49 @@ button[role="switch"] .ant-switch-inner {
 .ant-modal-footer {
   display: none;
 }
+:root {
+  /* fonts */
+  --regular-14: Inter;
+
+  /* font sizes */
+  --regular-14-size: 14px;
+  --bold-10-size: 10px;
+
+  /* Colors */
+  --bg-tertiary: #2b2b32;
+  --bg-border: #292932;
+  --bg-primary: #121416;
+  --opacity-black-52: rgba(0, 0, 0, 0.52);
+  --content-content-constant: #fff;
+  --system-success: #24ce9f;
+  --content-content-sub: #717ea0;
+  --content-content-secondary: #818798;
+
+  /* Gaps */
+  --gap-13xl: 32px;
+  --gap-xs: 12px;
+  --gap-36xl: 55px;
+  --gap-sm: 14px;
+  --gap-9xs: 4px;
+  --gap-5xs: 8px;
+  --gap-xl: 20px;
+  --gap-base: 16px;
+  --gap-lg: 18px;
+
+  /* Paddings */
+  --padding-7xs: 6px;
+  --padding-3xs: 10px;
+  --padding-sm: 14px;
+  --padding-xs: 12px;
+  --padding-9xs: 4px;
+  --padding-xl: 20px;
+
+  /* Border radiuses */
+  --br-11xs: 2px;
+  --br-9xs: 4px;
+  --br-7xs: 6px;
+  --br-5xs: 8px;
+
+  /* Effects */
+  --art-tooltip: 2px 2px 4px rgba(0, 0, 0, 0.15);
+}

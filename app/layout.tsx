@@ -53,7 +53,7 @@ export default function RootLayout({
                 {/* <!-- ===== Header End ===== --> */}
 
                 {/* <!-- ===== Main Content Start ===== --> */}
-                <main>
+                <main className={`${!showHeader && "overflow-hidden"}`}>
                   <div className="mx-auto  p-4 md:p-6 2xl:p-5">
                     <StyledComponentsRegistry>
                       {children}
