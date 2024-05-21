@@ -123,7 +123,7 @@ const Card: React.FC<DataGridProps> = ({ timeRange }) => {
   }, [timeRange, startDate]);
   return (
     <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 xl:grid-cols-2 2xl:gap-7.5 mt-7.5">
-      <Link href="/agents">
+      <Link className="card-agent" href="/agents">
         <CardDataStats
           title="Agents"
           total={formatNumberWithDots(card.agents.online + card.agents.offline)}
@@ -164,7 +164,7 @@ const Card: React.FC<DataGridProps> = ({ timeRange }) => {
           </svg>
         </CardDataStats>
       </Link>
-      <Link href="/alerts">
+      <Link className="cart-alert" href="/alerts">
         <CardDataStats
           title="Alerts"
           total={formatNumberWithDots(

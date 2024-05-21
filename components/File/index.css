@@ -27,10 +27,6 @@
   padding: 0px;
 }
 
-.dark .ant-select-selector {
-  background-color: rgb(36 48 63 / var(--tw-bg-opacity)) !important;
-  color: rgb(222 228 238 / var(--tw-text-opacity)) !important;
-}
 .dark .ant-tabs-tab {
   color: white;
   opacity: 0.8;

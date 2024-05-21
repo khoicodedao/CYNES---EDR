@@ -296,15 +296,6 @@ input[type="submit"] {
   left: 90.7%;
 }
 
-.art-icon,
-.art-light-icon {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 710px;
-  height: 900px;
-  object-fit: cover;
-}
 .art-light-icon {
   width: 761px;
 }

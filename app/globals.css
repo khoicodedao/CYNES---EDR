@@ -270,15 +270,11 @@ aside > div {
   width: 10px;
 }
 
-.dark .ant-table-expanded-row-fixed {
-  background-color: #283341 !important;
-}
-
 .dark .ant-empty-description {
   color: white !important;
 }
 .dark .ant-select-selection-search .ant-input-wrapper input {
-  background-color: #283341 !important;
+  background-color: #1e212a !important;
   color: white;
 }
 .dark .ant-select-selection-search .ant-input-wrapper input::placeholder {
@@ -291,7 +287,7 @@ aside > div {
   padding: 5px;
 }
 .dark .ant-select-selector {
-  background-color: #283341 !important;
+  background-color: #1e212a !important;
   color: white;
 }
 
@@ -536,9 +532,7 @@ main > div {
 .dark .react-json-view .object-key {
   color: rgb(226, 234, 243) !important;
 }
-:where(.css-dev-only-do-not-override-qgg3xn).ant-tabs
-  .ant-tabs-tab.ant-tabs-tab-active
-  .ant-tabs-tab-btn {
+.ant-tabs .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
   color: black !important;
   font-weight: 500;
 }
@@ -549,8 +543,7 @@ main > div {
 .ant-pagination-options {
   display: none !important;
 }
-:where(.css-dev-only-do-not-override-qgg3xn).ant-table-wrapper
-  .ant-table-pagination-right {
+.ant-table-wrapper .ant-table-pagination-right {
   justify-content: center !important;
 }
 
@@ -565,9 +558,7 @@ main > div {
   margin: 0px !important;
 }
 
-:where(.css-dev-only-do-not-override-qgg3xn).ant-pagination
-  .ant-pagination-item-active
-  a {
+.ant-pagination .ant-pagination-item-active a {
   color: #19caff !important;
 }
 
@@ -580,7 +571,7 @@ main > div {
   width: 379px !important;
   height: 145px !important;
 }
-:where(.css-dev-only-do-not-override-qgg3xn).ant-progress-line {
+.ant-progress-line {
   margin-bottom: 0px !important;
 }
 .parent {
@@ -597,4 +588,34 @@ main > div {
 
 .main-background {
   background-color: #1e212a !important;
+}
+
+.dashboard .dark\:bg-boxdark {
+  background-color: transparent !important;
+}
+
+.dashboard .function-bar,
+.dashboard .card-agent,
+.dashboard .cart-alert {
+  border: 1px solid !important;
+  --tw-border-opacity: 1;
+  border-color: rgb(46 58 71 / var(--tw-border-opacity)) !important;
+}
+.dark .ant-table-cell-row-hover {
+  background: #1e212a !important;
+  background-color: #1e212a !important;
+}
+.ant-modal-content,
+.ant-modal-title,
+.ant-select-item-option,
+.dropdown-header {
+  background-color: #1e212a !important;
+}
+.art-icon,
+.art-light-icon {
+  /* position: absolute; */
+  object-fit: cover !important;
+  width: 379px !important;
+  height: 145px !important;
+  position: unset !important;
 }

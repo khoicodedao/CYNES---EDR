@@ -12,9 +12,6 @@
   border-radius: 2px !important;
 }
 
-.dark .ant-table-cell-row-hover {
-  background-color: #4b576671 !important;
-}
 .dark .ant-pagination-item-link svg {
   fill: white;
 }

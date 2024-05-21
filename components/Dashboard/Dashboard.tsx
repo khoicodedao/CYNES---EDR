@@ -84,7 +84,7 @@ const DashBoard: React.FC = () => {
     getDataEvent();
   }, [timeRange]);
   return (
-    <>
+    <div className="dashboard">
       <FunctionBar
         setStoredValue={setStoredValue}
         storedValue={storedValue}
@@ -644,7 +644,7 @@ const DashBoard: React.FC = () => {
         </div>
         <img className={styles.dashboardIcon} alt="" src="/dashboard.svg" />
       </div> */}
-    </>
+    </div>
   );
 };
 
