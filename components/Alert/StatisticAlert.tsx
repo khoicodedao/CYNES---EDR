@@ -88,7 +88,7 @@ const StatisticEvent: React.FC<DataGridProps> = ({ timeRange }) => {
               <Progress
                 strokeColor="#EF8325"
                 status="active"
-                percent={dataPercentage.hight || "0"}
+                percent={dataPercentage.hight && "0"}
               />
             </div>
           </div>
@@ -107,7 +107,7 @@ const StatisticEvent: React.FC<DataGridProps> = ({ timeRange }) => {
             <div style={{ width: "90%" }}>
               <p className="font-bold">Medium</p>
               <Progress
-                percent={dataPercentage.medium || "0"}
+                percent={dataPercentage.medium && "0"}
                 strokeColor="#F2B325"
                 status="active"
               />
@@ -128,7 +128,7 @@ const StatisticEvent: React.FC<DataGridProps> = ({ timeRange }) => {
             <div style={{ width: "90%" }}>
               <p className="font-bold">Low</p>
               <Progress
-                percent={dataPercentage.low || "0"}
+                percent={dataPercentage.low && "0"}
                 strokeColor="#FBE5B5"
                 status="active"
               />

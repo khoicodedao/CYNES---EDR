@@ -220,7 +220,7 @@ span.flatpickr-weekday,
 
 .dark .ant-input-affix-wrapper,
 .dark .ant-input-affix-wrapper input {
-  background-color: #23303f;
+  background-color: #23262dd6;
 }
 
 /* .dark .ant-input-affix-wrapper {
@@ -325,11 +325,11 @@ aside > div {
   border-block-start: 0 white;
 }
 .dark .ant-input {
-  background-color: #283341 !important;
+  background-color: #23262dd6 !important;
   color: white;
 }
 .dark .ant-input::placeholder {
-  color: rgb(131, 121, 121) !important;
+  color: #23262dd6 !important;
 }
 
 .dark .ant-tag-close-icon,
@@ -394,7 +394,7 @@ button[role="switch"] .ant-switch-inner {
   border: 1px solid black;
 }
 .react-terminal {
-  height: calc(100vh - 322px) !important;
+  height: calc(100vh - 314px) !important;
 }
 @keyframes blink {
   0% {
@@ -595,7 +595,7 @@ main > div {
 }
 
 .dashboard .function-bar,
-.dashboard .card-agent,
+.dashboard .card-agent .os,
 .dashboard .cart-alert {
   border: 1px solid !important;
   --tw-border-opacity: 1;
@@ -618,4 +618,16 @@ main > div {
   width: 379px !important;
   height: 145px !important;
   position: unset !important;
+}
+
+.react-terminal-wrapper {
+  border: 1px solid !important;
+  --tw-border-opacity: 1;
+  border-color: rgb(46 58 71 / var(--tw-border-opacity)) !important;
+  background-color: transparent !important;
+}
+
+.dashboard-card {
+  background-image: url("/images/dashboard-card-background.png");
+  background-position: 11% 91%;
 }

@@ -89,7 +89,7 @@ const StatisticEvent: React.FC<DataGridProps> = ({ timeRange }) => {
               <Progress
                 strokeColor="#2693f5"
                 status="active"
-                percent={dataPercentage.hight || "0"}
+                percent={dataPercentage.hight && "0"}
               />
             </div>
           </div>
@@ -108,7 +108,7 @@ const StatisticEvent: React.FC<DataGridProps> = ({ timeRange }) => {
             <div style={{ width: "90%" }}>
               <p className="font-bold">Medium</p>
               <Progress
-                percent={dataPercentage.medium || "0"}
+                percent={dataPercentage.medium && "0"}
                 strokeColor="#7ee1ff"
                 status="active"
               />
@@ -129,7 +129,7 @@ const StatisticEvent: React.FC<DataGridProps> = ({ timeRange }) => {
             <div style={{ width: "90%" }}>
               <p className="font-bold">Low</p>
               <Progress
-                percent={dataPercentage.low || "0"}
+                percent={dataPercentage.low && "0"}
                 strokeColor="#dceefd"
                 status="active"
               />
@@ -144,49 +144,6 @@ const StatisticEvent: React.FC<DataGridProps> = ({ timeRange }) => {
           ></img>
         </div>
       </div>
-
-      {/* <Row gutter={15}>
-        <Col
-          className="flex justify-center items-center border-r border-solid border-gray"
-          span={4}
-        >
-          <h4 className="text-xl capitalize">Severity</h4>
-        </Col>
-        <Col className="border-r border-solid border-gray" span={5}>
-          <Statistic
-            title={
-              <div className="flex">
-                <Badge status="error" />
-                <p className="ml-2 opacity-70 font-bold"> Hight</p>
-              </div>
-            }
-            value={data.hight}
-          />
-        </Col>
-
-        <Col className="border-r border-solid border-gray" span={5}>
-          <Statistic
-            title={
-              <div className="flex">
-                <Badge status="warning" />
-                <p className="ml-2 opacity-70 font-bold"> Medium</p>
-              </div>
-            }
-            value={data.medium}
-          />
-        </Col>
-        <Col className="border-r border-solid border-gray " span={5}>
-          <Statistic
-            title={
-              <div className="flex">
-                <Badge status="processing" />
-                <p className="ml-2 opacity-70 font-bold"> Low</p>
-              </div>
-            }
-            value={data.low}
-          />
-        </Col>
-      </Row> */}
     </div>
   );
 };
