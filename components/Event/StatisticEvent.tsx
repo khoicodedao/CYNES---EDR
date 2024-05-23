@@ -44,6 +44,7 @@ const StatisticEvent: React.FC<DataGridProps> = ({ timeRange }) => {
       console.log(resData);
       if (resData.success) {
         setData(resData.data);
+        console.log(calculatePercentages(resData.data));
         setDataPercentage(calculatePercentages(resData.data));
       }
     };
@@ -89,7 +90,7 @@ const StatisticEvent: React.FC<DataGridProps> = ({ timeRange }) => {
               <Progress
                 strokeColor="#2693f5"
                 status="active"
-                percent={dataPercentage.hight && "0"}
+                percent={dataPercentage.hight}
               />
             </div>
           </div>
@@ -108,7 +109,7 @@ const StatisticEvent: React.FC<DataGridProps> = ({ timeRange }) => {
             <div style={{ width: "90%" }}>
               <p className="font-bold">Medium</p>
               <Progress
-                percent={dataPercentage.medium && "0"}
+                percent={dataPercentage.medium}
                 strokeColor="#7ee1ff"
                 status="active"
               />
@@ -129,7 +130,7 @@ const StatisticEvent: React.FC<DataGridProps> = ({ timeRange }) => {
             <div style={{ width: "90%" }}>
               <p className="font-bold">Low</p>
               <Progress
-                percent={dataPercentage.low && "0"}
+                percent={dataPercentage.low}
                 strokeColor="#dceefd"
                 status="active"
               />
@@ -137,11 +138,16 @@ const StatisticEvent: React.FC<DataGridProps> = ({ timeRange }) => {
           </div>
         </div>
         <div className="w-1/3">
-          <img
-            className="art-icon float-right"
-            alt=""
-            src="/images/art.svg"
-          ></img>
+          <div
+            style={{
+              backgroundImage:
+                'url("/images/calendar_icon.svg"), url("/images/ArtBG2.png")',
+              backgroundPosition: "center center, center bottom",
+              backgroundRepeat: "no-repeat, no-repeat",
+              width: "100%",
+              height: "144px",
+            }}
+          ></div>
         </div>
       </div>
     </div>

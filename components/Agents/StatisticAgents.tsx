@@ -74,7 +74,7 @@ const StatisticAgents: React.FC<DataGridProps> = ({ timeRange }) => {
               <Progress
                 strokeColor="#2693f5"
                 status="active"
-                percent={dataPercentage.online || "0"}
+                percent={dataPercentage.online}
               />
             </div>
           </div>
@@ -88,7 +88,7 @@ const StatisticAgents: React.FC<DataGridProps> = ({ timeRange }) => {
                 fontSize: "24px",
               }}
             >
-              {data.offline.toLocaleString("en-US") || 0}
+              {data.offline.toLocaleString("en-US")}
             </p>
             <div style={{ width: "90%" }}>
               <p className="font-bold">Offline</p>

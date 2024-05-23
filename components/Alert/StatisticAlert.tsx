@@ -88,7 +88,7 @@ const StatisticEvent: React.FC<DataGridProps> = ({ timeRange }) => {
               <Progress
                 strokeColor="#EF8325"
                 status="active"
-                percent={dataPercentage.hight && "0"}
+                percent={dataPercentage.hight}
               />
             </div>
           </div>
@@ -107,7 +107,7 @@ const StatisticEvent: React.FC<DataGridProps> = ({ timeRange }) => {
             <div style={{ width: "90%" }}>
               <p className="font-bold">Medium</p>
               <Progress
-                percent={dataPercentage.medium && "0"}
+                percent={dataPercentage.medium}
                 strokeColor="#F2B325"
                 status="active"
               />
@@ -128,7 +128,7 @@ const StatisticEvent: React.FC<DataGridProps> = ({ timeRange }) => {
             <div style={{ width: "90%" }}>
               <p className="font-bold">Low</p>
               <Progress
-                percent={dataPercentage.low && "0"}
+                percent={dataPercentage.low}
                 strokeColor="#FBE5B5"
                 status="active"
               />
@@ -136,11 +136,16 @@ const StatisticEvent: React.FC<DataGridProps> = ({ timeRange }) => {
           </div>
         </div>
         <div className="w-1/3">
-          <img
-            className="art-icon float-right"
-            alt=""
-            src="/images/art-alert.svg"
-          ></img>
+          <div
+            style={{
+              backgroundImage:
+                'url("/images/alert_icon.svg"), url("/images/ArtBG2.png")',
+              backgroundPosition: "center center, center bottom",
+              backgroundRepeat: "no-repeat, no-repeat",
+              width: "100%",
+              height: "144px",
+            }}
+          ></div>
         </div>
       </div>
 

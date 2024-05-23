@@ -316,36 +316,24 @@ const Card: React.FC<DataGridProps> = ({ timeRange }) => {
         </CardDataStats>
       </Link>
       <Link className="cart-alert" href="/alerts">
-        <CardDataStats
-          title="Alerts"
-          total={formatNumberWithDots(
-            card.alerts.hight + card.alerts.low + card.alerts.medium
-          )}
-          // newData="2.010"
-          detail={[
-            {
-              title: "Hight",
-              count: formatNumberWithDots(card.alerts.hight),
-              ratio: calculateRatios(
-                card.alerts.hight,
-                card.alerts.medium,
-                card.alerts.low
-              )[0],
-            },
-            {
-              title: "Medium",
-              count: formatNumberWithDots(card.alerts.medium),
-              ratio: calculateRatios(
-                card.alerts.hight,
-                card.alerts.medium,
-                card.alerts.low
-              )[1],
-            },
-          ]}
-          // levelDown
-        >
-          <WarningOutlined></WarningOutlined>
-        </CardDataStats>
+        <div className="grid grid-cols-2 grid-rows-2 gap-4 p-4 h-full">
+          {/* Phần 1 */}
+          <div className="bg-blue-100 flex items-center justify-center">
+            Phần 1
+          </div>
+          {/* Phần 2 */}
+          <div className="bg-green-100 flex items-center justify-center">
+            Phần 2
+          </div>
+          {/* Phần 3 */}
+          <div className="bg-yellow-100 flex items-center justify-center">
+            Phần 3
+          </div>
+          {/* Phần 4 */}
+          <div className="bg-red-100 flex items-center justify-center">
+            Phần 4
+          </div>
+        </div>
       </Link>
     </div>
   );

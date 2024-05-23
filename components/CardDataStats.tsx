@@ -1,6 +1,7 @@
 import { Progress } from "antd";
 import React, { ReactNode } from "react";
 import ChartThree from "../components/Charts/ChartThree";
+import { Tag } from "antd";
 interface CardDataStatsProps {
   title: string;
   total: string;
@@ -1284,7 +1285,11 @@ const CardDataStats: React.FC<CardDataStatsProps> = ({
                   window 7
                 </span>
               </div>
-              <div className="bg-red-500 text-white mr-1">15%</div>
+              <div className="bg-red-500 text-white mr-1">
+                <div className="flex items-center justify-center">
+                  <Tag className="w-3 h-2" color="#2693F5"></Tag>15%
+                </div>
+              </div>
             </div>
             <div className="flex  justify-between bg-gray-200 p-1">
               <div className="flex items-center justify-around bg-gray-200 ">
@@ -1321,7 +1326,11 @@ const CardDataStats: React.FC<CardDataStatsProps> = ({
                   window 8
                 </span>
               </div>
-              <div className="bg-red-500 text-white mr-1">19%</div>
+              <div className="bg-red-500 text-white mr-1">
+                <div className="flex items-center justify-center">
+                  <Tag className="w-3 h-2" color="#B1EDFF"></Tag>19%
+                </div>
+              </div>
             </div>
             <div className="flex  justify-between bg-gray-200 p-1">
               <div className="flex items-center justify-around bg-gray-200 ">
@@ -1358,7 +1367,11 @@ const CardDataStats: React.FC<CardDataStatsProps> = ({
                   window 10
                 </span>
               </div>
-              <div className="bg-red-500 text-white mr-1">65%</div>
+              <div className="bg-red-500 text-white mr-1">
+                <div className="flex items-center justify-center">
+                  <Tag className="w-3 h-2" color="#0B5970"></Tag>65%
+                </div>
+              </div>
             </div>
             <div className="flex  justify-between bg-gray-200 p-1">
               <div className="flex items-center justify-around bg-gray-200 ">
@@ -1394,11 +1407,15 @@ const CardDataStats: React.FC<CardDataStatsProps> = ({
                   Other
                 </span>
               </div>
-              <div className="bg-red-500 text-white mr-1">65%</div>
+              <div className="bg-red-500 text-white mr-1">
+                <div className="flex items-center justify-center">
+                  <Tag className="w-3 h-2" color="#0B5970"></Tag>1%
+                </div>
+              </div>
             </div>
           </div>
           <div className="flex-1 bg-red-500 text-white">
-            <ChartThree title="Events" data={[10, 20, 30]} />
+            <ChartThree title="Events" data={[10, 20, 30, 12]} />
           </div>
         </div>
       </div>

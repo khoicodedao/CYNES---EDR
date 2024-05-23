@@ -14,7 +14,7 @@ const options: ApexOptions = {
   chart: {
     type: "donut",
   },
-  colors: ["#2693F5", "#B1EDFF", "#0B5970"],
+  colors: ["#2693F5", "#B1EDFF", "#0B5970", "#0B5970"],
   labels: ["Hight", "Medium", "Low"],
   legend: {
     show: false,
