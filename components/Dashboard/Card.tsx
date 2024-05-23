@@ -1,10 +1,10 @@
 "use client";
-import React, { useState, useEffect } from "react";
-import CardDataStats from "../CardDataStats";
-import { WarningOutlined } from "@ant-design/icons";
+import API_URL from "@/helpers/api-url";
+import ChartThree from "../../components/Charts/ChartThree";
 import { customAxiosPost } from "@/helpers/custom-axios";
 import Link from "next/link";
-import API_URL from "@/helpers/api-url";
+import React, { useEffect, useState } from "react";
+import CardDataStats from "../CardDataStats";
 type CARD = {
   agents: {
     online: number;
@@ -122,7 +122,7 @@ const Card: React.FC<DataGridProps> = ({ timeRange }) => {
     getDataAgent();
   }, [timeRange, startDate]);
   return (
-    <div className="dashboard-card grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 xl:grid-cols-2 2xl:gap-7.5 mt-7.5">
+    <div className="dashboard-card grid grid-cols-1  md:grid-cols-2  xl:grid-cols-2  mt-7.5">
       <Link className="card-agent" href="/agents">
         <CardDataStats
           title="Agents"
@@ -315,23 +315,164 @@ const Card: React.FC<DataGridProps> = ({ timeRange }) => {
           </svg>
         </CardDataStats>
       </Link>
-      <Link className="cart-alert" href="/alerts">
+
+      {/* Card left side end*/}
+      <Link href="/alerts">
         <div className="grid grid-cols-2 grid-rows-2 gap-4 p-4 h-full">
           {/* Phần 1 */}
-          <div className="bg-blue-100 flex items-center justify-center">
-            Phần 1
+          <div>
+            {" "}
+            <div className="bg-blue-100 flex items-center justify-left rounded-lg">
+              <div
+                style={{
+                  background:
+                    "linear-gradient(167deg, #FFD978 -44%, rgba(0, 0, 0, 0.00) -43.99%, rgba(255, 199, 0, 0.14) 101.49%)",
+                  padding: "10px",
+                  borderRadius: "10px",
+                  boxShadow: "0px 0px 10px 0px rgba(0, 0, 0, 0.25)",
+                }}
+                className="p-2 mr-4 rounded-full"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="36"
+                  height="36"
+                  viewBox="0 0 36 36"
+                  fill="none"
+                >
+                  <path
+                    d="M35.6832 30.2603L19.8889 4.06678C19.4897 3.40479 18.773 3 17.9999 3C17.2269 3 16.5102 3.40472 16.111 4.06678L0.316825 30.2603C-0.0939411 30.9415 -0.106105 31.7912 0.285114 32.4839C0.676333 33.1766 1.41019 33.605 2.2057 33.605H33.7943C34.5898 33.605 35.3236 33.1765 35.7149 32.4839C36.1061 31.7912 36.094 30.9415 35.6832 30.2603ZM18.0118 12.0606C18.9189 12.0606 19.6864 12.5724 19.6864 13.4794C19.6864 16.2471 19.3608 20.2244 19.3608 22.9921C19.3608 23.7132 18.57 24.0154 18.0118 24.0154C17.2676 24.0154 16.6395 23.7131 16.6395 22.9921C16.6395 20.2244 16.314 16.2471 16.314 13.4794C16.314 12.5724 17.0582 12.0606 18.0118 12.0606ZM18.035 29.2022C17.0117 29.2022 16.2441 28.3649 16.2441 27.4113C16.2441 26.4345 17.0116 25.6205 18.035 25.6205C18.9886 25.6205 19.8027 26.4345 19.8027 27.4113C19.8027 28.3649 18.9886 29.2022 18.035 29.2022Z"
+                    fill="url(#paint0_linear_3388_11646)"
+                  />
+                  <defs>
+                    <linearGradient
+                      id="paint0_linear_3388_11646"
+                      x1="23"
+                      y1="6"
+                      x2="-3.10599e-06"
+                      y2="34.0525"
+                      gradientUnits="userSpaceOnUse"
+                    >
+                      <stop stop-color="#FFEA79" />
+                      <stop offset="1" stop-color="#F1890F" />
+                    </linearGradient>
+                  </defs>
+                </svg>
+              </div>
+              <div className="flex flex-col justify-center items-center">
+                <p className="text-2xl font-bold text-white">08</p>
+                <p className="text-xs">Alerts</p>
+              </div>
+              <div className="w-30 h-30">
+                <ChartThree title="Events" data={[10, 20, 30, 12]} />
+              </div>
+            </div>
+            <div className="flex flex-row items-left h-full">
+              <div className="flex-1 flex items-center justify-center bg-blue-300">
+                Phần 1
+              </div>
+              <div className="flex-1 flex items-center justify-center bg-green-300">
+                Phần 2
+              </div>
+              <div className="flex-1 flex items-center justify-center bg-yellow-300">
+                Phần 3
+              </div>
+            </div>
           </div>
+
           {/* Phần 2 */}
           <div className="bg-green-100 flex items-center justify-center">
-            Phần 2
-          </div>
-          {/* Phần 3 */}
-          <div className="bg-yellow-100 flex items-center justify-center">
-            Phần 3
-          </div>
-          {/* Phần 4 */}
-          <div className="bg-red-100 flex items-center justify-center">
-            Phần 4
+            <div
+              style={{
+                background:
+                  "linear-gradient(167deg, #98E8FF -44%, rgba(189, 240, 255, 0.00) -43.99%, rgba(105, 221, 255, 0.31) 101.49%)",
+                padding: "10px",
+                borderRadius: "10px",
+              }}
+              className="p-2 mr-4 rounded-full"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="42"
+                height="42"
+                viewBox="0 0 42 42"
+                fill="none"
+              >
+                <g filter="url(#filter0_d_3388_11655)">
+                  <path
+                    d="M33.9 8.1H32.2V4.7C32.2 4.24913 32.0209 3.81673 31.7021 3.49792C31.3833 3.17911 30.9509 3 30.5 3C30.0491 3 29.6167 3.17911 29.2979 3.49792C28.9791 3.81673 28.8 4.24913 28.8 4.7V8.1H15.2V4.7C15.2 4.24913 15.0209 3.81673 14.7021 3.49792C14.3833 3.17911 13.9509 3 13.5 3C13.0491 3 12.6167 3.17911 12.2979 3.49792C11.9791 3.81673 11.8 4.24913 11.8 4.7V8.1H10.1C8.7474 8.1 7.45019 8.63732 6.49376 9.59376C5.53732 10.5502 5 11.8474 5 13.2V14.9H39V13.2C39 11.8474 38.4627 10.5502 37.5062 9.59376C36.5498 8.63732 35.2526 8.1 33.9 8.1Z"
+                    fill="url(#paint0_linear_3388_11655)"
+                  />
+                  <path
+                    d="M5 31.9C5 33.2526 5.53732 34.5498 6.49376 35.5062C7.45019 36.4627 8.7474 37 10.1 37H33.9C35.2526 37 36.5498 36.4627 37.5062 35.5062C38.4627 34.5498 39 33.2526 39 31.9V18.3H5V31.9Z"
+                    fill="url(#paint1_linear_3388_11655)"
+                  />
+                </g>
+                <defs>
+                  <filter
+                    id="filter0_d_3388_11655"
+                    x="0"
+                    y="0"
+                    width="42"
+                    height="42"
+                    filterUnits="userSpaceOnUse"
+                    color-interpolation-filters="sRGB"
+                  >
+                    <feFlood flood-opacity="0" result="BackgroundImageFix" />
+                    <feColorMatrix
+                      in="SourceAlpha"
+                      type="matrix"
+                      values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+                      result="hardAlpha"
+                    />
+                    <feOffset dx="-1" dy="1" />
+                    <feGaussianBlur stdDeviation="2" />
+                    <feComposite in2="hardAlpha" operator="out" />
+                    <feColorMatrix
+                      type="matrix"
+                      values="0 0 0 0 0.0684862 0 0 0 0 0.456624 0 0 0 0 0.14222 0 0 0 0.31 0"
+                    />
+                    <feBlend
+                      mode="normal"
+                      in2="BackgroundImageFix"
+                      result="effect1_dropShadow_3388_11655"
+                    />
+                    <feBlend
+                      mode="normal"
+                      in="SourceGraphic"
+                      in2="effect1_dropShadow_3388_11655"
+                      result="shape"
+                    />
+                  </filter>
+                  <linearGradient
+                    id="paint0_linear_3388_11655"
+                    x1="39"
+                    y1="0.343749"
+                    x2="-6.6875"
+                    y2="42.8438"
+                    gradientUnits="userSpaceOnUse"
+                  >
+                    <stop stop-color="#A5EAFF" />
+                    <stop offset="1" stop-color="#52D7FF" />
+                  </linearGradient>
+                  <linearGradient
+                    id="paint1_linear_3388_11655"
+                    x1="39"
+                    y1="0.343749"
+                    x2="-6.6875"
+                    y2="42.8438"
+                    gradientUnits="userSpaceOnUse"
+                  >
+                    <stop stop-color="#A5EAFF" />
+                    <stop offset="1" stop-color="#52D7FF" />
+                  </linearGradient>
+                </defs>
+              </svg>
+            </div>
+            <div className="flex flex-col justify-center items-center">
+              <p className="text-2xl font-bold text-white">08</p>
+              <p className="text-xs">Alerts</p>
+            </div>
           </div>
         </div>
       </Link>
