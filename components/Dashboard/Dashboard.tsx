@@ -6,7 +6,6 @@ import useLocalStorage from "@/hooks/useLocalStorage";
 import dayjs from "dayjs";
 import React, { Suspense, useEffect, useState } from "react";
 import ChartOne from "../Charts/ChartOne";
-import ChartThree from "../Charts/ChartThree";
 import ChartTwo from "../Charts/ChartTwo";
 import Card from "./Card";
 import FallbackChartTwo from "./FallbackChartTwo";
