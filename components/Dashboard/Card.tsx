@@ -478,7 +478,7 @@ const Card: React.FC<DataGridProps> = ({ timeRange }) => {
               data={[10, 20, 30, 12]}
             />
           </div>
-          <div className="flex flex-row items-center justify-between">
+          <div className="flex flex-row items-center justify-between pt-2">
             <div className="flex-1 flex items-center justify-center bg-blue-300">
               <Tag color="#2693F5">15</Tag>
               <span className="text-white">Hight</span>

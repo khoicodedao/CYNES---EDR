@@ -631,3 +631,7 @@ main > div {
   background-image: url("/images/dashboard-card-background.png");
   background-position: 11% 91%;
 }
+.log-out[role="dialog"]{
+  top:35% !important;
+  left: 6%!important;
+}

@@ -1,8 +1,8 @@
 "use client";
-import { Modal, Form, Button, Space, Select, Switch } from "antd";
-import React from "react";
-import { customAxiosPost } from "@/helpers/custom-axios";
 import API_URL from "@/helpers/api-url";
+import { customAxiosPost } from "@/helpers/custom-axios";
+import { Button, Form, Modal, Select, Switch } from "antd";
+import React from "react";
 type DataGridProps = {
   open: boolean;
   type: "create" | "edit" | "delete";
