@@ -10,34 +10,35 @@ interface ChartThreeState {
   series: number[];
 }
 
-const options: ApexOptions = {
-  chart: {
-    type: "donut",
-  },
-  colors: ["#2693F5", "#B1EDFF", "#0B5970", "#0B5970"],
-  labels: ["Hight", "Medium", "Low"],
-  legend: {
-    show: false,
-    position: "bottom",
-  },
+type ChartThreeProps = {
+  data: number[];
+  colors: string[];
+  labels: string[];
+};
+const ChartThree: React.FC<ChartThreeProps> = ({ data, colors, labels }) => {
+  const options: ApexOptions = {
+    chart: {
+      type: "donut",
+    },
+    colors,
+    labels,
+    legend: {
+      show: false,
+      position: "bottom",
+    },
 
-  plotOptions: {
-    pie: {
-      donut: {
-        size: "30%",
-        background: "transparent",
+    plotOptions: {
+      pie: {
+        donut: {
+          size: "30%",
+          background: "transparent",
+        },
       },
     },
-  },
-  dataLabels: {
-    enabled: false,
-  },
-};
-type ChartThreeProps = {
-  title: string;
-  data: number[];
-};
-const ChartThree: React.FC<ChartThreeProps> = ({ title, data }) => {
+    dataLabels: {
+      enabled: false,
+    },
+  };
   return <ReactApexChart options={options} series={data} type="donut" />;
 };
 

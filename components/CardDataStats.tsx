@@ -24,7 +24,10 @@ const CardDataStats: React.FC<CardDataStatsProps> = ({
   children,
 }) => {
   return (
-    <div className="grid grid-cols-40-60 ">
+    <div
+      className="grid grid-cols-40-60 "
+      style={{ border: "1px solid rgb(46 58 71)" }}
+    >
       {/* 1st grid - Main alert */}
       <div className="border-none py-6 px-4 w-full justify-between  flex flex-col items-center  rounded-sm border border-stroke  shadow-default dark:border-strokedark dark:bg-boxdark p-4">
         <div className="card-data flex flex-row items-center  justify-between w-full">
@@ -1328,7 +1331,7 @@ const CardDataStats: React.FC<CardDataStatsProps> = ({
               </div>
               <div className="bg-red-500 text-white mr-1">
                 <div className="flex items-center justify-center">
-                  <Tag className="w-3 h-2" color="#B1EDFF"></Tag>19%
+                  <Tag className="w-3 h-2" color="#19CAFF"></Tag>19%
                 </div>
               </div>
             </div>
@@ -1367,9 +1370,9 @@ const CardDataStats: React.FC<CardDataStatsProps> = ({
                   window 10
                 </span>
               </div>
-              <div className="bg-red-500 text-white mr-1">
+              <div className="bg-red-500 text-white">
                 <div className="flex items-center justify-center">
-                  <Tag className="w-3 h-2" color="#0B5970"></Tag>65%
+                  <Tag className="w-3 h-2" color="#B1EDFF"></Tag>65%
                 </div>
               </div>
             </div>
@@ -1415,7 +1418,11 @@ const CardDataStats: React.FC<CardDataStatsProps> = ({
             </div>
           </div>
           <div className="flex-1 bg-red-500 text-white">
-            <ChartThree title="Events" data={[10, 20, 30, 12]} />
+            <ChartThree
+              labels={["Window 7", "Window 8", "Window 10", "Other"]}
+              colors={["#2693F5", "#19CAFF", "#B1EDFF", "#0B5970"]}
+              data={[10, 20, 30, 40]}
+            />
           </div>
         </div>
       </div>
