@@ -318,11 +318,11 @@ const Card: React.FC<DataGridProps> = ({ timeRange }) => {
 
       {/* Card left side end*/}
       <Link href="/alerts">
-        <div className="grid grid-cols-2 grid-rows-2 gap-4 p-4 h-full">
+        <div className="grid grid-cols-2 gap-4 p-4">
           {/* Phần 1 */}
           <div>
             {" "}
-            <div className="bg-blue-100 flex items-center justify-left rounded-lg">
+            <div className="bg-blue-100 flex items-center justify-left rounded-lg p-4">
               <div
                 style={{
                   background:
@@ -367,7 +367,7 @@ const Card: React.FC<DataGridProps> = ({ timeRange }) => {
                 <ChartThree title="Events" data={[10, 20, 30, 12]} />
               </div>
             </div>
-            <div className="flex flex-row items-left h-full">
+            <div className="flex flex-row items-center justify-between">
               <div className="flex-1 flex items-center justify-center bg-blue-300">
                 Phần 1
               </div>
