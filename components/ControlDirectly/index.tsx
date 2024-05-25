@@ -38,9 +38,8 @@ const useWebSocket = () => {
       active: boolean;
     }[]
   >([]);
-
   useEffect(() => {
-    const newSocket = io("https://103.200.20.228/user", {
+    const newSocket = io(window.socketUrl, {
       extraHeaders: headers,
     });
 
