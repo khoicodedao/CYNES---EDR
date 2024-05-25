@@ -56,12 +56,11 @@ const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
       dataIndex: "is_active",
       key: "is_active",
       width: 100,
-
       render: (is_active) => {
         return is_active ? (
-          <Tag color="success">Active</Tag>
+          <Tag color="#19caff">Active</Tag>
         ) : (
-          <Tag color="error">Not Active</Tag>
+          <Tag color="#717EA0">Inactive</Tag>
         );
       },
     },
@@ -88,6 +87,7 @@ const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
       title: "Action",
       key: "operation",
       fixed: "right",
+      align: "center",
       width: 120,
       render: (item) => {
         return (

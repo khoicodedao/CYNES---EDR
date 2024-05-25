@@ -61,11 +61,11 @@ const columns: ColumnsType<EVENT> = [
     render: (event_level) => {
       switch (event_level) {
         case 1:
-          return <Tag color="success">Low</Tag>;
+          return <Tag color="rgba(255, 255, 255, 0.52)">Low</Tag>;
         case 2:
-          return <Tag color="warning">Medium</Tag>;
+          return <Tag color="#7EE1FF">Medium</Tag>;
         default:
-          return <Tag color="error">Hight</Tag>;
+          return <Tag color="#2693F5">Hight</Tag>;
       }
     },
   },
@@ -155,65 +155,58 @@ const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
   return (
     <>
       <Drawer
-        title="Detail"
+        title={
+          <>
+            <span style={{ color: "#818798" }}>Event/ </span>
+            <span className="text-white">Details</span>
+          </>
+        }
         onClose={onClose}
         open={open}
         placement={"right"}
         width={800}
       >
-        <Tabs
-          className="mt-4 ml-2"
-          type="card"
-          items={[
-            {
-              label: `SUMMARY`,
-              key: "1",
-              children: (
-                <>
-                  <p className="mt-2">
-                    <Tag color="#0B5970"> Event Description: </Tag>
-                    <span className="dark:text-white">
-                      {record.event_description}
-                    </span>
-                  </p>
-                  <p className="mt-2">
-                    <Tag color="#0B5970">Artifact Name: </Tag>
-                    <span className="dark:text-white">
-                      {record.artifact_name}
-                    </span>
-                  </p>
-                  <p className="mt-2">
-                    <Tag color="#0B5970">Mitre Tactic: </Tag>
-                    <span className="dark:text-white">
-                      {record.mitre_tactic}
-                    </span>
-                  </p>
-                  <p className="mt-2">
-                    <Tag color="#0B5970">Mitre Technique: </Tag>
-                    <span className="dark:text-white">
-                      {record.mitre_technique}
-                    </span>
-                  </p>
-                </>
-              ),
-            },
-            {
-              label: `JSON`,
-              key: "2",
-              children: (
-                <p className="mt-2">
-                  <ReactJson
-                    quotesOnKeys={false}
-                    displayDataTypes={false}
-                    name="Event Info"
-                    src={record.event_info}
-                    theme="ocean"
-                  />
-                </p>
-              ),
-            },
-          ]}
-        />
+        <div className="p-8 pt-0">
+          <h3 className="summary-title text-white text-3xl pb-2">Sumary</h3>
+          <div
+            className="summary-detail p-4"
+            style={{ backgroundColor: "rgb(38 38 41)" }}
+          >
+            <p>
+              <Tag color="#0B5970"> Event Description: </Tag>
+              <span className="dark:text-white">
+                {record.event_description}
+              </span>
+            </p>
+            <p className="mt-2">
+              <Tag color="#0B5970">Artifact Name: </Tag>
+              <span className="dark:text-white">{record.artifact_name}</span>
+            </p>
+            <p className="mt-2">
+              <Tag color="#0B5970">Mitre Tactic: </Tag>
+              <span className="dark:text-white">{record.mitre_tactic}</span>
+            </p>
+            <p className="mt-2">
+              <Tag color="#0B5970">Mitre Technique: </Tag>
+              <span className="dark:text-white">{record.mitre_technique}</span>
+            </p>
+          </div>
+        </div>
+        <div className="p-8 pt-0">
+          <h3 className="summary-title text-white text-3xl pb-2">Json</h3>
+          <div
+            className="summary-detail p-4"
+            style={{ backgroundColor: "rgb(38 38 41)" }}
+          >
+            <ReactJson
+              quotesOnKeys={false}
+              displayDataTypes={false}
+              name="Event Info"
+              src={record.event_info}
+              theme="ocean"
+            />
+          </div>
+        </div>
       </Drawer>
       <Table
         rowKey="ID"

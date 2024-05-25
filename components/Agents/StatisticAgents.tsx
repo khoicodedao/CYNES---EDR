@@ -1,11 +1,10 @@
 "use client";
-import React, { useEffect, useState } from "react";
-import "./index.css";
-import { Col, Row, Statistic, Badge } from "antd";
+import API_URL from "@/helpers/api-url";
+import calculatePercentages from "@/helpers/caculatePercentages";
 import { customAxiosPost } from "@/helpers/custom-axios";
 import { Progress } from "antd";
-import calculatePercentages from "@/helpers/caculatePercentages";
-import API_URL from "@/helpers/api-url";
+import React, { useEffect, useState } from "react";
+import "./index.css";
 type DataGridProps = {
   timeRange: string[];
 };

@@ -5,7 +5,7 @@
   color: white;
 }
 
-:where(.css-dev-only-do-not-override-qgg3xn).ant-badge.ant-badge-status
+.ant-badge.ant-badge-status
   .ant-badge-status-dot {
   width: 29px !important;
 
@@ -16,9 +16,9 @@
   fill: white;
 }
 .dark
-  :where(.css-dev-only-do-not-override-qgg3xn).ant-table-wrapper
+.ant-table-wrapper
   .ant-table-row-expand-icon::before,
-:where(.css-dev-only-do-not-override-qgg3xn).ant-table-wrapper
+.ant-table-wrapper
   .ant-table-row-expand-icon::after {
   background: black !important;
 }

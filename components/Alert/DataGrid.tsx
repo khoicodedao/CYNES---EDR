@@ -57,11 +57,11 @@ const columns: ColumnsType<ALERT> = [
     render: (alert_level) => {
       switch (alert_level) {
         case 1:
-          return <Tag color="success">Low</Tag>;
+          return <Tag color="rgb(251, 229, 181)">Low</Tag>;
         case 2:
-          return <Tag color="warning">Medium</Tag>;
+          return <Tag color="rgb(242, 179, 37)">Medium</Tag>;
         default:
-          return <Tag color="error">Hight</Tag>;
+          return <Tag color="rgb(239, 131, 37)">Hight</Tag>;
       }
     },
   },
@@ -149,53 +149,59 @@ const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
   }, [timeRange, search, filter]);
   return (
     <>
-      {" "}
       <Drawer
-        title="Detail"
+        title={
+          <>
+            <span style={{ color: "#818798" }}>Alert/ </span>
+            <span className="text-white">Details</span>
+          </>
+        }
         onClose={onClose}
         open={open}
         placement={"right"}
         width={800}
       >
-        <Tabs
-          className="mt-4 ml-2"
-          type="card"
-          items={[
-            {
-              label: `SUMMARY`,
-              key: "1",
-              children: (
-                <>
-                  <p className="mt-2">
-                    <Tag color="#87d068"> Alert Description: </Tag>
-                    <span className="dark:text-white">
-                      {record.alert_description}
-                    </span>
-                  </p>
-                  <p className="mt-2">
-                    <Tag color="#87d068">Artifact Name: </Tag>
-                    <span className="dark:text-white">
-                      {record.artifact_name}
-                    </span>
-                  </p>
-                </>
-              ),
-            },
-            {
-              label: `JSON`,
-              key: "2",
-              children: (
-                <ReactJson
-                  quotesOnKeys={false}
-                  displayDataTypes={false}
-                  name="Alert Info"
-                  src={record.alert_info}
-                  theme="ocean"
-                />
-              ),
-            },
-          ]}
-        />
+        <div className="p-8 pt-0">
+          <h3 className="summary-title text-white text-3xl pb-2">Sumary</h3>
+          <div
+            className="summary-detail p-4"
+            style={{ backgroundColor: "rgb(38 38 41)" }}
+          >
+            <p>
+              <Tag color="#0B5970"> Event Description: </Tag>
+              <span className="dark:text-white">
+                {record.alert_description}
+              </span>
+            </p>
+            <p className="mt-2">
+              <Tag color="#0B5970">Artifact Name: </Tag>
+              <span className="dark:text-white">{record.artifact_name}</span>
+            </p>
+            <p className="mt-2">
+              <Tag color="#0B5970">Received time: </Tag>
+              <span className="dark:text-white">{record.receive_time}</span>
+            </p>
+            {/* <p className="mt-2">
+              <Tag color="#0B5970">Mitre Technique: </Tag>
+              <span className="dark:text-white">{record.}</span>
+            </p> */}
+          </div>
+        </div>
+        <div className="p-8 pt-0">
+          <h3 className="summary-title text-white text-3xl pb-2">Json</h3>
+          <div
+            className="summary-detail p-4"
+            style={{ backgroundColor: "rgb(38 38 41)" }}
+          >
+            <ReactJson
+              quotesOnKeys={false}
+              displayDataTypes={false}
+              name="Event Info"
+              src={record.alert_info}
+              theme="ocean"
+            />
+          </div>
+        </div>
       </Drawer>
       <Table
         onRow={(record, rowIndex) => {

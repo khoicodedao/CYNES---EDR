@@ -2,7 +2,7 @@
 import "./index.css";
 import Terminal, { ColorMode, TerminalOutput } from "react-terminal-ui";
 import { useState, useEffect } from "react";
-import { List, Badge } from "antd";
+import { List, Badge, Tag } from "antd";
 // import socket, { userName } from "./socket";
 import { io } from "socket.io-client";
 import { jwtDecode } from "jwt-decode";
@@ -125,8 +125,8 @@ const ControlDirectly = () => {
               border: "1px solid rgba(140, 140, 140, 0.35)",
             }}
           >
-            <h3 className="ml-2 pb-2 pt-2 opacity-70 font-bold border-b border-gray-400">
-              Agent Online
+            <h3 className="ml-2 pb-2 pt-2  font-bold border-b border-gray-400">
+              Agent Online <Tag color="#15AAD6">{listAgent.length}</Tag>
             </h3>
             <List
               itemLayout="horizontal"
@@ -140,7 +140,62 @@ const ControlDirectly = () => {
                   }}
                 >
                   <List.Item.Meta
-                    avatar={<Badge status="success" />}
+                    avatar={
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="84"
+                        height="84"
+                        viewBox="0 0 84 84"
+                        fill="none"
+                      >
+                        <g filter="url(#filter0_d_3388_16247)">
+                          <path
+                            d="M63.792 17.0007H19.4357C16.9904 17.0007 15 19.01 15 21.4808V52.8408C15 55.3116 16.9904 57.3208 19.4357 57.3208H34.9654C34.9188 59.1077 34.5809 61.966 33.3122 63.3157C32.8466 63.81 32.3138 64.0408 31.6337 64.0408C31.0207 64.0408 30.5247 64.5418 30.5247 65.1609C30.5247 65.7799 31.0207 66.2809 31.6337 66.2809H51.5941C52.207 66.2809 52.703 65.7799 52.703 65.1609C52.703 64.5418 52.207 64.0408 51.5941 64.0408C50.914 64.0408 50.3812 63.8111 49.9177 63.3168C48.6521 61.9738 48.312 59.1114 48.2637 57.3208H63.7922C66.2374 57.3208 68.2278 55.3117 68.2278 52.8408V21.4808C68.2277 19.01 66.2373 17.0007 63.792 17.0007ZM41.6139 55.0873C40.388 55.0873 39.3895 54.0789 39.3895 52.8407C39.3895 51.6025 40.388 50.5941 41.6139 50.5941C42.8398 50.5941 43.8382 51.6025 43.8382 52.8407C43.8382 54.0789 42.8398 55.0873 41.6139 55.0873ZM19.4357 48.3608V21.4808H63.7922L63.794 48.3608H19.4357Z"
+                            fill="#717EA0"
+                          />
+                        </g>
+                        <defs>
+                          <filter
+                            id="filter0_d_3388_16247"
+                            x="12"
+                            y="14.0007"
+                            width="61.2285"
+                            height="57.2802"
+                            filterUnits="userSpaceOnUse"
+                            color-interpolation-filters="sRGB"
+                          >
+                            <feFlood
+                              flood-opacity="0"
+                              result="BackgroundImageFix"
+                            />
+                            <feColorMatrix
+                              in="SourceAlpha"
+                              type="matrix"
+                              values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+                              result="hardAlpha"
+                            />
+                            <feOffset dx="1" dy="1" />
+                            <feGaussianBlur stdDeviation="2" />
+                            <feComposite in2="hardAlpha" operator="out" />
+                            <feColorMatrix
+                              type="matrix"
+                              values="0 0 0 0 0.0121582 0 0 0 0 0.0121582 0 0 0 0 0.0121582 0 0 0 0.14 0"
+                            />
+                            <feBlend
+                              mode="normal"
+                              in2="BackgroundImageFix"
+                              result="effect1_dropShadow_3388_16247"
+                            />
+                            <feBlend
+                              mode="normal"
+                              in="SourceGraphic"
+                              in2="effect1_dropShadow_3388_16247"
+                              result="shape"
+                            />
+                          </filter>
+                        </defs>
+                      </svg>
+                    }
                     title={
                       <div
                         className="dark:text-white cursor-pointer  "
@@ -150,8 +205,10 @@ const ControlDirectly = () => {
                           setClientID(item.title);
                         }}
                       >
-                        <div className="font-bold">ID: {item.title}</div>
-                        <div className="opacity-25">{item.time}</div>
+                        <div className="font-bold">ID Agent: {item.title}</div>
+                        <div className="opacity-25">
+                          Time Online: {item.time}
+                        </div>
                       </div>
                     }
                   />

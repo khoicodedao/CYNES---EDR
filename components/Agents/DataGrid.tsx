@@ -1,18 +1,14 @@
 "use client";
-import React, { useState, useEffect } from "react";
-import { SettingOutlined, MenuOutlined } from "@ant-design/icons";
-import type { TableColumnsType } from "antd";
-import { List } from "antd";
-import { Switch } from "antd";
-import { Space, Table, Tag, Tabs, Progress } from "antd";
-import { Drawer, Divider } from "antd";
-import { AGENT } from "@/types/agent";
-import { customAxiosPost } from "@/helpers/custom-axios";
-import "./index.css";
-import getHeightScroll from "@/helpers/get-height-scroll";
 import API_URL from "@/helpers/api-url";
+import { customAxiosPost } from "@/helpers/custom-axios";
 import formatDateString from "@/helpers/format-date";
+import getHeightScroll from "@/helpers/get-height-scroll";
+import { AGENT } from "@/types/agent";
+import type { TableColumnsType } from "antd";
+import { Drawer, List, Progress, Space, Switch, Table, Tabs, Tag } from "antd";
+import React, { useEffect, useState } from "react";
 import CONSTANT_DATA from "../common/constant";
+import "./index.css";
 const checkOnline = (lastSeen: string) => {
   const inputTime = new Date(lastSeen);
   const currentTime = new Date();
@@ -21,13 +17,13 @@ const checkOnline = (lastSeen: string) => {
   if (inputTime > fiveMinutesAgo) {
     return (
       <p>
-        <Tag color="#87d068">Online</Tag>Agent detail
+        <Tag color="rgb(38, 147, 245)">Online</Tag>
       </p>
     );
   } else {
     return (
       <p>
-        <Tag color="#ff4d4f">Offline</Tag>Agent detail
+        <Tag color="rgba(255, 255, 255, 0.52)">Offline</Tag>
       </p>
     );
   }
@@ -184,11 +180,16 @@ const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
     <>
       {/* Show Drawer content in the rightside  */}
       <Drawer
-        title={checkOnline(agentDrawer?.last_seen || "undefine")}
-        placement={"right"}
-        width={1000}
+        title={
+          <>
+            <span style={{ color: "#818798" }}>Agent/ </span>
+            <span className="text-white">Details</span>
+          </>
+        }
         onClose={onClose}
         open={open}
+        placement={"right"}
+        width={800}
         extra={
           <Space>
             <Switch
@@ -201,153 +202,169 @@ const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
           </Space>
         }
       >
-        {/* Drawer content */}
-        <div className=" pl-2 w-full max-w-full rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
-          <div className="flex items-center dark:opacity-50  dark:bg-boxdark">
+        <div className="p-8 pt-6">
+          <div className="flex justify-between">
+            <h3 className="summary-title text-white text-3xl pb-2">
+              Agent Info
+            </h3>
+            <div>{checkOnline(agentDrawer?.last_seen || "undefine")}</div>
+          </div>
+
+          <div
+            className="summary-detail p-4"
+            style={{ backgroundColor: "rgb(38 38 41)" }}
+          >
             <p>
-              Create At:{" "}
-              {formatDateString(agentDrawer?.agent_first_install || "")}
-            </p>{" "}
-            <Divider className="bg-black-90 dark:bg-white " type="vertical" />{" "}
-            <p>Last Seen: {formatDateString(agentDrawer?.last_seen || "")}</p>
+              <Tag color="#0B5970"> ID: </Tag>
+              <span className="dark:text-white">{agentDrawer.id}</span>
+            </p>
+            <p className="mt-2">
+              <Tag color="#0B5970">Computer Name: </Tag>
+              <span className="dark:text-white">
+                {agentDrawer.computer_name}
+              </span>
+            </p>
+            <p className="mt-2">
+              <Tag color="#0B5970">Created At: </Tag>
+              <span className="dark:text-white">{agentDrawer.created_at}</span>
+            </p>
+            <p className="mt-2">
+              <Tag color="#0B5970">Received time: </Tag>
+              <span className="dark:text-white">test</span>
+            </p>
           </div>
         </div>
-        {/* Properties */}
-        <div className="w-full p-6 mt-2 max-w-full rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
-          <div className="font-bold mb-2">
-            <SettingOutlined className="mr-1" />
-            Properties
-          </div>
-          <div className="grid grid-cols-3 ">
-            <div>
-              <p>
-                Model:
-                <Tag color="#87d068">{agentDrawer.model}</Tag>
-              </p>
-            </div>
-            <div>
-              <p>
-                Manufacturer:
-                <Tag color="#87d068">{agentDrawer.manufacturer}</Tag>
-              </p>
-            </div>
-            <div>
-              <p>
-                Tags:
-                <Tag color="#87d068">{agentDrawer.tags}</Tag>
-              </p>
-            </div>
+        <div className="p-8 pt-0">
+          <h3 className="summary-title text-white text-3xl pb-2">Properties</h3>
+          <div
+            className="summary-detail p-4"
+            style={{ backgroundColor: "rgb(38 38 41)" }}
+          >
+            <p className="mt-2">
+              <Tag color="#0B5970">Model: </Tag>
+              <span className="dark:text-white">{agentDrawer.model}</span>
+            </p>
+            <p className="mt-2">
+              <Tag color="#0B5970">Manufacturer: </Tag>
+              <span className="dark:text-white">
+                {agentDrawer.manufacturer}
+              </span>
+            </p>
+            <p className="mt-2">
+              <Tag color="#0B5970">Tag: </Tag>
+              <span className="dark:text-white">{agentDrawer.tags}</span>
+            </p>
           </div>
         </div>
-        {/* end */}
+        <div className="p-8 pt-0">
+          <h3 className="summary-title text-white text-3xl pb-2">
+            About Agents
+          </h3>
+          <div
+            className="summary-detail p-4"
+            style={{ backgroundColor: "rgb(38 38 41)" }}
+          >
+            <Tabs
+              // onChange={onChange}
+              className="dark:text-white"
+              type="card"
+              items={[
+                {
+                  label: `Detail`,
+                  key: "1",
+                  children: (
+                    <List
+                      dataSource={[
+                        `MAC: ${agentDrawer.mac}`,
+                        `Local IP: ${agentDrawer.local_ip}`,
+                        `Public IP: ${agentDrawer.public_ip}`,
+                        `Computer Name: ${agentDrawer.computer_name}`,
+                        `Motherboard Serial: ${agentDrawer.motherboard_serial}`,
+                        `OS: ${agentDrawer.os}`,
+                      ]}
+                      renderItem={(item) => <List.Item>{item}</List.Item>}
+                    />
+                  ),
+                },
+                {
+                  label: `Network card`,
+                  key: "2",
+                  children: (
+                    <Table
+                      dataSource={agentDrawer.network_cards}
+                      columns={[
+                        {
+                          title: "MAC",
+                          dataIndex: "mac",
+                          key: "mac",
+                        },
+                        {
+                          title: "IP",
+                          dataIndex: "ip",
+                          key: "ip",
+                        },
+                        {
+                          title: "Description",
+                          dataIndex: "description",
+                          key: "description",
+                        },
+                      ]}
+                    />
+                  ),
+                },
+                {
+                  label: `Software Info`,
+                  key: "3",
+                  children: (
+                    <Table
+                      dataSource={agentDrawer.software_info}
+                      columns={[
+                        {
+                          title: "Software name",
+                          dataIndex: "name",
+                          key: "name",
+                        },
+                        {
+                          title: "Version",
+                          dataIndex: "version",
+                          key: "version",
+                        },
+                      ]}
+                    />
+                  ),
+                },
 
-        {/* Agent detail */}
-        <div className="w-full p-6 mt-2 max-w-full rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
-          <div className="font-bold mb-2">
-            <MenuOutlined className="mr-1" />
-            About Agent: <Tag color="#87d068">{agentDrawer.mac}</Tag>
+                {
+                  label: `Hardware`,
+                  key: "4",
+                  children: (
+                    <div className="grid grid-cols-2 gap-4">
+                      <div className="bg-gray-300 p-4">
+                        <span className="mr-4">CPU:</span>
+                        <Progress
+                          strokeColor={"rgb(38, 147, 245)"}
+                          status="active"
+                          type="circle"
+                          percent={extractNumericValue(agentDrawer.ram || "")}
+                        />
+                      </div>
+                      <div className="bg-gray-300 p-4">
+                        <span className="mr-4">RAM:</span>
+                        <Progress
+                          strokeColor={"rgb(38, 147, 245)"}
+                          status="active"
+                          type="circle"
+                          percent={extractNumericValue(agentDrawer?.cpu || "")}
+                        />
+                      </div>
+                    </div>
+                  ),
+                },
+              ]}
+            />
           </div>
-          <Tabs
-            // onChange={onChange}
-            className="dark:text-white"
-            type="card"
-            items={[
-              {
-                label: `Detail`,
-                key: "1",
-                children: (
-                  <List
-                    bordered
-                    dataSource={[
-                      `MAC: ${agentDrawer.mac}`,
-                      `Local IP: ${agentDrawer.local_ip}`,
-                      `Public IP: ${agentDrawer.public_ip}`,
-                      `Computer Name: ${agentDrawer.computer_name}`,
-                      `Motherboard Serial: ${agentDrawer.motherboard_serial}`,
-                      `OS: ${agentDrawer.os}`,
-                    ]}
-                    renderItem={(item) => <List.Item>{item}</List.Item>}
-                  />
-                ),
-              },
-              {
-                label: `Network card`,
-                key: "2",
-                children: (
-                  <Table
-                    bordered
-                    dataSource={agentDrawer.network_cards}
-                    columns={[
-                      {
-                        title: "MAC",
-                        dataIndex: "mac",
-                        key: "mac",
-                      },
-                      {
-                        title: "IP",
-                        dataIndex: "ip",
-                        key: "ip",
-                      },
-                      {
-                        title: "Description",
-                        dataIndex: "description",
-                        key: "description",
-                      },
-                    ]}
-                  />
-                ),
-              },
-              {
-                label: `Software Info`,
-                key: "3",
-                children: (
-                  <Table
-                    bordered
-                    dataSource={agentDrawer.software_info}
-                    columns={[
-                      {
-                        title: "Software name",
-                        dataIndex: "name",
-                        key: "name",
-                      },
-                      {
-                        title: "Version",
-                        dataIndex: "version",
-                        key: "version",
-                      },
-                    ]}
-                  />
-                ),
-              },
-
-              {
-                label: `Hardware`,
-                key: "4",
-                children: (
-                  <div className="grid grid-cols-2 gap-4">
-                    <div className="bg-gray-300 p-4">
-                      <span className="mr-4">CPU:</span>
-                      <Progress
-                        type="circle"
-                        percent={extractNumericValue(agentDrawer.ram || "")}
-                      />
-                    </div>
-                    <div className="bg-gray-300 p-4">
-                      <span className="mr-4">RAM:</span>
-                      <Progress
-                        type="circle"
-                        percent={extractNumericValue(agentDrawer?.cpu || "")}
-                      />
-                    </div>
-                  </div>
-                ),
-              },
-            ]}
-          />
         </div>
-        {/* end */}
       </Drawer>
-      {/* ================= */}
       {/* Table content */}
       <Table
         loading={loading}

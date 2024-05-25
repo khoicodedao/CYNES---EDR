@@ -15,9 +15,9 @@
   fill: white;
 }
 .dark
-  :where(.css-dev-only-do-not-override-qgg3xn).ant-table-wrapper
+.ant-table-wrapper
   .ant-table-row-expand-icon::before,
-:where(.css-dev-only-do-not-override-qgg3xn).ant-table-wrapper
+.ant-table-wrapper
   .ant-table-row-expand-icon::after {
   background: black !important;
 }
@@ -43,6 +43,6 @@
   background-color: #45454587;
 }
 
-.ant-list-items li.active {
-  background-color: #8b808087;
+.ant-list-items li.active svg path {
+  fill: #2693F5 ; 
 }
