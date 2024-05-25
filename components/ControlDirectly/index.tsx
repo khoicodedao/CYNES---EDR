@@ -77,7 +77,6 @@ const useWebSocket = () => {
     });
 
     newSocket.on("msg", (msg: any) => {
-      console.log("msg", msg);
       const newOutput = (
         <TerminalOutput>{`${directory} ${msg.command_info.output}`}</TerminalOutput>
       );
@@ -183,8 +182,6 @@ const ControlDirectly = () => {
             colorMode={ColorMode.Dark}
             onInput={(terminalInput) => {
               if (socket) {
-                console.log("clientID", clientID);
-                console.log("directory", directory);
                 socket.emit("msg", {
                   from: userName.username,
                   to: clientID,
@@ -196,6 +193,7 @@ const ControlDirectly = () => {
                 });
                 if (terminalInput === "clear") setTerminalLineData([]);
                 else {
+                  console.log(terminalInput);
                   const newTerminalLineData = [...terminalLineData];
                   newTerminalLineData.push(
                     <TerminalOutput>{`${directory} ${terminalInput}`}</TerminalOutput>
