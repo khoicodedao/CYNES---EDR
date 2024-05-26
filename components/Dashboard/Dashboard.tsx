@@ -1,30 +1,13 @@
 "use client";
 import FunctionBar from "@/components/common/FunctionBar";
-import API_URL from "@/helpers/api-url";
-import { customAxiosPost } from "@/helpers/custom-axios";
 import useLocalStorage from "@/hooks/useLocalStorage";
 import dayjs from "dayjs";
-import React, { Suspense, useEffect, useState } from "react";
+import React, { Suspense, useState } from "react";
 import ChartOne from "../Charts/ChartOne";
 import ChartTwo from "../Charts/ChartTwo";
 import Card from "./Card";
 import FallbackChartTwo from "./FallbackChartTwo";
-type Level = {
-  hight: number;
-  medium: number;
-  low: number;
-};
 const DashBoard: React.FC = () => {
-  const [alertLevel, setAlertLevel] = useState<Level>({
-    hight: 0,
-    medium: 0,
-    low: 0,
-  });
-  const [eventLevel, setEventLevel] = useState<Level>({
-    hight: 0,
-    medium: 0,
-    low: 0,
-  });
   const [storedValue, setStoredValue] = useLocalStorage("local-time", [
     dayjs().toISOString(),
     dayjs().endOf("day").toISOString(),
@@ -37,51 +20,6 @@ const DashBoard: React.FC = () => {
   const [search, setSearch] = useState<
     { field: string; operator: string; value: string }[]
   >([]);
-  let filter: any = {};
-
-  useEffect(() => {
-    if (timeRange) {
-      const filterInTimeRage = [
-        {
-          field: "created_at",
-          operator: ">=",
-          value: timeRange[0],
-        },
-        {
-          field: "created_at",
-          operator: "<=",
-          value: timeRange[1],
-        },
-      ];
-      filter["filter"] = filterInTimeRage;
-    }
-    let urlEvent = API_URL.EVENTS.COUNT_EVENTS;
-    let getDataEvent = async () => {
-      let resData: { success: boolean; data: Level } = await customAxiosPost(
-        urlEvent,
-        filter
-      );
-      console.log(resData);
-      if (resData.success) {
-        setEventLevel(resData.data);
-      }
-    };
-    //======Get Alert data
-    let urlAlert = API_URL.ALERTS.COUNT_ALERTS;
-    let getDataAlert = async () => {
-      let resData: { success: boolean; data: Level } = await customAxiosPost(
-        urlAlert,
-        filter
-      );
-      console.log(resData);
-      if (resData.success) {
-        setAlertLevel(resData.data);
-      }
-    };
-    //==========fetch data
-    getDataAlert();
-    getDataEvent();
-  }, [timeRange]);
   return (
     <div className="dashboard">
       <FunctionBar

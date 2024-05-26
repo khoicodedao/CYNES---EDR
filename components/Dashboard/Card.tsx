@@ -5,12 +5,19 @@ import { Tag } from "antd";
 import React, { useEffect, useState } from "react";
 import ChartThree from "../../components/Charts/ChartThree";
 import CardDataStats from "../CardDataStats";
+import calculatePercentages from "@/helpers/caculatePercentages";
+
 type CARD = {
   agents: {
     online: number;
     offline: number;
   };
   alerts: {
+    hight: number;
+    medium: number;
+    low: number;
+  };
+  events: {
     hight: number;
     medium: number;
     low: number;
@@ -22,6 +29,11 @@ const cardInit: CARD = {
     offline: 0,
   },
   alerts: {
+    hight: 0,
+    medium: 0,
+    low: 0,
+  },
+  events: {
     hight: 0,
     medium: 0,
     low: 0,
@@ -61,6 +73,7 @@ function calculateRatios(number1: number, number2: number, number3?: number) {
 }
 type DataGridProps = {
   timeRange?: string[];
+  card?: CARD;
 };
 type AgentStatus = {
   online: number;
@@ -91,9 +104,75 @@ const Card: React.FC<DataGridProps> = ({ timeRange }) => {
     ];
     filter["filter"] = filterInTimeRage;
   }
+  const eventInWeek = async () => {
+    // Get the start and end dates of the current week
+    const currentDate = new Date();
+    const startOfWeek = new Date(
+      currentDate.setDate(currentDate.getDate() - currentDate.getDay())
+    );
+    let urlEvent = API_URL.EVENTS.COUNT_EVENTS;
+
+    const fetchDataForDay = async (day: any) => {
+      const dayStart = new Date(
+        startOfWeek.getTime() + day * 24 * 60 * 60 * 1000
+      );
+      const dayEnd = new Date(dayStart.getTime() + 24 * 60 * 60 * 1000 - 1);
+
+      const filter = [
+        {
+          field: "created_at",
+          operator: ">=",
+          value: dayStart.toISOString().slice(0, 10),
+        },
+        {
+          field: "created_at",
+          operator: "<=",
+          value: dayEnd.toISOString().slice(0, 10),
+        },
+      ];
+
+      let resData: { success: boolean; data: any } = await customAxiosPost(
+        urlEvent,
+        { filter }
+      );
+      if (resData.success) {
+        const lowCount = resData.data.low;
+        const mediumCount = resData.data.medium;
+        const highCount = resData.data.hight;
+        return { lowCount, mediumCount, highCount };
+      } else {
+        return { lowCount: 0, mediumCount: 0, highCount: 0 };
+      }
+    };
+
+    const getDataEvent = async () => {
+      // const formattedData = [
+      //   {
+      //     name: "Low",
+      //     data: lowData,
+      //   },
+      //   {
+      //     name: "Medium",
+      //     data: mediumData,
+      //   },
+      //   {
+      //     name: "High",
+      //     data: highData,
+      //   },
+      // ];
+
+      for (let day = 0; day < 7; day++) {
+        let data = await fetchDataForDay(day);
+        console.log(data);
+      }
+    };
+    getDataEvent();
+  };
+
   useEffect(() => {
     let urlAgent = API_URL.AGENT.COUNT_AGENTS;
     let urlAlert = API_URL.ALERTS.COUNT_ALERTS;
+    let urlEvent = API_URL.EVENTS.COUNT_EVENTS;
     let getDataAgent = async () => {
       let resData: { success: boolean; data: AgentStatus } =
         await customAxiosPost(urlAgent, startDate);
@@ -118,9 +197,25 @@ const Card: React.FC<DataGridProps> = ({ timeRange }) => {
         });
       }
     };
+    let getDataEvent = async () => {
+      let resData: { success: boolean; data: AlertLevel } =
+        await customAxiosPost(urlEvent, filter);
+      if (resData.success) {
+        setCard((prevState) => {
+          return {
+            ...prevState,
+            events: resData.data,
+          };
+        });
+      }
+    };
     getDataAlert();
     getDataAgent();
+    getDataEvent();
+    eventInWeek();
+    eventInWeek();
   }, [timeRange, startDate]);
+
   return (
     <div className="dashboard-card gap-2 grid grid-cols-1  md:grid-cols-2  xl:grid-cols-2  mt-7.5">
       <CardDataStats
@@ -314,7 +409,7 @@ const Card: React.FC<DataGridProps> = ({ timeRange }) => {
         className="grid grid-cols-2 gap-4 p-4"
         style={{ background: "#292A3", border: "1px solid rgb(46 58 71)" }}
       >
-        <div>
+        <div className="flex flex-col justify-between">
           {" "}
           <div className="bg-blue-100 flex items-center justify-center rounded-lg p-4">
             <div
@@ -354,32 +449,38 @@ const Card: React.FC<DataGridProps> = ({ timeRange }) => {
               </svg>
             </div>
             <div className="flex flex-col justify-center items-center">
-              <p className="text-2xl font-bold text-white">08</p>
+              <p className="text-2xl font-bold text-white">
+                {Object.values(card.alerts)
+                  .reduce((acc, curr) => acc + curr, 0)
+                  .toLocaleString("en-US")}
+              </p>
               <p className="text-xs">Alerts</p>
             </div>
 
             <ChartThree
               labels={["Hight", "Medium", "Low"]}
               colors={["#EF8325", "#F2B325", "#FBE5B5"]}
-              data={[10, 20, 30, 12]}
+              data={Object.values(calculatePercentages(card.alerts)).map(
+                Number
+              )}
             />
           </div>
           <div className="flex flex-row items-center justify-between">
             <div className="flex-1 flex items-center justify-center bg-blue-300">
-              <Tag color="#EF8325">5</Tag>
+              <Tag color="#EF8325">{card.alerts.hight}</Tag>
               <span className="text-white">Hight</span>
             </div>
             <div className="flex-1 flex items-center justify-center bg-green-300">
-              <Tag color="#F2B325">3</Tag>
+              <Tag color="#F2B325">{card.alerts.medium}</Tag>
               <span className="text-white">Medium</span>
             </div>
             <div className="flex-1 flex items-center justify-center bg-yellow-300">
-              <Tag color="#FBE5B5">8</Tag>
+              <Tag color="#FBE5B5">{card.alerts.low}</Tag>
               <span className="text-white">Low</span>
             </div>
           </div>
         </div>
-        <div>
+        <div className="flex flex-col justify-between">
           <div className="bg-blue-100 flex items-center justify-center rounded-lg p-4">
             <div
               style={{
@@ -469,26 +570,35 @@ const Card: React.FC<DataGridProps> = ({ timeRange }) => {
               </svg>
             </div>
             <div className="flex flex-col justify-center items-center">
-              <p className="text-2xl font-bold text-white">08</p>
+              <p className="text-2xl font-bold text-white">
+                {" "}
+                {Object.values(card.events)
+                  .reduce((acc, curr) => acc + curr, 0)
+                  .toLocaleString("en-US")}
+              </p>
               <p className="text-xs">Events</p>
             </div>
             <ChartThree
               labels={["Hight", "Medium", "Low"]}
               colors={["#2693F5", "#7EE1FF", "#DCEEFD"]}
-              data={[10, 20, 30, 12]}
+              data={Object.values(calculatePercentages(card.events)).map(
+                Number
+              )}
             />
           </div>
           <div className="flex flex-row items-center justify-between pt-2">
             <div className="flex-1 flex items-center justify-center bg-blue-300">
-              <Tag color="#2693F5">15</Tag>
+              <Tag color="#2693F5">{card.events.hight}</Tag>
               <span className="text-white">Hight</span>
             </div>
             <div className="flex-1 flex items-center justify-center bg-green-300">
-              <Tag color="#7EE1FF">20</Tag>
+              <Tag color="#7EE1FF">{card.events.medium}</Tag>
               <span className="text-white">Medium</span>
             </div>
             <div className="flex-1 flex items-center justify-center bg-yellow-300">
-              <Tag color="#DCEEFD">15</Tag>
+              <Tag color="#DCEEFD">
+                {card.events.low.toLocaleString("en-US")}
+              </Tag>
               <span className="text-white">Low</span>
             </div>
           </div>
