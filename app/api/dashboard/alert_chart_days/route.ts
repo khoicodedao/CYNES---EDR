@@ -88,7 +88,7 @@ export async function POST(request: NextRequest) {
             data: lv2OnWeek,
           },
           {
-            name: "Hight",
+            name: "High",
             data: lv3OnWeek,
           },
         ],

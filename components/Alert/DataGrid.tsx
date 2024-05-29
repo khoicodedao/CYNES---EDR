@@ -61,7 +61,7 @@ const columns: ColumnsType<ALERT> = [
         case 2:
           return <Tag color="rgb(242, 179, 37)">Medium</Tag>;
         default:
-          return <Tag color="rgb(239, 131, 37)">Hight</Tag>;
+          return <Tag color="rgb(239, 131, 37)">High</Tag>;
       }
     },
   },

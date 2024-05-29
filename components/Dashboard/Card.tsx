@@ -458,7 +458,7 @@ const Card: React.FC<DataGridProps> = ({ timeRange }) => {
             </div>
 
             <ChartThree
-              labels={["Hight", "Medium", "Low"]}
+              labels={["High", "Medium", "Low"]}
               colors={["#EF8325", "#F2B325", "#FBE5B5"]}
               data={Object.values(calculatePercentages(card.alerts)).map(
                 Number
@@ -579,7 +579,7 @@ const Card: React.FC<DataGridProps> = ({ timeRange }) => {
               <p className="text-xs">Events</p>
             </div>
             <ChartThree
-              labels={["Hight", "Medium", "Low"]}
+              labels={["High", "Medium", "Low"]}
               colors={["#2693F5", "#7EE1FF", "#DCEEFD"]}
               data={Object.values(calculatePercentages(card.events)).map(
                 Number

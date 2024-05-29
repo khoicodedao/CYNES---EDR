@@ -65,7 +65,7 @@ const columns: ColumnsType<EVENT> = [
         case 2:
           return <Tag color="#7EE1FF">Medium</Tag>;
         default:
-          return <Tag color="#2693F5">Hight</Tag>;
+          return <Tag color="#2693F5">High</Tag>;
       }
     },
   },
