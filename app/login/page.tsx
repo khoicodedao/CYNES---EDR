@@ -24,13 +24,13 @@ const SignIn: React.FC = () => {
   const [buttonDisabled, setButtonDisabled] = useState(false);
   const [loading, setLoading] = useState(false);
   const [alert, setAlert] = useState("");
-  useEffect(() => {
-    fetch("/api/env")
-      .then((res) => res.json())
-      .then((data) => {
-        window.socketUrl = data.socketUrl; // Truyền giá trị vào biến global window
-      });
-  }, []);
+  // useEffect(() => {
+  //   fetch("/api/env")
+  //     .then((res) => res.json())
+  //     .then((data) => {
+  //       window.socketUrl = data.socketUrl; // Truyền giá trị vào biến global window
+  //     });
+  // }, []);
   useEffect(() => {
     if (user.user_name.length > 0 && user.password.length > 0) {
       setButtonDisabled(false);

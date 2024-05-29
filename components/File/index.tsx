@@ -1,10 +1,8 @@
 "use client";
-import FunctionBar from "@/components/common/FunctionBar";
-import StatisticAgents from "./StatisticAgents";
-import DataGrid from "./DataGrid";
-import { useState } from "react";
-import dayjs from "dayjs";
 import useLocalStorage from "@/hooks/useLocalStorage";
+import dayjs from "dayjs";
+import { useState } from "react";
+import DataGrid from "./DataGrid";
 const FileManager = () => {
   const [storedValue, setStoredValue] = useLocalStorage("local-time", [
     dayjs().toISOString(),

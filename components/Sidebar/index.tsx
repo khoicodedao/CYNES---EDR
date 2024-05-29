@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import styles from "./index.module.css";
 import path from "path";
-
+import { FolderOpenOutlined } from "@ant-design/icons";
 interface SidebarProps {
   sidebarOpen: boolean;
   setSidebarOpen: (arg: boolean) => void;
@@ -411,6 +411,16 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                   </div>
 
                   <div className={styles.titleOfLine}>Database</div>
+                </Link>
+                <Link href="/files" className={styles.menuItem}>
+                  <div
+                    className={`p-2 ${
+                      (pathname === "/files" && styles.active) || ""
+                    }`}
+                  >
+                    <FolderOpenOutlined />
+                  </div>
+                  <div className={styles.titleOfLine}>Files</div>
                 </Link>
               </div>
             </div>

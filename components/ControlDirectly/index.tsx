@@ -39,7 +39,7 @@ const useWebSocket = () => {
     }[]
   >([]);
   useEffect(() => {
-    const newSocket = io(window.socketUrl, {
+    const newSocket = io("https://103.200.20.228/user", {
       extraHeaders: headers,
     });
 

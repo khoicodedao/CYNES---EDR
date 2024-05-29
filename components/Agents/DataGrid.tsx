@@ -15,17 +15,9 @@ const checkOnline = (lastSeen: string) => {
   const fiveMinutesAgo = new Date(currentTime.getTime() - 5 * 60 * 1000);
   // Compare the input time with the current time
   if (inputTime > fiveMinutesAgo) {
-    return (
-      <p>
-        <Tag color="rgb(38, 147, 245)">Online</Tag>
-      </p>
-    );
+    return <Tag color="rgb(38, 147, 245)">Online</Tag>;
   } else {
-    return (
-      <p>
-        <Tag color="rgba(255, 255, 255, 0.52)">Offline</Tag>
-      </p>
-    );
+    return <Tag color="rgba(255, 255, 255, 0.52)">Offline</Tag>;
   }
 };
 function extractNumericValue(inputString: string) {
@@ -85,7 +77,20 @@ const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
       key: "ID",
       width: 90,
     },
-    { title: "MAC", dataIndex: "mac", key: "mac", width: 180 },
+    {
+      title: "MAC",
+      dataIndex: "mac",
+      key: "mac",
+      width: 250,
+      render: (item, record) => {
+        console.log(record);
+        return (
+          <div>
+            {checkOnline(record.last_seen || "")} <span>{item}</span>
+          </div>
+        );
+      },
+    },
 
     { title: "Local IP", dataIndex: "local_ip", key: "local_ip", width: 150 },
     {
@@ -101,8 +106,7 @@ const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
       width: 200,
     },
     { title: "OS", dataIndex: "os", key: "os", width: 120 },
-    { title: "RAM", dataIndex: "ram", key: "ram", width: 250 },
-    { title: "CPU", dataIndex: "cpu", key: "cpu", width: 350 },
+
     {
       title: "Version",
       dataIndex: "agent_version",
