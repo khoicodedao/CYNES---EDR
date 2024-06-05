@@ -104,75 +104,12 @@ const Card: React.FC<DataGridProps> = ({ timeRange }) => {
     ];
     filter["filter"] = filterInTimeRage;
   }
-  const eventInWeek = async () => {
-    // Get the start and end dates of the current week
-    const currentDate = new Date();
-    const startOfWeek = new Date(
-      currentDate.setDate(currentDate.getDate() - currentDate.getDay())
-    );
-    let urlEvent = API_URL.EVENTS.COUNT_EVENTS;
-
-    const fetchDataForDay = async (day: any) => {
-      const dayStart = new Date(
-        startOfWeek.getTime() + day * 24 * 60 * 60 * 1000
-      );
-      const dayEnd = new Date(dayStart.getTime() + 24 * 60 * 60 * 1000 - 1);
-
-      const filter = [
-        {
-          field: "created_at",
-          operator: ">=",
-          value: dayStart.toISOString().slice(0, 10),
-        },
-        {
-          field: "created_at",
-          operator: "<=",
-          value: dayEnd.toISOString().slice(0, 10),
-        },
-      ];
-
-      let resData: { success: boolean; data: any } = await customAxiosPost(
-        urlEvent,
-        { filter }
-      );
-      if (resData.success) {
-        const lowCount = resData.data.low;
-        const mediumCount = resData.data.medium;
-        const highCount = resData.data.hight;
-        return { lowCount, mediumCount, highCount };
-      } else {
-        return { lowCount: 0, mediumCount: 0, highCount: 0 };
-      }
-    };
-
-    const getDataEvent = async () => {
-      // const formattedData = [
-      //   {
-      //     name: "Low",
-      //     data: lowData,
-      //   },
-      //   {
-      //     name: "Medium",
-      //     data: mediumData,
-      //   },
-      //   {
-      //     name: "High",
-      //     data: highData,
-      //   },
-      // ];
-
-      for (let day = 0; day < 7; day++) {
-        let data = await fetchDataForDay(day);
-        console.log(data);
-      }
-    };
-    getDataEvent();
-  };
 
   useEffect(() => {
     let urlAgent = API_URL.AGENT.COUNT_AGENTS;
     let urlAlert = API_URL.ALERTS.COUNT_ALERTS;
     let urlEvent = API_URL.EVENTS.COUNT_EVENTS;
+    let dataStatistics: any = [];
     let getDataAgent = async () => {
       let resData: { success: boolean; data: AgentStatus } =
         await customAxiosPost(urlAgent, startDate);
@@ -212,8 +149,6 @@ const Card: React.FC<DataGridProps> = ({ timeRange }) => {
     getDataAlert();
     getDataAgent();
     getDataEvent();
-    eventInWeek();
-    eventInWeek();
   }, [timeRange, startDate]);
 
   return (
@@ -465,16 +400,16 @@ const Card: React.FC<DataGridProps> = ({ timeRange }) => {
               )}
             />
           </div>
-          <div className="flex flex-row items-center justify-between">
-            <div className="flex-1 flex items-center justify-center bg-blue-300">
+          <div className="flex flex-col flex-wrap items-start xl:flex-row xl:items-center justify-between">
+            <div className="flex items-center justify-center flex-wrap bg-blue-300">
               <Tag color="#EF8325">{card.alerts.hight}</Tag>
               <span className="text-white">Hight</span>
             </div>
-            <div className="flex-1 flex items-center justify-center bg-green-300">
+            <div className="flex items-center justify-center bg-green-300">
               <Tag color="#F2B325">{card.alerts.medium}</Tag>
               <span className="text-white">Medium</span>
             </div>
-            <div className="flex-1 flex items-center justify-center bg-yellow-300">
+            <div className="flex items-center justify-center bg-yellow-300">
               <Tag color="#FBE5B5">{card.alerts.low}</Tag>
               <span className="text-white">Low</span>
             </div>
@@ -586,16 +521,16 @@ const Card: React.FC<DataGridProps> = ({ timeRange }) => {
               )}
             />
           </div>
-          <div className="flex flex-row items-center justify-between pt-2">
-            <div className="flex-1 flex items-center justify-center bg-blue-300">
+          <div className="flex flex-wrap flex-col items-start xl:flex-row xl:items-center justify-between pt-2">
+            <div className=" flex items-center justify-center bg-blue-300">
               <Tag color="#2693F5">{card.events.hight}</Tag>
               <span className="text-white">Hight</span>
             </div>
-            <div className="flex-1 flex items-center justify-center bg-green-300">
+            <div className=" flex items-center justify-center bg-green-300">
               <Tag color="#7EE1FF">{card.events.medium}</Tag>
               <span className="text-white">Medium</span>
             </div>
-            <div className="flex-1 flex items-center justify-center bg-yellow-300">
+            <div className=" flex items-center justify-center bg-yellow-300">
               <Tag color="#DCEEFD">
                 {card.events.low.toLocaleString("en-US")}
               </Tag>

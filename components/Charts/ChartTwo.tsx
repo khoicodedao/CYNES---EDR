@@ -1,9 +1,10 @@
-// "use client";
+"use client";
 import { ApexOptions } from "apexcharts";
 import React from "react";
 import dynamic from "next/dynamic";
+
 type DataGridProps = {
-  timeRange?: string[];
+  data?: any;
 };
 const ApexCharts = dynamic(() => import("react-apexcharts"), { ssr: false });
 const options: ApexOptions = {
@@ -64,35 +65,14 @@ const options: ApexOptions = {
     opacity: 1,
   },
 };
-const ChartTwo: React.FC<DataGridProps> = async ({ timeRange }) => {
-  function fetchDataWithDelay() {
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        const sampleData = [
-          {
-            name: "Low",
-            data: [44, 55, 41, 67, 22, 43, 65],
-          },
-          {
-            name: "Medium",
-            data: [13, 23, 20, 8, 13, 27, 15],
-          },
-          {
-            name: "Hight",
-            data: [13, 23, 20, 8, 13, 27, 15],
-          },
-        ];
-        resolve(sampleData);
-      }, 1000); // Delay response by 3 seconds
-    });
-  }
-  let series = await fetchDataWithDelay();
+const ChartTwo: React.FC<DataGridProps> = ({ data }) => {
+  let series = data;
   return (
     <div className="col-span-12 rounded-sm border border-stroke bg-white p-7.5 shadow-default dark:border-strokedark dark:bg-boxdark xl:col-span-4">
       <div className="mb-4 justify-between gap-4 sm:flex">
         <div>
           <h4 className="text-xl font-semibold text-black dark:text-white">
-            Statistic
+            Statistic Alert
           </h4>
         </div>
       </div>
