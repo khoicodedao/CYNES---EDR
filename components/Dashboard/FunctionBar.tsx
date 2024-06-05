@@ -44,9 +44,9 @@ const FunctionBar = () => {
             presets={[
               {
                 label: (
-                  <span aria-label="Current Time to End of Day">Now ~ EOD</span>
+                  <span aria-label="Start Day to End of Day">SOD ~ EOD</span>
                 ),
-                value: () => [dayjs(), dayjs().endOf("day")], // 5.8.0+ support function
+                value: () => [dayjs().startOf("day"), dayjs().endOf("day")], // 5.8.0+ support function
               },
               ...rangePresets,
             ]}
