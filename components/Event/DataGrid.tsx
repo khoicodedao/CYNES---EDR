@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { Table, Tag, Tabs } from "antd";
+import { Table, Tag, Spin } from "antd";
 import type { ColumnsType } from "antd/es/table";
 import "./index.css";
 import { EVENT } from "@/types/event";
@@ -11,6 +11,8 @@ import getHeightScroll from "@/helpers/get-height-scroll";
 import { Drawer } from "antd";
 import ReactJson from "react-json-view";
 import CONSTANT_DATA from "../common/constant";
+import { ExportOutlined } from "@ant-design/icons";
+import exportToExcel from "@/helpers/export-to-excel";
 const columns: ColumnsType<EVENT> = [
   {
     title: "ID",
@@ -124,6 +126,18 @@ const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
     filter["filter"] = [...filter["filter"], ...search]; //Add filter time range and search
   }
   Object.assign(filter, CONSTANT_DATA.REQUIRED_TOTAL);
+  const exportData = async () => {
+    setLoading(true);
+    filter.page_no = 1;
+    filter.page_size = 10000;
+    let resData: {
+      success: boolean;
+      events: EVENT[];
+      count: number;
+    } = await customAxiosPost(API_URL.EVENTS.GET_EVENTS, filter);
+    exportToExcel(resData.events, "events.xlsx");
+    setLoading(false);
+  };
 
   useEffect(() => {
     let url = API_URL.EVENTS.GET_EVENTS;
@@ -208,6 +222,10 @@ const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
           </div>
         </div>
       </Drawer>
+      <ExportOutlined
+        className="export float-right"
+        onClick={exportData}
+      ></ExportOutlined>
       <Table
         rowKey="ID"
         loading={loading}

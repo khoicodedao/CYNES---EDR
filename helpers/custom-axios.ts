@@ -118,4 +118,6 @@ const customAxiosGet = async <T>(
   }
 };
 
-export { customAxiosPost, customAxiosGet, customAxiosDelete, customAxiosPut };
+export default customAxiosPost;
+
+export { customAxiosDelete, customAxiosGet, customAxiosPost, customAxiosPut };

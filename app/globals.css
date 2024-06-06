@@ -421,7 +421,7 @@ button[role="switch"] .ant-switch-inner {
   border: 1px solid #d5d5d5;
 }
 .ant-switch[aria-checked="false"] {
-  background-color: #717EA0 !important;
+  background-color: #717ea0 !important;
 }
 .ant-switch[aria-checked="true"] {
   background-color: #19caff !important;
@@ -631,27 +631,31 @@ main > div {
   background-image: url("/images/dashboard-card-background.png");
   background-position: 11% 91%;
 }
-.log-out[role="dialog"]{
-  top:35% !important;
-  left: 6%!important;
+.log-out[role="dialog"] {
+  top: 35% !important;
+  left: 6% !important;
 }
-.ant-table-cell-fix-right span{
+.ant-table-cell-fix-right span {
   align-items: center !important;
   justify-content: center !important;
 }
-.ant-table-cell-fix-right-first{
+.ant-table-cell-fix-right-first {
   text-align: center !important;
 }
-.ant-drawer-header{
+.ant-drawer-header {
   background-color: #1e212a !important;
 }
-.ant-drawer-header-title .anticon-close svg{
-  fill:rgb(129, 135, 152);
+.ant-drawer-header-title .anticon-close svg {
+  fill: rgb(129, 135, 152);
 }
-.ant-tabs-tab{
+.ant-tabs-tab {
   border-radius: 0px !important;
 }
-.ant-list-item .ant-list-item-meta{
+.ant-list-item .ant-list-item-meta {
   justify-content: center !important;
   align-items: center !important;
+}
+.export {
+  width: 30px;
+  height: 30px;
 }

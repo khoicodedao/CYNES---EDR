@@ -1,14 +1,13 @@
 "use client";
 import FunctionBar from "@/components/common/FunctionBar";
+import API_URL from "@/helpers/api-url";
+import { customAxiosPost } from "@/helpers/custom-axios";
 import useLocalStorage from "@/hooks/useLocalStorage";
 import dayjs from "dayjs";
-import React, { Suspense, useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import ChartOne from "../Charts/ChartOne";
 import ChartTwo from "../Charts/ChartTwo";
 import Card from "./Card";
-import FallbackChartTwo from "./FallbackChartTwo";
-import API_URL from "@/helpers/api-url";
-import { customAxiosPost } from "@/helpers/custom-axios";
 
 const DashBoard: React.FC = () => {
   const [dataChartTwo, setDataChartTwo] = useState<any[]>([
