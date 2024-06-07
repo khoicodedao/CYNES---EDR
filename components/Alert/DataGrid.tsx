@@ -1,16 +1,17 @@
 "use client";
-import React, { useState, useEffect } from "react";
-import { Tabs, Table, Tag } from "antd";
-import type { ColumnsType } from "antd/es/table";
-import getHeightScroll from "@/helpers/get-height-scroll";
-import "./index.css";
-import { Drawer } from "antd";
-import { ALERT } from "@/types/alert";
 import API_URL from "@/helpers/api-url";
 import { customAxiosPost } from "@/helpers/custom-axios";
 import formatDateString from "@/helpers/format-date";
+import getHeightScroll from "@/helpers/get-height-scroll";
+import { ALERT } from "@/types/alert";
+import { Drawer, Table, Tag } from "antd";
+import type { ColumnsType } from "antd/es/table";
+import React, { useEffect, useState } from "react";
 import ReactJson from "react-json-view";
 import CONSTANT_DATA from "../common/constant";
+import { ExportOutlined } from "@ant-design/icons";
+import "./index.css";
+import exportToExcel from "@/helpers/export-to-excel";
 const columns: ColumnsType<ALERT> = [
   {
     title: "ID",
@@ -87,6 +88,7 @@ type DataGridProps = {
   search?: { field: string; operator: string; value: string }[];
 };
 const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
+  const [loadingExport, setLoadingExport] = useState(false);
   const [record, setRecord] = useState<ALERT>({} as ALERT);
   const [open, setOpen] = useState(false);
   const [alerts, setAlertList] = useState<ALERT[]>([] as ALERT[]);
@@ -119,6 +121,18 @@ const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
     filter["filter"] = [...filter["filter"], ...search]; //Add filter time range and search
   }
   Object.assign(filter, CONSTANT_DATA.REQUIRED_TOTAL);
+  const exportData = async () => {
+    setLoadingExport(true);
+    filter.page_no = 1;
+    filter.page_size = 10000;
+    let resData: {
+      success: boolean;
+      alerts: ALERT[];
+      count: number;
+    } = await customAxiosPost(API_URL.ALERTS.GET_ALERTS, filter);
+    exportToExcel(resData.alerts, "alerts.xlsx");
+    setLoadingExport(false);
+  };
   useEffect(() => {
     let url = API_URL.ALERTS.GET_ALERTS;
     let getData = async () => {
@@ -203,6 +217,20 @@ const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
           </div>
         </div>
       </Drawer>
+      <div className="float-right" style={{ marginRight: "10px" }}>
+        {loadingExport ? (
+          <>
+            {" "}
+            <span style={{ marginRight: "18px" }}>Exporting</span>
+            <div className="dot-pulse inline-block"></div>
+          </>
+        ) : (
+          <ExportOutlined
+            className="export"
+            onClick={exportData}
+          ></ExportOutlined>
+        )}
+      </div>
       <Table
         onRow={(record, rowIndex) => {
           return {

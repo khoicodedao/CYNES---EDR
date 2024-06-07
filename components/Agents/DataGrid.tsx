@@ -1,6 +1,8 @@
 "use client";
 import API_URL from "@/helpers/api-url";
 import { customAxiosPost } from "@/helpers/custom-axios";
+import exportToExcel from "@/helpers/export-to-excel";
+import { ExportOutlined } from "@ant-design/icons";
 import formatDateString from "@/helpers/format-date";
 import getHeightScroll from "@/helpers/get-height-scroll";
 import { AGENT } from "@/types/agent";
@@ -38,6 +40,7 @@ type DataGridProps = {
 };
 const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
   const [open, setOpen] = useState(false);
+  const [loadingExport, setLoadingExport] = useState(false);
   const [loading, setLoading] = useState(false);
   const [agentList, setAgentList] = useState<AGENT[]>([]);
   const [totalCount, setTotalCount] = useState(0);
@@ -62,6 +65,19 @@ const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
     filter["filter"] = [...filter["filter"], ...search]; //Add filter time range and search
   }
   Object.assign(filter, CONSTANT_DATA.REQUIRED_TOTAL);
+  const exportData = async () => {
+    setLoadingExport(true);
+    filter.page_no = 1;
+    filter.page_size = 10000;
+    let resData: {
+      success: boolean;
+      data: { agents: AGENT[] };
+      count: number;
+    } = await customAxiosPost(API_URL.AGENT.GET_AGENTS, filter);
+    exportToExcel(resData.data.agents, "agents.xlsx");
+    setLoadingExport(false);
+  };
+
   // === Drawer ====
   const showDrawer = () => {
     setOpen(true);
@@ -370,6 +386,20 @@ const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
         </div>
       </Drawer>
       {/* Table content */}
+      <div className="float-right" style={{ marginRight: "10px" }}>
+        {loadingExport ? (
+          <>
+            {" "}
+            <span style={{ marginRight: "18px" }}>Exporting</span>
+            <div className="dot-pulse inline-block"></div>
+          </>
+        ) : (
+          <ExportOutlined
+            className="export"
+            onClick={exportData}
+          ></ExportOutlined>
+        )}
+      </div>
       <Table
         loading={loading}
         onRow={(record, rowIndex) => {

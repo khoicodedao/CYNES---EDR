@@ -11,6 +11,9 @@ import CONSTANT_DATA from "../common/constant";
 import { PlusOutlined, EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import "./index.css";
 import ModalCRUD from "./ModalCRUD";
+import exportToExcel from "@/helpers/export-to-excel";
+import { ExportOutlined } from "@ant-design/icons";
+
 type NotificationType = "success" | "info" | "warning" | "error";
 type DataGridProps = {
   timeRange?: string[];
@@ -125,6 +128,7 @@ const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
   };
   const [database, setDatabaseList] = useState<DATABASE[]>([] as DATABASE[]);
   const [loading, setLoading] = useState(false);
+  const [loadingExport, setLoadingExport] = useState(false);
   const [filter, setFilter] = useState<any>(CONSTANT_DATA.PAGINATION);
   const [totalCount, setTotalCount] = useState(0);
   const [reload, setReload] = useState(false);
@@ -171,6 +175,19 @@ const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
     filter["filter"] = [...filter["filter"], ...search]; //Add filter time range and search
   }
   Object.assign(filter, CONSTANT_DATA.REQUIRED_TOTAL);
+  const exportData = async () => {
+    setLoadingExport(true);
+    filter.page_no = 1;
+    filter.page_size = 10000;
+    let resData: {
+      success: boolean;
+      database: DATABASE[];
+      count: number;
+    } = await customAxiosPost(API_URL.DATABASE.GET_DATABASE, filter);
+    exportToExcel(resData.database, "database.xlsx");
+    setLoadingExport(false);
+  };
+
   useEffect(() => {
     let url = API_URL.DATABASE.GET_DATABASE;
     let getData = async () => {
@@ -210,7 +227,7 @@ const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
         dataEdit={dataEdit}
         openNotificationWithIcon={openNotificationWithIcon}
       ></ModalCRUD>
-      <div className=" mt-2 mr-2 flex justify-end">
+      <div className=" mt-2 mr-2 flex justify-between">
         <Button
           icon={<PlusOutlined />}
           onClick={() => {
@@ -229,6 +246,20 @@ const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
         >
           Add a row
         </Button>
+        <div style={{ marginRight: "10px" }}>
+          {loadingExport ? (
+            <>
+              {" "}
+              <span style={{ marginRight: "18px" }}>Exporting</span>
+              <div className="dot-pulse inline-block"></div>
+            </>
+          ) : (
+            <ExportOutlined
+              className="export"
+              onClick={exportData}
+            ></ExportOutlined>
+          )}
+        </div>
       </div>
       <Table
         loading={loading}

@@ -1,18 +1,17 @@
 "use client";
-import React, { useState, useEffect } from "react";
-import { Table, Tag, Spin } from "antd";
-import type { ColumnsType } from "antd/es/table";
-import "./index.css";
-import { EVENT } from "@/types/event";
 import API_URL from "@/helpers/api-url";
 import { customAxiosPost } from "@/helpers/custom-axios";
+import exportToExcel from "@/helpers/export-to-excel";
 import formatDateString from "@/helpers/format-date";
 import getHeightScroll from "@/helpers/get-height-scroll";
-import { Drawer } from "antd";
+import { EVENT } from "@/types/event";
+import { ExportOutlined } from "@ant-design/icons";
+import { Drawer, Table, Tag } from "antd";
+import type { ColumnsType } from "antd/es/table";
+import React, { useEffect, useState } from "react";
 import ReactJson from "react-json-view";
 import CONSTANT_DATA from "../common/constant";
-import { ExportOutlined } from "@ant-design/icons";
-import exportToExcel from "@/helpers/export-to-excel";
+import "./index.css";
 const columns: ColumnsType<EVENT> = [
   {
     title: "ID",
@@ -98,6 +97,7 @@ const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
   const [open, setOpen] = useState(false);
   const [events, setEventList] = useState<EVENT[]>([] as EVENT[]);
   const [loading, setLoading] = useState(false);
+  const [loadingExport, setLoadingExport] = useState(false);
   const [totalCount, setTotalCount] = useState(0);
   const [filter, setFilter] = useState<any>(CONSTANT_DATA.PAGINATION);
   const showDrawer = () => {
@@ -127,7 +127,7 @@ const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
   }
   Object.assign(filter, CONSTANT_DATA.REQUIRED_TOTAL);
   const exportData = async () => {
-    setLoading(true);
+    setLoadingExport(true);
     filter.page_no = 1;
     filter.page_size = 10000;
     let resData: {
@@ -136,7 +136,7 @@ const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
       count: number;
     } = await customAxiosPost(API_URL.EVENTS.GET_EVENTS, filter);
     exportToExcel(resData.events, "events.xlsx");
-    setLoading(false);
+    setLoadingExport(false);
   };
 
   useEffect(() => {
@@ -222,10 +222,21 @@ const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
           </div>
         </div>
       </Drawer>
-      <ExportOutlined
-        className="export float-right"
-        onClick={exportData}
-      ></ExportOutlined>
+      <div className="float-right" style={{ marginRight: "10px" }}>
+        {loadingExport ? (
+          <>
+            {" "}
+            <span style={{ marginRight: "18px" }}>Exporting</span>
+            <div className="dot-pulse inline-block"></div>
+          </>
+        ) : (
+          <ExportOutlined
+            className="export"
+            onClick={exportData}
+          ></ExportOutlined>
+        )}
+      </div>
+
       <Table
         rowKey="ID"
         loading={loading}
