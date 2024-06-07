@@ -35,7 +35,7 @@ const columns: ColumnsType<ALERT> = [
     title: "Local IP ",
     dataIndex: "local_ip",
     key: "local_ip",
-    width: 120,
+    width: 140,
   },
   {
     title: "Alert Type",

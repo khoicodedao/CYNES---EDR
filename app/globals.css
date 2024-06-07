@@ -1889,4 +1889,9 @@ main > div {
   }
 }
 
-/*# sourceMappingURL=three-dots.css.map */
+.ant-drawer-title {
+  color: white !important;
+}
+.ant-drawer-header button {
+  color: white !important;
+}
