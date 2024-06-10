@@ -25,6 +25,7 @@ const Alert = () => {
       {/* <!-- ====== FunctionBar Section Start ====== --> */}
       <div className="w-full max-w-full rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
         <FunctionBar
+          showSearchBar
           setStoredValue={setStoredValue}
           storedValue={storedValue}
           setTimeRange={setTimeRange}
@@ -38,6 +39,7 @@ const Alert = () => {
             "alert_name",
             "alert_type",
             "alert_description",
+            "alert_level",
           ]}
         ></FunctionBar>
       </div>

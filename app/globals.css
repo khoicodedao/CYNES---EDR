@@ -1895,3 +1895,36 @@ main > div {
 .ant-drawer-header button {
   color: white !important;
 }
+.search-container {
+  display: flex;
+  width: 90%;
+  margin: 0px auto;
+  position: relative;
+}
+.search-container input {
+  background: #2b2b32;
+  height: 32px;
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #2b2b32;
+  border-radius: 4px;
+}
+.suggestions {
+  height: 230px;
+  overflow-y: scroll;
+  position: absolute;
+  top: 38px;
+  width: calc(100% - 35px);
+  border: 1px solid #dbdbe7;
+  border-top: none;
+  background: #2b2b32d2;
+  z-index: 999999999999;
+}
+.suggestions div {
+  padding: 10px;
+  cursor: pointer;
+}
+.suggestions div.highlighted {
+  background: #44444dfb !important;
+}

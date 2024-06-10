@@ -1,16 +1,21 @@
-import React, { ChangeEventHandler } from "react";
+import { CloseCircleOutlined, FilterOutlined } from "@ant-design/icons";
+import type { SelectProps, TimeRangePickerProps } from "antd";
+import SearchBar from "../SearchBar";
+import {
+  Button,
+  DatePicker,
+  Divider,
+  Drawer,
+  Input,
+  Popover,
+  Select,
+  Space,
+  Tag,
+  notification,
+} from "antd";
 import dayjs from "dayjs";
-import type { TimeRangePickerProps } from "antd";
-import { DatePicker, Drawer } from "antd";
-import { ReloadOutlined } from "@ant-design/icons";
-import { useState } from "react";
-import { Popover, Space, Button, Divider, Tag, notification } from "antd";
-import { FilterOutlined } from "@ant-design/icons";
-import { Input } from "antd";
+import React, { useState } from "react";
 const { RangePicker } = DatePicker;
-import { Select } from "antd";
-import type { SelectProps } from "antd";
-import { CloseCircleOutlined } from "@ant-design/icons";
 function findKeysWithEmptyStringValue(obj: any) {
   const keysWithEmptyString = [];
   let keys = Object.keys(obj);
@@ -50,6 +55,7 @@ type FunctionBarProps = {
   setStoredValue?: React.Dispatch<React.SetStateAction<string[]>>;
   placeHolder?: string;
   filterKey?: string[];
+  showSearchBar: boolean;
 };
 
 const FunctionBar: React.FC<FunctionBarProps> = ({
@@ -57,7 +63,9 @@ const FunctionBar: React.FC<FunctionBarProps> = ({
   setSearch, // getValue from Search bar to parent component
   storedValue,
   setStoredValue,
+  showSearchBar,
   filterKey,
+  placeHolder,
   search = [{ field: "string", operator: "string", value: "string" }],
 }) => {
   //<============Notification api===========>
@@ -229,7 +237,15 @@ const FunctionBar: React.FC<FunctionBarProps> = ({
             );
           })}
         </div>
+        {showSearchBar && (
+          <SearchBar
+            filterKey={filterKey || []}
+            placeHolder={placeHolder || ""}
+            searchFunction={setSearch}
+          />
+        )}
       </div>
+
       <div className=" justify-end items-center flex w-1/3 md:w-1/3  ">
         {/* Export dashboard to PDF */}
         <Popover

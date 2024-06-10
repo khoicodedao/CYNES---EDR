@@ -104,6 +104,7 @@ const DashBoard: React.FC = () => {
   return (
     <div className="dashboard">
       <FunctionBar
+        showSearchBar={false}
         setStoredValue={setStoredValue}
         storedValue={storedValue}
         setTimeRange={setTimeRange}

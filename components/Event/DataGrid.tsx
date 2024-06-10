@@ -39,13 +39,13 @@ const columns: ColumnsType<EVENT> = [
     width: 180,
     align: "center",
   },
-  {
-    title: "Event Type",
-    dataIndex: "event_type",
-    key: "event_type",
-    width: 120,
-    align: "center",
-  },
+  // {
+  //   title: "Event Type",
+  //   dataIndex: "event_type",
+  //   key: "event_type",
+  //   width: 120,
+  //   align: "center",
+  // },
   {
     title: "Event Name",
     dataIndex: "event_name",
