@@ -36,6 +36,7 @@ const Event = () => {
             "computer_name",
             "event_name",
             "event_type",
+            "event_level",
             "=",
             ">",
             "<",

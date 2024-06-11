@@ -121,7 +121,7 @@ const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
       key: "computer_name",
       width: 200,
     },
-    { title: "OS", dataIndex: "os", key: "os", width: 120 },
+    // { title: "OS", dataIndex: "os", key: "os", width: 200 },
 
     {
       title: "Version",

@@ -8,10 +8,14 @@ interface SearchBarProps {
     React.SetStateAction<{ field: string; operator: string; value: string }[]>
   >;
   filterKey: string[];
-  placeHolder:string;
+  placeHolder: string;
 }
 
-const SearchBar: React.FC<SearchBarProps> = ({ searchFunction, filterKey }) => {
+const SearchBar: React.FC<SearchBarProps> = ({
+  searchFunction,
+  filterKey,
+  placeHolder,
+}) => {
   const [inputValue, setInputValue] = useState<string>("");
   const [suggestions, setSuggestions] = useState<string[]>([]);
   const [highlightedIndex, setHighlightedIndex] = useState<number>(-1);
@@ -84,7 +88,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ searchFunction, filterKey }) => {
         onFocus={handleFocus}
         onBlur={handleBlur}
         onKeyDown={handleKeyDown}
-        placeholder="Enter key (e.g., mac, ip)"
+        placeholder={placeHolder}
       />
       {suggestions.length > 0 && (
         <div className="suggestions">

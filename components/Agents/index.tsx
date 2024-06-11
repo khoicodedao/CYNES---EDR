@@ -23,12 +23,13 @@ const Agent = () => {
       {/* <!-- ====== FunctionBar Section Start ====== --> */}
       <div className="w-full max-w-full rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
         <FunctionBar
+          showSearchBar
           setStoredValue={setStoredValue}
           storedValue={storedValue}
           setTimeRange={setTimeRange}
           setSearch={setSearch}
           search={search}
-          placeHolder="Search by query (mac='AA-DC-2F-4A-AD-F5')"
+          placeHolder="Search by query (mac='AA-DC-2F-4A-AD-F5...')"
           filterKey={[
             "mac",
             "local_ip",
@@ -37,6 +38,11 @@ const Agent = () => {
             "agent_user",
             "tags",
             "os",
+            "=",
+            ">",
+            "<",
+            ">=",
+            "<=",
           ]}
         ></FunctionBar>
       </div>

@@ -27,24 +27,24 @@ const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
       key: "ID",
       width: 120,
     },
-    {
-      title: "Group ID",
-      dataIndex: "group_id",
-      key: "group_id",
-      width: 120,
-    },
+    // {
+    //   title: "Group ID",
+    //   dataIndex: "group_id",
+    //   key: "group_id",
+    //   width: 120,
+    // },
     {
       title: "Group Name",
       dataIndex: "group_name",
       key: "group_name",
       width: 120,
     },
-    {
-      title: "Command Id",
-      dataIndex: "command_id",
-      key: "command_id",
-      width: 120,
-    },
+    // {
+    //   title: "Command Id",
+    //   dataIndex: "command_id",
+    //   key: "command_id",
+    //   width: 120,
+    // },
     {
       title: "Command Name",
       dataIndex: "command_name",

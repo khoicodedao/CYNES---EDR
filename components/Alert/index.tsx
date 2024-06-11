@@ -40,6 +40,11 @@ const Alert = () => {
             "alert_type",
             "alert_description",
             "alert_level",
+            "=",
+            ">",
+            "<",
+            ">=",
+            "<=",
           ]}
         ></FunctionBar>
       </div>
