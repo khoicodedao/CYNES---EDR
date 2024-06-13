@@ -32,11 +32,13 @@ const Event = () => {
           placeHolder="Search by query (mac='AA-DC-2F-4A-AD-F5')"
           filterKey={[
             "mac",
+            "agent",
             "local_ip",
             "computer_name",
             "event_name",
             "event_type",
             "event_level",
+            "event_description",
             "=",
             ">",
             "<",

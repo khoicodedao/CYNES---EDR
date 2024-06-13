@@ -15,6 +15,7 @@ const API_URL = {
     GET_AGENTS: "/api/agents",
     COUNT_AGENTS: "/api/agents/statistic_agents",
     REMOTE_AGENT: "/api/agents/remote",
+    COUNT_OS: "/api/agents/count-os",
   },
   EVENTS: {
     GET_EVENTS: "/api/events",

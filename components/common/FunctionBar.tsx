@@ -217,26 +217,7 @@ const FunctionBar: React.FC<FunctionBarProps> = ({
             onClick={showDrawer}
           ></Button>
         )}
-        <div>
-          {search.map((item, key) => {
-            return (
-              <Tag
-                className="filter p-1"
-                key={key}
-                onClick={() => {
-                  search.splice(key, 1); //remove element when click x
-                  if (setSearch) {
-                    setSearch([...search]);
-                  }
-                }}
-                // closeIcon={<CloseCircleOutlined />}
-                icon={<CloseCircleOutlined />}
-              >
-                {Object.values(item).toString().replaceAll(",", "")}
-              </Tag>
-            );
-          })}
-        </div>
+
         {showSearchBar && (
           <SearchBar
             filterKey={filterKey || []}

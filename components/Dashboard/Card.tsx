@@ -6,6 +6,7 @@ import React, { useEffect, useState } from "react";
 import ChartThree from "../../components/Charts/ChartThree";
 import CardDataStats from "../CardDataStats";
 import calculatePercentages from "@/helpers/caculatePercentages";
+import { DeliveredProcedureOutlined } from "@ant-design/icons";
 
 type CARD = {
   agents: {
@@ -109,7 +110,6 @@ const Card: React.FC<DataGridProps> = ({ timeRange }) => {
     let urlAgent = API_URL.AGENT.COUNT_AGENTS;
     let urlAlert = API_URL.ALERTS.COUNT_ALERTS;
     let urlEvent = API_URL.EVENTS.COUNT_EVENTS;
-    let dataStatistics: any = [];
     let getDataAgent = async () => {
       let resData: { success: boolean; data: AgentStatus } =
         await customAxiosPost(urlAgent, startDate);
@@ -154,6 +154,7 @@ const Card: React.FC<DataGridProps> = ({ timeRange }) => {
   return (
     <div className="dashboard-card gap-2 grid grid-cols-1  md:grid-cols-2  xl:grid-cols-2  mt-7.5">
       <CardDataStats
+        filter={filter}
         title="Agents"
         total={formatNumberWithDots(card.agents.online + card.agents.offline)}
         // newData="+ 1"
@@ -344,7 +345,7 @@ const Card: React.FC<DataGridProps> = ({ timeRange }) => {
         className="grid grid-cols-2 gap-4 p-4"
         style={{ background: "#292A3", border: "1px solid rgb(46 58 71)" }}
       >
-        <div className="flex flex-col justify-between">
+        <div className="flex flex-col justify-center items-center">
           {" "}
           <div className="bg-blue-100 flex items-center justify-center rounded-lg p-4">
             <div
@@ -391,16 +392,17 @@ const Card: React.FC<DataGridProps> = ({ timeRange }) => {
               </p>
               <p className="text-xs">Alerts</p>
             </div>
-
-            <ChartThree
-              labels={["High", "Medium", "Low"]}
-              colors={["#EF8325", "#F2B325", "#FBE5B5"]}
-              data={Object.values(calculatePercentages(card.alerts)).map(
-                Number
-              )}
-            />
+            <div className="hidden xl:block">
+              <ChartThree
+                labels={["High", "Medium", "Low"]}
+                colors={["#EF8325", "#F2B325", "#FBE5B5"]}
+                data={Object.values(calculatePercentages(card.alerts)).map(
+                  Number
+                )}
+              />
+            </div>
           </div>
-          <div className="flex flex-col flex-wrap items-start xl:flex-row xl:items-center justify-between">
+          {/* <div className="flex flex-col flex-wrap items-start xl:flex-row xl:items-center justify-between">
             <div className="flex items-center justify-center flex-wrap bg-blue-300">
               <Tag color="#EF8325">{card.alerts.hight}</Tag>
               <span className="text-white">Hight</span>
@@ -413,9 +415,9 @@ const Card: React.FC<DataGridProps> = ({ timeRange }) => {
               <Tag color="#FBE5B5">{card.alerts.low}</Tag>
               <span className="text-white">Low</span>
             </div>
-          </div>
+          </div> */}
         </div>
-        <div className="flex flex-col justify-between">
+        <div className="flex flex-col justify-center items-center">
           <div className="bg-blue-100 flex items-center justify-center rounded-lg p-4">
             <div
               style={{
@@ -521,7 +523,7 @@ const Card: React.FC<DataGridProps> = ({ timeRange }) => {
               )}
             />
           </div>
-          <div className="flex flex-wrap flex-col items-start xl:flex-row xl:items-center justify-between pt-2">
+          {/* <div className="flex flex-wrap flex-col items-start xl:flex-row xl:items-center justify-between pt-2">
             <div className=" flex items-center justify-center bg-blue-300">
               <Tag color="#2693F5">{card.events.hight}</Tag>
               <span className="text-white">Hight</span>
@@ -536,7 +538,7 @@ const Card: React.FC<DataGridProps> = ({ timeRange }) => {
               </Tag>
               <span className="text-white">Low</span>
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>

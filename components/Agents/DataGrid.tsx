@@ -101,7 +101,7 @@ const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
       render: (item, record) => {
         console.log(record);
         return (
-          <div>
+          <div className="flex">
             {checkOnline(record.last_seen || "")} <span>{item}</span>
           </div>
         );
@@ -234,23 +234,23 @@ const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
             className="summary-detail p-4"
             style={{ backgroundColor: "rgb(38 38 41)" }}
           >
-            <p>
+            <p className="flex">
               <Tag color="#0B5970"> ID: </Tag>
               <span className="dark:text-white">{agentDrawer.id}</span>
             </p>
-            <p className="mt-2">
+            <p className="mt-2 flex">
               <Tag color="#0B5970">Computer Name: </Tag>
               <span className="dark:text-white">
                 {agentDrawer.computer_name}
               </span>
             </p>
-            <p className="mt-2">
+            <p className="mt-2 flex">
               <Tag color="#0B5970">Created At: </Tag>
               <span className="dark:text-white">{agentDrawer.created_at}</span>
             </p>
-            <p className="mt-2">
+            <p className="mt-2 flex">
               <Tag color="#0B5970">Received time: </Tag>
-              <span className="dark:text-white">test</span>
+              <span className="dark:text-white">{agentDrawer.last_seen}</span>
             </p>
           </div>
         </div>
@@ -260,17 +260,17 @@ const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
             className="summary-detail p-4"
             style={{ backgroundColor: "rgb(38 38 41)" }}
           >
-            <p className="mt-2">
+            <p className="mt-2 flex">
               <Tag color="#0B5970">Model: </Tag>
               <span className="dark:text-white">{agentDrawer.model}</span>
             </p>
-            <p className="mt-2">
+            <p className="mt-2 flex">
               <Tag color="#0B5970">Manufacturer: </Tag>
               <span className="dark:text-white">
                 {agentDrawer.manufacturer}
               </span>
             </p>
-            <p className="mt-2">
+            <p className="mt-2 flex">
               <Tag color="#0B5970">Tag: </Tag>
               <span className="dark:text-white">{agentDrawer.tags}</span>
             </p>

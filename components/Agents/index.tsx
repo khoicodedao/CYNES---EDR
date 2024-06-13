@@ -7,7 +7,7 @@ import dayjs from "dayjs";
 import useLocalStorage from "@/hooks/useLocalStorage";
 const Agent = () => {
   const [storedValue, setStoredValue] = useLocalStorage("local-time", [
-    dayjs().toISOString(),
+    dayjs().startOf("days").toISOString(),
     dayjs().endOf("day").toISOString(),
   ]);
   const defaultTimeRange =

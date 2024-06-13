@@ -25,7 +25,7 @@ const DashBoard: React.FC = () => {
     },
   ]);
   const [storedValue, setStoredValue] = useLocalStorage("local-time", [
-    dayjs().toISOString(),
+    dayjs().startOf("day").toISOString(),
     dayjs().endOf("day").toISOString(),
   ]);
   const defaultTimeRange =

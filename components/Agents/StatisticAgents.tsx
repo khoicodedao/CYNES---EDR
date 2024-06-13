@@ -27,7 +27,6 @@ const StatisticAgents: React.FC<DataGridProps> = ({ timeRange }) => {
     let getData = async () => {
       let resData: { success: boolean; data: AgentStatus } =
         await customAxiosPost(url, startDate);
-      console.log(resData);
       if (resData.success) {
         setData(resData.data);
         setDataPercentage(calculatePercentages(resData.data));

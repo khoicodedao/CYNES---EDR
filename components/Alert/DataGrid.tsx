@@ -181,17 +181,17 @@ const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
             className="summary-detail p-4"
             style={{ backgroundColor: "rgb(38 38 41)" }}
           >
-            <p>
+            <p className="flex">
               <Tag color="#0B5970"> Event Description: </Tag>
               <span className="dark:text-white">
                 {record.alert_description}
               </span>
             </p>
-            <p className="mt-2">
+            <p className="mt-2 flex">
               <Tag color="#0B5970">Artifact Name: </Tag>
               <span className="dark:text-white">{record.artifact_name}</span>
             </p>
-            <p className="mt-2">
+            <p className="mt-2 flex">
               <Tag color="#0B5970">Received time: </Tag>
               <span className="dark:text-white">{record.receive_time}</span>
             </p>

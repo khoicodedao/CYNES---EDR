@@ -1,13 +1,30 @@
+"use client";
 import { Progress } from "antd";
-import React, { ReactNode } from "react";
+import API_URL from "@/helpers/api-url";
+import React, { ReactNode, useEffect, useState } from "react";
+import { customAxiosPost } from "@/helpers/custom-axios";
 import ChartThree from "../components/Charts/ChartThree";
+import calculatePercentages from "@/helpers/caculatePercentages";
 import { Tag } from "antd";
+type DataRes = {
+  success: boolean;
+  data: DataWindow;
+};
+
+type DataWindow = {
+  window7: number;
+  window8: number;
+  window10: number;
+  window11: number;
+};
+
 interface CardDataStatsProps {
   title: string;
   total: string;
   // newData: string;
   // levelUp?: boolean;
   // levelDown?: boolean;
+  filter: any;
   detail?: Array<{ title: string; count: string; ratio: number }>;
   children: ReactNode;
 }
@@ -17,12 +34,27 @@ const CardDataStats: React.FC<CardDataStatsProps> = ({
   // newData,
   // levelUp,
   // levelDown,
+  filter,
   detail = [
     { title: "Loading...", count: "0", ratio: 0 },
     { title: "Loading...", count: "0", ratio: 0 },
   ],
   children,
 }) => {
+  const [windowStatistic, SetWindowStatistic] = useState<any>({
+    window7: "0",
+    window8: "0",
+    window10: "0",
+    window11: "0",
+  });
+  useEffect(() => {
+    let countOS = API_URL.AGENT.COUNT_OS;
+    let getData = async () => {
+      let resData: DataRes = await customAxiosPost(countOS, filter);
+      SetWindowStatistic(resData.data);
+    };
+    getData();
+  }, [filter]);
   return (
     <div
       className="grid grid-cols-40-60 "
@@ -67,15 +99,9 @@ const CardDataStats: React.FC<CardDataStatsProps> = ({
         </p>
         <div className="flex">
           <div className="flex-1 bg-blue-500 text-white">
-            <div className="flex  justify-between bg-gray-200 p-1">
+            <div className="flex  justify-start bg-gray-200 p-1">
               <div className="flex items-center justify-around bg-gray-200 ">
-                <div
-                  style={{
-                    padding: "6px",
-                    background: "black",
-                    borderRadius: "50%",
-                  }}
-                >
+                <div>
                   {" "}
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -1284,25 +1310,23 @@ const CardDataStats: React.FC<CardDataStatsProps> = ({
                   </svg>
                 </div>
 
-                <span className="mr-1 text-sm" style={{ color: "#aeb7c0" }}>
-                  window 7
+                <span
+                  className="mr-1 text-sm"
+                  style={{ color: "#aeb7c0", minWidth: "68px" }}
+                >
+                  Window 7
                 </span>
               </div>
               <div className="bg-red-500 text-white mr-1">
                 <div className="flex items-center justify-center">
-                  <Tag className="w-3 h-2" color="#2693F5"></Tag>15%
+                  <Tag className="w-3 h-2" color="#2693F5"></Tag>
+                  {windowStatistic.window7}
                 </div>
               </div>
             </div>
-            <div className="flex  justify-between bg-gray-200 p-1">
+            <div className="flex  justify-start bg-gray-200 p-1">
               <div className="flex items-center justify-around bg-gray-200 ">
-                <div
-                  style={{
-                    padding: "6px",
-                    background: "black",
-                    borderRadius: "50%",
-                  }}
-                >
+                <div>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="18"
@@ -1325,25 +1349,23 @@ const CardDataStats: React.FC<CardDataStatsProps> = ({
                     </defs>
                   </svg>
                 </div>
-                <span className="mr-1 text-sm" style={{ color: "#aeb7c0" }}>
-                  window 8
+                <span
+                  className="mr-1 text-sm"
+                  style={{ color: "#aeb7c0", minWidth: "68px" }}
+                >
+                  Window 8
                 </span>
               </div>
               <div className="bg-red-500 text-white mr-1">
                 <div className="flex items-center justify-center">
-                  <Tag className="w-3 h-2" color="#19CAFF"></Tag>19%
+                  <Tag className="w-3 h-2" color="#19CAFF"></Tag>{" "}
+                  {windowStatistic.window8}
                 </div>
               </div>
             </div>
-            <div className="flex  justify-between bg-gray-200 p-1">
+            <div className="flex  justify-start bg-gray-200 p-1">
               <div className="flex items-center justify-around bg-gray-200 ">
-                <div
-                  style={{
-                    padding: "6px",
-                    background: "black",
-                    borderRadius: "50%",
-                  }}
-                >
+                <div>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="18"
@@ -1366,62 +1388,67 @@ const CardDataStats: React.FC<CardDataStatsProps> = ({
                     </defs>
                   </svg>
                 </div>
-                <span className="mr-1 text-sm" style={{ color: "#aeb7c0" }}>
-                  window 10
+                <span
+                  className="mr-1 text-sm"
+                  style={{ color: "#aeb7c0", minWidth: "68px" }}
+                >
+                  Window 10
                 </span>
               </div>
               <div className="bg-red-500 text-white">
                 <div className="flex items-center justify-center">
-                  <Tag className="w-3 h-2" color="#B1EDFF"></Tag>65%
+                  <Tag className="w-3 h-2" color="#B1EDFF"></Tag>{" "}
+                  {windowStatistic.window10}
                 </div>
               </div>
             </div>
-            <div className="flex  justify-between bg-gray-200 p-1">
+            <div className="flex  justify-start bg-gray-200 p-1">
               <div className="flex items-center justify-around bg-gray-200 ">
-                <div
-                  style={{
-                    padding: "9px 3px",
-                    background: "black",
-                    borderRadius: "50%",
-                  }}
-                >
+                <div>
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="18"
-                    height="4"
-                    viewBox="0 0 18 4"
+                    height="18"
+                    viewBox="0 0 18 18"
                     fill="none"
                   >
-                    <path
-                      d="M1.50001 3.50003C2.32845 3.50003 3.00002 2.82845 3.00002 2.00002C3.00002 1.17158 2.32845 0.5 1.50001 0.5C0.671578 0.5 0 1.17158 0 2.00002C0 2.82845 0.671578 3.50003 1.50001 3.50003Z"
-                      fill="#374957"
-                    />
-                    <path
-                      d="M9.00002 3.50003C9.82845 3.50003 10.5 2.82845 10.5 2.00002C10.5 1.17158 9.82845 0.5 9.00002 0.5C8.17158 0.5 7.5 1.17158 7.5 2.00002C7.5 2.82845 8.17158 3.50003 9.00002 3.50003Z"
-                      fill="#374957"
-                    />
-                    <path
-                      d="M16.5 3.50003C17.3285 3.50003 18 2.82845 18 2.00002C18 1.17158 17.3285 0.5 16.5 0.5C15.6716 0.5 15 1.17158 15 2.00002C15 2.82845 15.6716 3.50003 16.5 3.50003Z"
-                      fill="#374957"
-                    />
+                    <g clip-path="url(#clip0_3388_11606)">
+                      <path
+                        fill-rule="evenodd"
+                        clip-rule="evenodd"
+                        d="M0 2.46154L7.38462 1.4359V8.5641L0 8.61538V2.46154ZM7.38462 9.38461V16.5128L0 15.4872V9.33333L7.38462 9.38461ZM8.20513 1.33333L18 0V8.46154L8.20513 8.5641V1.33333ZM18 9.48718V17.9487L8.20513 16.6154V9.38461L18 9.48718Z"
+                        fill="#00ADEF"
+                      />
+                    </g>
+                    <defs>
+                      <clipPath id="clip0_3388_11606">
+                        <rect width="18" height="17.9487" fill="white" />
+                      </clipPath>
+                    </defs>
                   </svg>
                 </div>
-                <span className="mr-1 text-sm" style={{ color: "#aeb7c0" }}>
-                  Other
+                <span
+                  className="mr-1 text-sm"
+                  style={{ color: "#aeb7c0", minWidth: "68px" }}
+                >
+                  Window 11
                 </span>
               </div>
               <div className="bg-red-500 text-white mr-1">
                 <div className="flex items-center justify-center">
-                  <Tag className="w-3 h-2" color="#0B5970"></Tag>1%
+                  <Tag className="w-3 h-2" color="#0B5970"></Tag>{" "}
+                  {windowStatistic.window11}
                 </div>
               </div>
             </div>
           </div>
           <div className="flex-1 bg-red-500 text-white">
             <ChartThree
-              labels={["Window 7", "Window 8", "Window 10", "Other"]}
+              labels={["Window 7", "Window 8", "Window 10", "Window 11"]}
               colors={["#2693F5", "#19CAFF", "#B1EDFF", "#0B5970"]}
-              data={[10, 20, 30, 40]}
+              data={Object.values(calculatePercentages(windowStatistic)).map(
+                Number
+              )}
             />
           </div>
         </div>
