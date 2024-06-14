@@ -1931,3 +1931,11 @@ main > div {
 .ant-tag {
   overflow: hidden !important;
 }
+.ant-table-tbody .ant-table-row:nth-child(odd) .ant-table-cell {
+  background-color: #1e212a !important;
+  padding: 3px !important;
+}
+.ant-table-tbody .ant-table-row:nth-child(even) .ant-table-cell {
+  background-color: #191a1e !important;
+  padding: 3px !important;
+}

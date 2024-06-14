@@ -163,7 +163,7 @@ const ControlDirectly = () => {
               border: "1px solid rgba(140, 140, 140, 0.35)",
             }}
           >
-            <h3 className="ml-2 pb-2 pt-2  font-bold border-b border-gray-400">
+            <h3 className="flex ml-2 pb-2 pt-2  font-bold border-b border-gray-400">
               Agent Online <Tag color="#15AAD6">{listAgent.length}</Tag>
             </h3>
             <List
