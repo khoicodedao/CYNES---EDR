@@ -18,6 +18,7 @@ const columns: ColumnsType<EVENT> = [
     dataIndex: "ID",
     key: "ID",
     width: 150,
+    align: "center",
   },
   {
     title: "Agent",

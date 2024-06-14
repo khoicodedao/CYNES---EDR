@@ -92,6 +92,7 @@ const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
       dataIndex: "ID",
       key: "ID",
       width: 90,
+      align: "center",
     },
     {
       title: "MAC",
@@ -142,6 +143,21 @@ const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
       width: 120,
     },
 
+    {
+      title: "Remote",
+      key: "remote",
+      align: "center",
+      width: 120,
+      render: (item, record) => {
+        return (
+          <Switch
+            onChange={(checked) => {
+              remote(record.id, checked);
+            }}
+          />
+        );
+      },
+    },
     {
       title: "Time",
       dataIndex: "created_at",
@@ -210,17 +226,6 @@ const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
         open={open}
         placement={"right"}
         width={800}
-        extra={
-          <Space>
-            <Switch
-              checkedChildren="Connected"
-              unCheckedChildren="Disconnected"
-              onChange={(checked) => {
-                remote(agentDrawer.id, checked);
-              }}
-            />
-          </Space>
-        }
       >
         <div className="p-8 pt-6">
           <div className="flex justify-between">

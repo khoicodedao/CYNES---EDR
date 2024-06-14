@@ -26,6 +26,7 @@ const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
       dataIndex: "ID",
       key: "ID",
       width: 120,
+      align: "center",
     },
     {
       title: "Type",
