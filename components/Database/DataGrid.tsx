@@ -25,14 +25,15 @@ const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
       title: "ID",
       dataIndex: "ID",
       key: "ID",
-      width: 120,
+      width: 90,
       align: "center",
     },
     {
       title: "Type",
       dataIndex: "type",
       key: "type",
-      width: 200,
+      width: 90,
+      align: "center",
     },
     {
       title: "Description",
@@ -50,6 +51,7 @@ const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
     {
       title: "Update at",
       dataIndex: "updated_at",
+      align: "center",
       key: "updated_at",
       width: 120,
       render: (item) => {
@@ -57,6 +59,7 @@ const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
       },
     },
     {
+      align: "center",
       title: "Active",
       dataIndex: "is_active",
       key: "is_active",
@@ -74,6 +77,7 @@ const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
       title: "Created At",
       dataIndex: "created_at",
       key: "created_at",
+      align: "center",
       render: (item) => {
         return formatDateString(item);
       },
@@ -81,6 +85,7 @@ const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
     {
       title: "Action",
       key: "operation",
+      align: "center",
       fixed: "right",
       width: 200,
       render: (item) => {
@@ -162,18 +167,18 @@ const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
       content: string;
     }
   );
-  if (timeRange) {
-    const filterInTimeRage = [
-      {
-        field: "created_at",
-        operator: ">=",
-        value: timeRange[0],
-      },
-    ];
-    filter["filter"] = filterInTimeRage;
-  }
+  // if (timeRange) {
+  //   const filterInTimeRage = [
+  //     {
+  //       field: "created_at",
+  //       operator: ">=",
+  //       value: timeRange[0],
+  //     },
+  //   ];
+  //   filter["filter"] = filterInTimeRage;
+  // }
   if (search) {
-    filter["filter"] = [...filter["filter"], ...search]; //Add filter time range and search
+    filter["filter"] = [...search]; //Add filter time range and search
   }
   Object.assign(filter, CONSTANT_DATA.REQUIRED_TOTAL);
   const exportData = async () => {
@@ -196,10 +201,10 @@ const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
       let resData: {
         success: boolean;
         database: DATABASE[];
-        total_count: number;
+        count: number;
       } = await customAxiosPost(url, filter);
       if (resData.success) {
-        setTotalCount(resData.total_count);
+        setTotalCount(resData.count);
         setDatabaseList(
           resData.database.map((data, index) => {
             return {
@@ -245,7 +250,7 @@ const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
           type="primary"
           style={{ marginBottom: 16 }}
         >
-          Add a row
+          Add a data
         </Button>
         <div style={{ marginRight: "10px" }}>
           {loadingExport ? (

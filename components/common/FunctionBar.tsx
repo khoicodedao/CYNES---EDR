@@ -56,6 +56,7 @@ type FunctionBarProps = {
   placeHolder?: string;
   filterKey?: string[];
   showSearchBar: boolean;
+  showTimeRangePicker?: boolean;
 };
 
 const FunctionBar: React.FC<FunctionBarProps> = ({
@@ -66,6 +67,7 @@ const FunctionBar: React.FC<FunctionBarProps> = ({
   showSearchBar,
   filterKey,
   placeHolder,
+  showTimeRangePicker = true,
   search = [{ field: "string", operator: "string", value: "string" }],
 }) => {
   //<============Notification api===========>
@@ -234,27 +236,29 @@ const FunctionBar: React.FC<FunctionBarProps> = ({
             return <div>Export dashboard data!</div>;
           }}
         ></Popover>
-        <div className="ml-2 event-range-padding">
-          <RangePicker
-            presets={[
-              {
-                label: (
-                  <span aria-label="Start Day to End of Day">SOD ~ EOD</span>
-                ),
-                value: () => [dayjs().startOf("day"), dayjs().endOf("day")], // 5.8.0+ support function
-              },
-              ...rangePresets,
-            ]}
-            defaultValue={
-              storedValue.length > 0
-                ? [dayjs(storedValue[0]), dayjs(storedValue[1])]
-                : [dayjs(), dayjs().endOf("day")]
-            }
-            showTime
-            format="YYYY-MM-DD HH:mm:ss"
-            onChange={onRangeChange}
-          />
-        </div>
+        {showTimeRangePicker && (
+          <div className="ml-2 event-range-padding">
+            <RangePicker
+              presets={[
+                {
+                  label: (
+                    <span aria-label="Start Day to End of Day">SOD ~ EOD</span>
+                  ),
+                  value: () => [dayjs().startOf("day"), dayjs().endOf("day")], // 5.8.0+ support function
+                },
+                ...rangePresets,
+              ]}
+              defaultValue={
+                storedValue.length > 0
+                  ? [dayjs(storedValue[0]), dayjs(storedValue[1])]
+                  : [dayjs(), dayjs().endOf("day")]
+              }
+              showTime
+              format="YYYY-MM-DD HH:mm:ss"
+              onChange={onRangeChange}
+            />
+          </div>
+        )}
       </div>
     </div>
   );

@@ -24,7 +24,7 @@ const ListCommand = () => {
       {/* <!-- ====== FunctionBar Section Start ====== --> */}
       <div className="w-full max-w-full rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
         <FunctionBar
-          showSearchBar
+          showSearchBar={false}
           setStoredValue={setStoredValue}
           storedValue={storedValue}
           setTimeRange={setTimeRange}
@@ -32,6 +32,7 @@ const ListCommand = () => {
           search={search}
           placeHolder="Search by query (mac='AA-DC-2F-4A-AD-F5')"
           filterKey={["command_type", "command_name"]}
+          showTimeRangePicker={false}
         ></FunctionBar>
       </div>
       {/* <!-- ====== FunctionBar Section End ====== --> */}

@@ -29,6 +29,7 @@ const Database = () => {
           setSearch={setSearch}
           search={search}
           placeHolder="Search by query"
+          showTimeRangePicker={false}
           filterKey={["content", "type", "description"]}
         ></FunctionBar>
       </div>

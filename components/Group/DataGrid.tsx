@@ -26,9 +26,11 @@ const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
       align: "center",
     },
     {
+      align: "center",
       title: "Group Name",
       dataIndex: "group_name",
       key: "group_name",
+      width: 200,
     },
     {
       title: "Group Filter",
@@ -46,6 +48,8 @@ const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
       },
     },
     {
+      align: "center",
+      width: 200,
       title: "Update at",
       dataIndex: "updated_at",
       key: "updated_at",
@@ -54,7 +58,9 @@ const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
       },
     },
     {
+      align: "center",
       title: "Created At",
+      width: 200,
       dataIndex: "created_at",
       key: "created_at",
       render: (item) => {
@@ -140,23 +146,23 @@ const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
   const [type, setType] = useState<"create" | "edit" | "delete">("create");
   const [totalCount, setTotalCount] = useState(0);
   const [filter, setFilter] = useState<any>(CONSTANT_DATA.PAGINATION);
-  if (timeRange) {
-    const filterInTimeRage = [
-      {
-        field: "created_at",
-        operator: ">=",
-        value: timeRange[0],
-      },
-      {
-        field: "created_at",
-        operator: "<=",
-        value: timeRange[1],
-      },
-    ];
-    filter["filter"] = filterInTimeRage;
-  }
+  // if (timeRange) {
+  //   const filterInTimeRage = [
+  //     {
+  //       field: "created_at",
+  //       operator: ">=",
+  //       value: timeRange[0],
+  //     },
+  //     {
+  //       field: "created_at",
+  //       operator: "<=",
+  //       value: timeRange[1],
+  //     },
+  //   ];
+  //   filter["filter"] = filterInTimeRage;
+  // }
   if (search) {
-    filter["filter"] = [...filter["filter"], ...search]; //Add filter time range and search
+    filter["filter"] = [...search]; //Add filter time range and search
   }
   Object.assign(filter, CONSTANT_DATA.REQUIRED_TOTAL);
   useEffect(() => {
@@ -198,7 +204,7 @@ const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
           type="primary"
           style={{ marginBottom: 16 }}
         >
-          Add a row
+          Add a group
         </Button>
       </div>
       <Table

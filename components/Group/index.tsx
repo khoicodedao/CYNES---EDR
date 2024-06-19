@@ -30,6 +30,7 @@ const Group = () => {
           search={search}
           placeHolder="Search by query (mac='AA-DC-2F-4A-AD-F5')"
           filterKey={["group_name"]}
+          showTimeRangePicker={false}
         ></FunctionBar>
       </div>
       {/* <!-- ====== FunctionBar Section End ====== --> */}

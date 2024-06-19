@@ -31,14 +31,18 @@ const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
       dataIndex: "user_name",
       key: "user_name",
       width: 120,
+      align: "center",
     },
     {
       title: "Role",
       dataIndex: "role",
       key: "role",
       width: 120,
+      align: "center",
     },
     {
+      align: "center",
+
       title: "Create at",
       dataIndex: "created_at",
       key: "created_at",
@@ -49,11 +53,11 @@ const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
     },
 
     {
+      align: "center",
       title: "Action",
       key: "operation",
       fixed: "right",
       width: 60,
-      align: "center",
       render: (item) => {
         return (
           <div className="flex justify-center items-center">
@@ -200,7 +204,7 @@ const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
           type="primary"
           style={{ marginBottom: 16 }}
         >
-          Add a row
+          Add a user
         </Button>
       </div>
       <Table

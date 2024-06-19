@@ -25,9 +25,11 @@ const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
       title: "ID",
       dataIndex: "id",
       key: "id",
-      width: 120,
+      width: 90,
+      align: "center",
     },
     {
+      align: "center",
       title: "Command Name",
       dataIndex: "command_name",
       key: "command_name",
@@ -38,6 +40,7 @@ const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
       dataIndex: "command_type",
       key: "command_type",
       width: 200,
+      align: "center",
     },
     {
       title: "Command Info",
@@ -161,23 +164,23 @@ const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
       command_info: [];
     }
   );
-  if (timeRange) {
-    const filterInTimeRage = [
-      {
-        field: "created_at",
-        operator: ">=",
-        value: timeRange[0],
-      },
-      {
-        field: "created_at",
-        operator: "<=",
-        value: timeRange[1],
-      },
-    ];
-    filter["filter"] = filterInTimeRage;
-  }
+  // if (timeRange) {
+  //   const filterInTimeRage = [
+  //     {
+  //       field: "created_at",
+  //       operator: ">=",
+  //       value: timeRange[0],
+  //     },
+  //     {
+  //       field: "created_at",
+  //       operator: "<=",
+  //       value: timeRange[1],
+  //     },
+  //   ];
+  //   filter["filter"] = filterInTimeRage;
+  // }
   if (search) {
-    filter["filter"] = [...filter["filter"], ...search]; //Add filter time range and search
+    filter["filter"] = [...search]; //Add filter time range and search
   }
   Object.assign(filter, CONSTANT_DATA.REQUIRED_TOTAL);
   useEffect(() => {

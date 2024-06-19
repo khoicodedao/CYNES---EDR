@@ -28,6 +28,7 @@ const Tasks = () => {
           storedValue={storedValue}
           setTimeRange={setTimeRange}
           setSearch={setSearch}
+          showTimeRangePicker={false}
           search={search}
           placeHolder="Search by query (mac='AA-DC-2F-4A-AD-F5')"
           filterKey={["group_name", "command_name"]}

@@ -1,13 +1,23 @@
 "use client";
 import API_URL from "@/helpers/api-url";
-import { customAxiosPost } from "@/helpers/custom-axios";
+import { customAxiosPost, customAxiosDelete } from "@/helpers/custom-axios";
 import exportToExcel from "@/helpers/export-to-excel";
 import { ExportOutlined } from "@ant-design/icons";
 import formatDateString from "@/helpers/format-date";
 import getHeightScroll from "@/helpers/get-height-scroll";
 import { AGENT } from "@/types/agent";
 import type { TableColumnsType } from "antd";
-import { Drawer, List, Progress, Space, Switch, Table, Tabs, Tag } from "antd";
+import {
+  Drawer,
+  List,
+  Progress,
+  Space,
+  Switch,
+  Table,
+  Tabs,
+  Tag,
+  Button,
+} from "antd";
 import React, { useEffect, useState } from "react";
 import CONSTANT_DATA from "../common/constant";
 import "./index.css";
@@ -17,9 +27,25 @@ const checkOnline = (lastSeen: string) => {
   const fiveMinutesAgo = new Date(currentTime.getTime() - 5 * 60 * 1000);
   // Compare the input time with the current time
   if (inputTime > fiveMinutesAgo) {
-    return <Tag color="rgb(38, 147, 245)">Online</Tag>;
+    return (
+      <Tag
+        style={{
+          height: "16px",
+          borderRadius: "50%",
+        }}
+        color="#87d068"
+      ></Tag>
+    );
   } else {
-    return <Tag color="rgba(255, 255, 255, 0.52)">Offline</Tag>;
+    return (
+      <Tag
+        style={{
+          height: "16px",
+          borderRadius: "50%",
+        }}
+        color="rgba(255, 255, 255, 0.52)"
+      ></Tag>
+    );
   }
 };
 function extractNumericValue(inputString: string) {
@@ -34,18 +60,27 @@ function extractNumericValue(inputString: string) {
     return 0;
   }
 }
+
 type DataGridProps = {
   timeRange?: string[];
   search?: { field: string; operator: string; value: string }[];
 };
 const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
   const [open, setOpen] = useState(false);
+  const [reload, setReload] = useState(false);
   const [loadingExport, setLoadingExport] = useState(false);
   const [loading, setLoading] = useState(false);
   const [agentList, setAgentList] = useState<AGENT[]>([]);
   const [totalCount, setTotalCount] = useState(0);
   const [agentDrawer, setAgentDrawer] = useState<AGENT>({} as AGENT); //set data when dupble click in table row
   const [filter, setFilter] = useState<any>(CONSTANT_DATA.PAGINATION);
+  const uninstall = (url: string) => {
+    customAxiosDelete(url).then((response: any) => {
+      if (!response?.error) {
+        setReload(!reload);
+      }
+    });
+  };
   if (timeRange) {
     const filterInTimeRage = [
       {
@@ -91,36 +126,45 @@ const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
       title: "ID",
       dataIndex: "ID",
       key: "ID",
-      width: 90,
+      width: 50,
       align: "center",
     },
     {
       title: "MAC",
       dataIndex: "mac",
       key: "mac",
-      width: 250,
+      width: 150,
+      align: "center",
       render: (item, record) => {
         console.log(record);
         return (
-          <div className="flex">
+          <div className="flex items-center">
             {checkOnline(record.last_seen || "")} <span>{item}</span>
           </div>
         );
       },
     },
 
-    { title: "Local IP", dataIndex: "local_ip", key: "local_ip", width: 150 },
+    {
+      title: "Local IP",
+      dataIndex: "local_ip",
+      key: "local_ip",
+      width: 150,
+      align: "center",
+    },
     {
       title: "Public IP",
       dataIndex: "public_ip",
       key: "public_ip",
       width: 120,
+      align: "center",
     },
     {
       title: "Computer Name",
       dataIndex: "computer_name",
       key: "computer_name",
       width: 200,
+      align: "center",
     },
     // { title: "OS", dataIndex: "os", key: "os", width: 200 },
 
@@ -129,20 +173,31 @@ const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
       dataIndex: "agent_version",
       key: "agent_version",
       width: 120,
+      align: "center",
     },
-    {
-      title: "Agent install",
-      dataIndex: "agent_first_install",
-      key: "agent_first_install",
-      width: 120,
-    },
+    // {
+    //   title: "Agent install",
+    //   dataIndex: "agent_first_install",
+    //   key: "agent_first_install",
+    //   width: 120,
+    // },
     {
       title: "User",
       dataIndex: "agent_user",
       key: "agent_user",
       width: 120,
+      align: "center",
     },
-
+    {
+      title: "Time",
+      dataIndex: "created_at",
+      key: "created_at",
+      width: 200,
+      render: (item) => {
+        return formatDateString(item);
+      },
+      align: "center",
+    },
     {
       title: "Remote",
       key: "remote",
@@ -156,16 +211,6 @@ const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
             }}
           />
         );
-      },
-    },
-    {
-      title: "Time",
-      dataIndex: "created_at",
-      key: "created_at",
-      fixed: "right",
-      width: 200,
-      render: (item) => {
-        return formatDateString(item);
       },
     },
   ];
@@ -190,10 +235,11 @@ const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
       setLoading(true);
       let resData: {
         success: boolean;
-        data: { agents: AGENT[] };
-        count: number;
+        data: { agents: AGENT[]; count: number };
       } = await customAxiosPost(url, filter);
       if (resData.success) {
+        console.log(resData);
+        setTotalCount(resData.data.count);
         setAgentList(
           resData.data.agents.map((data, index) => {
             return {
@@ -209,7 +255,7 @@ const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
       }
     };
     getData();
-  }, [timeRange, search, filter]);
+  }, [timeRange, search, filter, reload]);
   //
 
   return (
@@ -226,6 +272,17 @@ const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
         open={open}
         placement={"right"}
         width={800}
+        extra={
+          <Button
+            className="text-white"
+            type="primary"
+            onClick={() => {
+              uninstall(API_URL.AGENT.GET_AGENTS + "/" + agentDrawer?.id);
+            }}
+          >
+            Uninstall
+          </Button>
+        }
       >
         <div className="p-8 pt-6">
           <div className="flex justify-between">
