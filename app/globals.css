@@ -1939,3 +1939,12 @@ main > div {
   background-color: #191a1e !important;
   padding: 3px !important;
 }
+/* styles/index.css */
+
+.ellipsis-cell {
+  max-width: 460px;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  position: relative !important;
+}

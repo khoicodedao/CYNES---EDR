@@ -17,45 +17,50 @@ const columns: ColumnsType<ALERT> = [
     title: "ID",
     dataIndex: "ID",
     key: "ID",
-    width: 150,
+    width: 70,
     align: "center",
   },
-  {
-    title: "Agent",
-    dataIndex: "agent_id",
-    key: "agent_id",
-    width: 120,
-  },
+  // {
+  //   title: "Agent",
+  //   dataIndex: "agent_id",
+  //   key: "agent_id",
+  //   width: 120,
+  // },
   {
     title: "MAC",
     dataIndex: "mac",
     key: "mac",
     width: 180,
+    align: "center",
   },
   {
     title: "Local IP ",
     dataIndex: "local_ip",
     key: "local_ip",
     width: 140,
+    align: "center",
   },
   {
     title: "Alert Type",
     dataIndex: "alert_type",
     key: "alert_type",
     width: 200,
+    align: "center",
   },
 
   {
     title: "Alert Name",
     dataIndex: "alert_name",
     key: "alert_name",
-    width: 120,
+    width: 220,
+    align: "center",
   },
   {
     title: "Alert level",
     dataIndex: "alert_level",
     key: "alert_level",
     width: 120,
+    align: "center",
     render: (alert_level) => {
       switch (alert_level) {
         case 1:
@@ -72,12 +77,13 @@ const columns: ColumnsType<ALERT> = [
     dataIndex: "alert_description",
     key: "alert_description",
     width: 440,
+    className: "ellipsis-cell",
   },
   {
     title: "Time",
     dataIndex: "created_at",
     key: "created_at",
-
+    align: "center",
     width: 200,
     render: (item) => {
       return formatDateString(item);

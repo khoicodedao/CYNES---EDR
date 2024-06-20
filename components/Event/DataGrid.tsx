@@ -12,19 +12,14 @@ import React, { useEffect, useState } from "react";
 import ReactJson from "react-json-view";
 import CONSTANT_DATA from "../common/constant";
 import "./index.css";
+
 const columns: ColumnsType<EVENT> = [
   {
     title: "ID",
     dataIndex: "ID",
     key: "ID",
-    width: 150,
+    width: 70,
     align: "center",
-  },
-  {
-    title: "Agent",
-    dataIndex: "agent_id",
-    key: "agent_id",
-    width: 120,
   },
   {
     title: "MAC",
@@ -40,13 +35,6 @@ const columns: ColumnsType<EVENT> = [
     width: 180,
     align: "center",
   },
-  // {
-  //   title: "Event Type",
-  //   dataIndex: "event_type",
-  //   key: "event_type",
-  //   width: 120,
-  //   align: "center",
-  // },
   {
     title: "Event Name",
     dataIndex: "event_name",
@@ -76,6 +64,7 @@ const columns: ColumnsType<EVENT> = [
     dataIndex: "event_description",
     key: "event_description",
     width: 440,
+    className: "ellipsis-cell",
   },
   {
     title: "Time",
@@ -88,6 +77,7 @@ const columns: ColumnsType<EVENT> = [
     },
   },
 ];
+
 type DataGridProps = {
   timeRange?: string[];
   search?: { field: string; operator: string; value: string }[];
@@ -101,13 +91,15 @@ const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
   const [loadingExport, setLoadingExport] = useState(false);
   const [totalCount, setTotalCount] = useState(0);
   const [filter, setFilter] = useState<any>(CONSTANT_DATA.PAGINATION);
+
   const showDrawer = () => {
     setOpen(true);
   };
+
   const onClose = () => {
     setOpen(false);
   };
-  //=== End ====
+
   if (timeRange) {
     const filterInTimeRage = [
       {
@@ -123,10 +115,13 @@ const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
     ];
     filter["filter"] = filterInTimeRage;
   }
+
   if (search) {
-    filter["filter"] = [...filter["filter"], ...search]; //Add filter time range and search
+    filter["filter"] = [...filter["filter"], ...search]; // Add filter time range and search
   }
+
   Object.assign(filter, CONSTANT_DATA.REQUIRED_TOTAL);
+
   const exportData = async () => {
     setLoadingExport(true);
     filter.page_no = 1;
@@ -167,6 +162,7 @@ const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
     };
     getData();
   }, [timeRange, search, filter]);
+
   return (
     <>
       <Drawer
@@ -182,12 +178,12 @@ const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
         width={800}
       >
         <div className="p-8 pt-0">
-          <h3 className="summary-title text-white text-3xl pb-2">Sumary</h3>
+          <h3 className="summary-title text-white text-3xl pb-2">Summary</h3>
           <div
             className="summary-detail p-4"
             style={{ backgroundColor: "rgb(38 38 41)" }}
           >
-            <p className="flex">
+            <p className="flex items-center">
               <Tag color="#0B5970"> Event Description: </Tag>
               <span className="dark:text-white">
                 {record.event_description}
@@ -226,7 +222,6 @@ const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
       <div className="float-right" style={{ marginRight: "10px" }}>
         {loadingExport ? (
           <>
-            {" "}
             <span style={{ marginRight: "18px" }}>Exporting</span>
             <div className="dot-pulse inline-block"></div>
           </>
@@ -241,7 +236,6 @@ const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
       <Table
         rowKey="ID"
         loading={loading}
-        // bordered
         onRow={(record, rowIndex) => {
           return {
             onDoubleClick: (event) => {
@@ -257,13 +251,12 @@ const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
         pagination={{
           hideOnSinglePage: true,
           pageSize: CONSTANT_DATA.PAGINATION.page_size,
-          total: totalCount, //response first filter require total
+          total: totalCount, // response first filter require total
           onChange: (page, pageSize) => {
             setFilter({ ...filter, page_no: page });
           },
         }}
-        // pagination={{ position: [Tab, bottom] }}
-      ></Table>
+      />
     </>
   );
 };

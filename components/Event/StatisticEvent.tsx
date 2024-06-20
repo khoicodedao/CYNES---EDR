@@ -55,24 +55,29 @@ const StatisticEvent: React.FC<DataGridProps> = ({ timeRange }) => {
   return (
     <div className="severity">
       <div className="flex justify-around items-center">
-        <div className="w-1/3">
+        <div className="w-1/4">
           <div className="flex items-center  justify-around flex-row">
             {/* <div className="w-1/2"></div> */}
             <div className="w-full">
-              <div className="parent m-auto">
+              <div className="parent m-auto" style={{ width: "80%" }}>
                 <b
-                  style={{ color: "#dceefd", width: "100%", fontSize: "24px" }}
+                  style={{
+                    color: "#dceefd",
+                    width: "100%",
+                    fontSize: "24px",
+                    textAlign: "center",
+                  }}
                 >
                   {Object.values(data)
                     .reduce((acc, val) => acc + val, 0)
                     .toLocaleString("en-US")}
                 </b>
-                <div className="total-events">Total events</div>
+                <p className="total-events text-center w-full">Total events</p>
               </div>
             </div>
           </div>
         </div>
-        <div className="w-1/3">
+        <div className="w-2/4">
           <div className="flex items-center  justify-around flex-row">
             <p
               className="font-bold"
@@ -137,7 +142,7 @@ const StatisticEvent: React.FC<DataGridProps> = ({ timeRange }) => {
             </div>
           </div>
         </div>
-        <div className="w-1/3">
+        <div className="w-1/4">
           <div
             style={{
               backgroundImage:
