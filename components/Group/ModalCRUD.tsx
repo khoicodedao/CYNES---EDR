@@ -1,5 +1,5 @@
 "use client";
-import { Modal, Form, Input, Button, Space } from "antd";
+import { Modal, Form, Input, Button, Space, Select } from "antd";
 import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
 import React from "react";
 import { customAxiosPost } from "@/helpers/custom-axios";
@@ -121,14 +121,26 @@ const ModalCRUD: React.FC<DataGridProps> = ({
                     name={[name, "field"]}
                     rules={[{ required: true, message: "Missing field" }]}
                   >
-                    <Input placeholder="Field" />
+                    <Select defaultValue={"mac"}>
+                      <Select.Option value="mac">mac</Select.Option>
+                      <Select.Option value="ip">ip</Select.Option>
+                      <Select.Option value="local_ip">local_ip</Select.Option>
+                      <Select.Option value="public_ip">public_ip</Select.Option>
+                    </Select>
                   </Form.Item>
                   <Form.Item
                     {...restField}
                     name={[name, "operator"]}
                     rules={[{ required: true, message: "Missing operator" }]}
                   >
-                    <Input placeholder="Operator" />
+                    <Select defaultValue={"="}>
+                      <Select.Option value="="> {"="} </Select.Option>
+                      <Select.Option value="!="> {"!="} </Select.Option>
+                      <Select.Option value=">"> {">"} </Select.Option>
+                      <Select.Option value=">"> {">="} </Select.Option>
+                      <Select.Option value="<"> {"<"} </Select.Option>
+                      <Select.Option value="<="> {"<="} </Select.Option>
+                    </Select>
                   </Form.Item>
                   <Form.Item
                     {...restField}

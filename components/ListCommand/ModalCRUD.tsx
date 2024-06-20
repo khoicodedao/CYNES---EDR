@@ -1,5 +1,5 @@
 "use client";
-import { Modal, Form, Input, Button, Space, Switch } from "antd";
+import { Modal, Form, Input, Button, Space, Switch, Select } from "antd";
 import { MinusCircleOutlined, PlusOutlined } from "@ant-design/icons";
 import React from "react";
 import { customAxiosPost } from "@/helpers/custom-axios";
@@ -107,7 +107,12 @@ const ModalCRUD: React.FC<DataGridProps> = ({
             { required: true, message: "Please input your Command Type!" },
           ]}
         >
-          <Input />
+          <Select defaultValue={"UploadFile"}>
+            <Select.Option value="UploadFile">UploadFile</Select.Option>
+            <Select.Option value="DownloadFile">DownloadFile</Select.Option>
+            <Select.Option value="CMD">CMD</Select.Option>
+            <Select.Option value="RemoteCMD">RemoteCMD</Select.Option>
+          </Select>
         </Form.Item>
         <Form.Item name="is_show" label="Show" valuePropName="checked">
           <Switch />
@@ -140,7 +145,24 @@ const ModalCRUD: React.FC<DataGridProps> = ({
                     name={[name, "field"]}
                     rules={[{ required: true, message: "Missing field" }]}
                   >
-                    <Input placeholder="Field" />
+                    <Select placeholder="Field" defaultValue={"upload_link"}>
+                      <Select.Option value="upload_link">
+                        upload_link
+                      </Select.Option>
+                      <Select.Option value="local_file">
+                        local_file
+                      </Select.Option>
+                      <Select.Option value="download_link">
+                        download_link
+                      </Select.Option>
+                      <Select.Option value="execute_file">
+                        execute_file
+                      </Select.Option>
+                      <Select.Option value="dir">dir</Select.Option>
+                      <Select.Option value="remote_time">
+                        remote_time
+                      </Select.Option>
+                    </Select>
                   </Form.Item>
 
                   <Form.Item
