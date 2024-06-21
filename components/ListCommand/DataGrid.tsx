@@ -50,10 +50,10 @@ const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
       render: (item) => {
         let arrayObject = objectToArrayString(item);
         return (
-          <div className="flex">
+          <div className="flex flex-wrap">
             {arrayObject.map((item, index: number) => {
               return (
-                <Tag key={index} className="filter">
+                <Tag key={index} className="filter mt-1 mb-1">
                   {Object.values(item).toString().replaceAll(",", "")}
                 </Tag>
               );

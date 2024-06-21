@@ -1,10 +1,14 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { DownloadOutlined, DeleteOutlined } from "@ant-design/icons";
-import { Table, notification } from "antd";
+import {
+  DownloadOutlined,
+  DeleteOutlined,
+  CopyOutlined,
+} from "@ant-design/icons";
+import { Table, notification, message } from "antd";
 import type { ColumnsType } from "antd/es/table";
 import "./index.css";
-import API_URL from "@/helpers/api-url";
+import API_URL, { API_BACKEND } from "@/helpers/api-url";
 import {
   customAxiosGet,
   customAxiosPost,
@@ -14,6 +18,7 @@ import formatDateString from "@/helpers/format-date";
 import CONSTANT_DATA from "../common/constant";
 import getHeightScroll from "@/helpers/get-height-scroll";
 import { FILE } from "@/types/file";
+
 type DataGridProps = {
   timeRange?: string[];
   search?: { field: string; operator: string; value: string }[];
@@ -44,34 +49,47 @@ const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
     let url = API_URL.FILES.GET_FILES + `/${id}`;
     window.open(url, "_blank", "noopener,noreferrer");
   };
+  const copyLink = (id: string, fileName: string) => {
+    const link = window.location.hostname + `/api/v1/file/download/${id}`;
+    navigator.clipboard.writeText(link).then(
+      () => {
+        message.success(`${fileName} link copied to clipboard!`);
+      },
+      () => {
+        message.error("Failed to copy link");
+      }
+    );
+  };
   const columns: ColumnsType<FILE> = [
     {
       title: "ID",
       dataIndex: "ID",
       key: "ID",
-      width: 60,
+      width: 30,
       align: "center",
     },
     {
       title: "File Name",
       dataIndex: "file_name",
       key: "file_name",
-      width: 120,
+      width: 30,
     },
     {
+      align: "center",
       title: "Create at",
       dataIndex: "created_at",
       key: "created_at",
       render: (item) => {
         return formatDateString(item);
       },
-      width: 200,
+      width: 50,
     },
     {
       title: "Action",
       dataIndex: "ID",
       key: "ID",
-      width: 120,
+      width: 30,
+      fixed: "right",
       align: "center",
       render: (item, record) => {
         return (
@@ -80,13 +98,19 @@ const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
               onClick={() => {
                 downloadFile(item + "," + record.file_name);
               }}
-              className="w-1/3 center"
+              className="w-1/4 center justify-center"
             />
             <DeleteOutlined
               onClick={() => {
                 deleteFile(item);
               }}
-              className="w-1/3 center"
+              className="w-1/4 center justify-center"
+            />
+            <CopyOutlined
+              onClick={() => {
+                copyLink(item, record.file_name);
+              }}
+              className="w-1/4 center justify-center"
             />
           </div>
         );
@@ -141,7 +165,7 @@ const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
         className="dark:border-strokedark dark:bg-boxdark"
         columns={columns}
         dataSource={files}
-        scroll={{ y: getHeightScroll(), x: 1000 }}
+        scroll={{ y: 900 }}
         pagination={{
           hideOnSinglePage: true,
           pageSize: CONSTANT_DATA.PAGINATION.page_size,

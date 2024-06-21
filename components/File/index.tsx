@@ -3,6 +3,7 @@ import useLocalStorage from "@/hooks/useLocalStorage";
 import dayjs from "dayjs";
 import { useState } from "react";
 import DataGrid from "./DataGrid";
+import Upload from "./Upload";
 const FileManager = () => {
   const [storedValue, setStoredValue] = useLocalStorage("local-time", [
     dayjs().toISOString(),
@@ -18,8 +19,13 @@ const FileManager = () => {
   >([]);
   return (
     <>
-      <div className=" mt-1 w-full max-w-full rounded-sm border border-stroke bg-white  dark:border-strokedark dark:bg-boxdark shadow-default">
-        <DataGrid timeRange={timeRange} search={search}></DataGrid>
+      <div className=" flex mt-1 rounded-sm border border-stroke bg-white  dark:border-strokedark dark:bg-boxdark shadow-default">
+        <div className="w-3/4">
+          <DataGrid timeRange={timeRange} search={search}></DataGrid>
+        </div>
+        <div className="w-1/4">
+          <Upload></Upload>
+        </div>
       </div>
       {/* <!-- ====== DataGrid Section End ====== --> */}
     </>
