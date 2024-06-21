@@ -137,7 +137,7 @@ const ModalCRUD: React.FC<DataGridProps> = ({
                       <Select.Option value="="> {"="} </Select.Option>
                       <Select.Option value="!="> {"!="} </Select.Option>
                       <Select.Option value=">"> {">"} </Select.Option>
-                      <Select.Option value=">"> {">="} </Select.Option>
+                      <Select.Option value=">="> {">="} </Select.Option>
                       <Select.Option value="<"> {"<"} </Select.Option>
                       <Select.Option value="<="> {"<="} </Select.Option>
                     </Select>

@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { Tag, Table, notification, Popconfirm, Button } from "antd";
+import { Tag, Table, notification, Popconfirm, Button, Drawer } from "antd";
 import type { ColumnsType } from "antd/es/table";
 import "./index.css";
 import { GROUP, GROUP_FILTER } from "@/types/group";
@@ -11,6 +11,7 @@ import getHeightScroll from "@/helpers/get-height-scroll";
 import CONSTANT_DATA from "../common/constant";
 import { PlusOutlined, EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import ModalCRUD from "./ModalCRUD";
+import DrawerAgent from "./DrawerAgent";
 type NotificationType = "success" | "info" | "warning" | "error";
 type DataGridProps = {
   timeRange?: string[];
@@ -119,6 +120,7 @@ const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
     }
   );
   const [api, contextHolder] = notification.useNotification();
+  const [groupDrawer, setGroupDrawer] = useState<GROUP>({} as GROUP);
   const openNotificationWithIcon = (type: NotificationType, data: string) => {
     api[type]({
       message: type,
@@ -142,6 +144,7 @@ const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
   };
   //===========================
   const [groups, setGroupList] = useState<GROUP[]>([] as GROUP[]);
+  const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [type, setType] = useState<"create" | "edit" | "delete">("create");
   const [totalCount, setTotalCount] = useState(0);
@@ -165,6 +168,12 @@ const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
     filter["filter"] = [...search]; //Add filter time range and search
   }
   Object.assign(filter, CONSTANT_DATA.REQUIRED_TOTAL);
+  const showDrawer = () => {
+    setOpen(true);
+  };
+  const onClose = () => {
+    setOpen(false);
+  };
   useEffect(() => {
     let url = API_URL.GROUPS.GET_GROUPS;
     let getData = async () => {
@@ -184,6 +193,20 @@ const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
   }, [timeRange, search, filter, reload]);
   return (
     <>
+      <Drawer
+        title={
+          <>
+            <span style={{ color: "#818798" }}>Group/ </span>
+            <span className="text-white">Computers</span>
+          </>
+        }
+        onClose={onClose}
+        open={open}
+        placement={"right"}
+        width={800}
+      >
+        <DrawerAgent groupFilter={groupDrawer.group_filter}></DrawerAgent>
+      </Drawer>
       {contextHolder}
       <ModalCRUD
         open={isModalOpen}
@@ -209,6 +232,15 @@ const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
       </div>
       <Table
         loading={loading}
+        onRow={(record, rowIndex) => {
+          return {
+            onDoubleClick: (event) => {
+              showDrawer();
+              console.log(record);
+              setGroupDrawer(record);
+            },
+          };
+        }}
         className="dark:border-strokedark dark:bg-boxdark"
         columns={columns}
         dataSource={groups}

@@ -74,7 +74,6 @@ const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
     },
     {
       align: "center",
-
       width: 200,
       title: "Created At",
       dataIndex: "created_at",
