@@ -1954,6 +1954,6 @@ main > div {
 .ant-upload-list  svg{
   fill:white !important ;
 }
-.ant-upload-list-item-name{
-  color:white;
+.ant-upload-list-item-name,.ant-upload-text,.ant-upload-hint{
+  color:white !important;
 }

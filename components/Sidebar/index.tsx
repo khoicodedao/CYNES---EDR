@@ -3,8 +3,7 @@ import React, { useRef, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import styles from "./index.module.css";
-import path from "path";
-import { FolderOpenOutlined } from "@ant-design/icons";
+import { FolderOpenOutlined, FileDoneOutlined } from "@ant-design/icons";
 interface SidebarProps {
   sidebarOpen: boolean;
   setSidebarOpen: (arg: boolean) => void;
@@ -422,6 +421,16 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                     <FolderOpenOutlined />
                   </div>
                   <div className={styles.titleOfLine}>Files</div>
+                </Link>
+                <Link href="/license" className={styles.menuItem}>
+                  <div
+                    className={`p-2 ${
+                      (pathname === "/license" && styles.active) || ""
+                    }`}
+                  >
+                    <FileDoneOutlined />
+                  </div>
+                  <div className={styles.titleOfLine}>License</div>
                 </Link>
               </div>
             </div>

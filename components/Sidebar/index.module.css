@@ -136,7 +136,7 @@
   top: 96px;
   left: 0;
   width: 224px;
-  height: 666px;
+  height: 777px;
   overflow: hidden;
 }
 .block1Icon,
@@ -1216,7 +1216,7 @@
 .navigation {
   top: 0;
   height: 100vh;
-  overflow-y: scroll;
+  overflow-y: hidden;
 }
 .navigation::-webkit-scrollbar {
   display: none;
