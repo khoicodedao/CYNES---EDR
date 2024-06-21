@@ -4,15 +4,15 @@ import { API_BACKEND } from "@/helpers/api-url";
 export async function POST(request: Request) {
   try {
     const formData = await request.formData();
-    const file = formData.get("file");
+    const file: any = formData.get("file");
 
     if (!file) {
       return NextResponse.json({ error: "No file provided" }, { status: 400 });
     }
 
     const fileBlob = await file
-      .arrayBuffer()
-      .then((buffer) => new Blob([buffer]));
+      ?.arrayBuffer()
+      ?.then((buffer: any) => new Blob([buffer]));
 
     const formDataToSend = new FormData();
     formDataToSend.append("file", fileBlob, file.name);
