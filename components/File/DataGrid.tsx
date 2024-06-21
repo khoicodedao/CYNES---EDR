@@ -1,32 +1,36 @@
 "use client";
-import React, { useState, useEffect } from "react";
-import {
-  DownloadOutlined,
-  DeleteOutlined,
-  CopyOutlined,
-} from "@ant-design/icons";
-import { Table, notification, message } from "antd";
-import type { ColumnsType } from "antd/es/table";
-import "./index.css";
-import API_URL, { API_BACKEND } from "@/helpers/api-url";
-import {
-  customAxiosGet,
-  customAxiosPost,
-  customAxiosDelete,
-} from "@/helpers/custom-axios";
+import API_URL from "@/helpers/api-url";
+import { customAxiosDelete, customAxiosPost } from "@/helpers/custom-axios";
 import formatDateString from "@/helpers/format-date";
-import CONSTANT_DATA from "../common/constant";
-import getHeightScroll from "@/helpers/get-height-scroll";
 import { FILE } from "@/types/file";
+import {
+  CopyOutlined,
+  DeleteOutlined,
+  DownloadOutlined,
+} from "@ant-design/icons";
+import { Modal, Table, message, notification } from "antd";
+import type { ColumnsType } from "antd/es/table";
+import React, { useEffect, useState } from "react";
+import CONSTANT_DATA from "../common/constant";
+import "./index.css";
+import { ExclamationCircleFilled } from "@ant-design/icons";
+
+const { confirm } = Modal;
 
 type DataGridProps = {
   timeRange?: string[];
   search?: { field: string; operator: string; value: string }[];
+  reload: boolean;
+  setReload: React.Dispatch<React.SetStateAction<boolean>>;
 };
 type NotificationType = "success" | "info" | "warning" | "error";
 
-const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
-  const [reload, setReload] = useState(false);
+const DataGrid: React.FC<DataGridProps> = ({
+  timeRange,
+  search,
+  reload,
+  setReload,
+}) => {
   const [api, contextHolder] = notification.useNotification();
   const openNotificationWithIcon = (type: NotificationType, data: string) => {
     api[type]({
@@ -36,14 +40,27 @@ const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
     });
   };
   const deleteFile = async (id: string) => {
-    let url = API_URL.FILES.GET_FILES + `/${id}`;
-    let res: { error: boolean; msg: string } = await customAxiosDelete(url);
-    if (res.error) {
-      openNotificationWithIcon("error", res.msg);
-    } else {
-      openNotificationWithIcon("success", res.msg);
-      setReload(!reload);
-    }
+    confirm({
+      title: "Are you sure you want to delete this file?",
+      icon: <ExclamationCircleFilled />,
+      content: "This action cannot be undone.",
+      okText: "Yes",
+      okType: "danger",
+      cancelText: "No",
+      onOk: async () => {
+        let url = API_URL.FILES.GET_FILES + `/${id}`;
+        let res: { error: boolean; msg: string } = await customAxiosDelete(url);
+        if (res.error) {
+          openNotificationWithIcon("error", res.msg);
+        } else {
+          openNotificationWithIcon("success", res.msg);
+          setReload(!reload);
+        }
+      },
+      onCancel() {
+        console.log("Cancel");
+      },
+    });
   };
   const downloadFile = async (id: string) => {
     let url = API_URL.FILES.GET_FILES + `/${id}`;

@@ -3,10 +3,19 @@ import { Upload, Button, message, UploadProps } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import { RcFile, UploadChangeParam } from "antd/lib/upload";
 
-const FileUploadComponent: React.FC = () => {
+type FileUploadProps = {
+  reload: boolean;
+  setReload: React.Dispatch<React.SetStateAction<boolean>>;
+};
+
+const FileUploadComponent: React.FC<FileUploadProps> = ({
+  reload,
+  setReload,
+}) => {
   const [fileList, setFileList] = useState<UploadProps["fileList"]>([]);
 
   const handleChange = (info: UploadChangeParam) => {
+    setReload(!reload);
     let newFileList = [...info.fileList];
 
     // 1. Limit the number of uploaded files
@@ -35,7 +44,7 @@ const FileUploadComponent: React.FC = () => {
   return (
     <div>
       <Upload {...uploadProps}>
-        <Button icon={<UploadOutlined />}>Upload</Button>
+        <Button icon={<UploadOutlined />}>Upload file</Button>
       </Upload>
     </div>
   );

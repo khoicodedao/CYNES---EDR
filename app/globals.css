@@ -1948,3 +1948,12 @@ main > div {
   text-overflow: ellipsis !important;
   position: relative !important;
 }
+.ant-modal-confirm-title, .ant-modal-confirm-content, .ant-btn-default{
+  color: white !important ;
+}
+.ant-upload-list  svg{
+  fill:white !important ;
+}
+.ant-upload-list-item-name{
+  color:white;
+}
