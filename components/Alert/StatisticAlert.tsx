@@ -7,13 +7,14 @@ import React, { useEffect, useState } from "react";
 import "./index.css";
 type DataGridProps = {
   timeRange: string[];
+  search?: { field: string; operator: string; value: string }[];
 };
 type AlertLevel = {
   hight: number;
   medium: number;
   low: number;
 };
-const StatisticEvent: React.FC<DataGridProps> = ({ timeRange }) => {
+const StatisticEvent: React.FC<DataGridProps> = ({ timeRange, search }) => {
   const [data, setData] = useState<AlertLevel>({ hight: 0, medium: 0, low: 0 });
   let [dataPercentage, setDataPercentage] = useState<any>({
     hight: 0,
@@ -36,6 +37,9 @@ const StatisticEvent: React.FC<DataGridProps> = ({ timeRange }) => {
     ];
     filter["filter"] = filterInTimeRage;
   }
+  if (search) {
+    filter["filter"] = [...filter["filter"], ...search]; // Add filter time range and search
+  }
   useEffect(() => {
     let url = API_URL.ALERTS.COUNT_ALERTS;
     let getData = async () => {
@@ -49,7 +53,7 @@ const StatisticEvent: React.FC<DataGridProps> = ({ timeRange }) => {
     };
 
     getData();
-  }, [timeRange]);
+  }, [timeRange, search]);
   return (
     <div className="severity">
       <div className="flex justify-around items-center">

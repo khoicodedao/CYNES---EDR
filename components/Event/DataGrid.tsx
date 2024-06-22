@@ -206,7 +206,7 @@ const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
         <div className="p-8 pt-0">
           <h3 className="summary-title text-white text-3xl pb-2">Json</h3>
           <div
-            className="summary-detail p-4"
+            className="summary-detail p-4 json-view-container"
             style={{ backgroundColor: "rgb(38 38 41)" }}
           >
             <ReactJson

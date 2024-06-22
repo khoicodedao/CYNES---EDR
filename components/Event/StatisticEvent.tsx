@@ -7,13 +7,14 @@ import React, { useEffect, useState } from "react";
 import "./index.css";
 type DataGridProps = {
   timeRange: string[];
+  search?: { field: string; operator: string; value: string }[];
 };
 type EventLevel = {
   hight: number;
   medium: number;
   low: number;
 };
-const StatisticEvent: React.FC<DataGridProps> = ({ timeRange }) => {
+const StatisticEvent: React.FC<DataGridProps> = ({ timeRange, search }) => {
   const [data, setData] = useState<EventLevel>({ hight: 0, medium: 0, low: 0 });
   let [dataPercentage, setDataPercentage] = useState<any>({
     hight: 0,
@@ -35,6 +36,10 @@ const StatisticEvent: React.FC<DataGridProps> = ({ timeRange }) => {
       },
     ];
     filter["filter"] = filterInTimeRage;
+
+    if (search) {
+      filter["filter"] = [...filter["filter"], ...search]; // Add filter time range and search
+    }
   }
   useEffect(() => {
     let url = API_URL.EVENTS.COUNT_EVENTS;
@@ -50,7 +55,7 @@ const StatisticEvent: React.FC<DataGridProps> = ({ timeRange }) => {
     };
 
     getData();
-  }, [timeRange]);
+  }, [timeRange, search]);
 
   return (
     <div className="severity">

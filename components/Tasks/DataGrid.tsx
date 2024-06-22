@@ -9,7 +9,12 @@ import { customAxiosPost } from "@/helpers/custom-axios";
 import formatDateString from "@/helpers/format-date";
 import CONSTANT_DATA from "../common/constant";
 import getHeightScroll from "@/helpers/get-height-scroll";
-import { PlusOutlined, EditOutlined, DeleteOutlined } from "@ant-design/icons";
+import {
+  PlusOutlined,
+  EditOutlined,
+  DeleteOutlined,
+  ReloadOutlined,
+} from "@ant-design/icons";
 import ModalCRUD from "./ModalCRUD";
 import { GROUP } from "@/types/group";
 import { COMMAND } from "@/types/command";
@@ -121,6 +126,29 @@ const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
             >
               <DeleteOutlined className="w-1/3 center" />
             </Popconfirm>
+            <ReloadOutlined
+              onClick={async () => {
+                let urlEdit = API_URL.TASKS.UPDATE_TASK;
+                let { id, group_id, group_name, command_id, command_name } =
+                  item;
+                let res: { error: boolean; msg: string } =
+                  await customAxiosPost(urlEdit, {
+                    is_active: true,
+                    command_name,
+                    group_name,
+                    command_id: Number(command_id),
+                    group_id: Number(group_id),
+                    id,
+                  });
+                if (res.error) {
+                  openNotificationWithIcon("error", res.msg);
+                } else {
+                  openNotificationWithIcon("success", res.msg);
+                  setReload(!reload);
+                }
+              }}
+              className="w-1/3 center"
+            />
           </div>
         );
       },

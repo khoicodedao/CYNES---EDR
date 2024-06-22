@@ -6,7 +6,8 @@ interface Condition {
 
 const parseInput = (input: string): Condition[] => {
   const conditions: Condition[] = [];
-  const regex = /(\w+)\s*(:|=|>=|<=|>|<)\s*([\w.\s-]+)/g;
+  // Update regex to include the LIKE operator
+  const regex = /(\w+)\s*(=|>=|<=|>|<|:|LIKE)\s*([\w.\s%-]+)/gi;
   let match;
 
   while ((match = regex.exec(input)) !== null) {

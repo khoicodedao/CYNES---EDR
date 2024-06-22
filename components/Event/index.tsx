@@ -51,7 +51,7 @@ const Event = () => {
 
       {/* <!-- ====== StatisticEvent Section Start ====== --> */}
       <div className=" mt-1 w-full max-w-full rounded-sm border border-stroke bg-white  dark:border-strokedark dark:bg-boxdark shadow-default">
-        <StatisticEvent timeRange={timeRange}></StatisticEvent>
+        <StatisticEvent timeRange={timeRange} search={search}></StatisticEvent>
       </div>
 
       {/* <!-- ====== Event Section End ====== --> */}

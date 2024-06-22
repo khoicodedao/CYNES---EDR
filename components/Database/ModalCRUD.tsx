@@ -2,7 +2,7 @@
 import API_URL from "@/helpers/api-url";
 import arrayToObject from "@/helpers/array-to-object";
 import { customAxiosPost } from "@/helpers/custom-axios";
-import { Button, Form, Input, Modal, Switch } from "antd";
+import { Button, Form, Input, Modal, Switch, Select } from "antd";
 import React from "react";
 type DataGridProps = {
   open: boolean;
@@ -93,7 +93,12 @@ const ModalCRUD: React.FC<DataGridProps> = ({
           name="type"
           rules={[{ required: true, message: "Please input your Type!" }]}
         >
-          <Input />
+          <Select defaultValue={"md5"}>
+            <Select.Option value="md5">md5</Select.Option>
+            <Select.Option value="ip">ip</Select.Option>
+            <Select.Option value="domain">domain</Select.Option>
+            <Select.Option value="url">url</Select.Option>
+          </Select>
         </Form.Item>
         <Form.Item
           label="Description"

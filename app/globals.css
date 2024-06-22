@@ -1957,7 +1957,7 @@ main > div {
 .ant-upload-list-item-name,.ant-upload-text,.ant-upload-hint{
   color:white !important;
 }
-.json-view-container {
+.json-view-container,.summary-detail {
   width: 100%;
   overflow: auto;
   box-sizing: border-box;
@@ -1967,3 +1967,4 @@ main > div {
 .json-view-container > div {
   width: 100% !important;
 }
+.ant-tag{min-width: fit-content !important;}

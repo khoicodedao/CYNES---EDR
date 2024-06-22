@@ -52,7 +52,7 @@ const Alert = () => {
 
       {/* <!-- ====== StatisticEvent Section Start ====== --> */}
       <div className=" mt-1 w-full max-w-full rounded-sm border border-stroke bg-white  dark:border-strokedark dark:bg-boxdark shadow-default">
-        <StatisticAlert timeRange={timeRange}></StatisticAlert>
+        <StatisticAlert timeRange={timeRange} search={search}></StatisticAlert>
       </div>
 
       {/* <!-- ====== Event Section End ====== --> */}
