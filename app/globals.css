@@ -1957,3 +1957,13 @@ main > div {
 .ant-upload-list-item-name,.ant-upload-text,.ant-upload-hint{
   color:white !important;
 }
+.json-view-container {
+  width: 100%;
+  overflow: auto;
+  box-sizing: border-box;
+  word-wrap: break-word; /* Ensures long words break down to fit within the container */
+  word-break: break-all; 
+}
+.json-view-container > div {
+  width: 100% !important;
+}
