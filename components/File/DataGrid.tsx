@@ -119,7 +119,7 @@ const DataGrid: React.FC<DataGridProps> = ({
             />
             <DeleteOutlined
               onClick={() => {
-                deleteFile(item);
+                deleteFile(record.id);
               }}
               className="w-1/4 center justify-center"
             />
@@ -142,8 +142,8 @@ const DataGrid: React.FC<DataGridProps> = ({
   filter["filter"] = [
     {
       field: "type",
-      operator: "=",
-      value: "upload",
+      operator: "!=",
+      value: "license", //agent , user, license
     },
   ];
   useEffect(() => {

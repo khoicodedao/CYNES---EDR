@@ -5,7 +5,8 @@ export async function POST(request: Request) {
   try {
     const formData = await request.formData();
     const file: any = formData.get("file");
-
+    const uploadType: string | null =
+      formData.get("upload_type")?.toString() || null;
     if (!file) {
       return NextResponse.json({ error: "No file provided" }, { status: 400 });
     }
@@ -16,7 +17,12 @@ export async function POST(request: Request) {
 
     const formDataToSend = new FormData();
     formDataToSend.append("file", fileBlob, file.name);
-
+    formDataToSend.append("file_name", file.name);
+    if (uploadType) {
+      formDataToSend.append("upload_type", uploadType);
+    } else {
+      formDataToSend.append("upload_type", "user");
+    }
     // Send the file to the backend server
     const backendResponse: AxiosResponse = await axios.post(
       API_BACKEND.FILES.UPLOAD_FILE,

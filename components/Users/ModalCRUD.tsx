@@ -1,5 +1,5 @@
 "use client";
-import { Modal, Form, Button, Space, Select, Switch, Input } from "antd";
+import { Modal, Form, Button, Select, Input } from "antd";
 import React from "react";
 import { customAxiosPost } from "@/helpers/custom-axios";
 import API_URL from "@/helpers/api-url";
@@ -111,7 +111,10 @@ const ModalCRUD: React.FC<DataGridProps> = ({
           <Input />
         </Form.Item>
         <Form.Item name="role" label="Role" required>
-          <Input />
+          <Select defaultValue={"user"}>
+            <Select.Option value="admin">admin</Select.Option>
+            <Select.Option value="user">user</Select.Option>
+          </Select>
         </Form.Item>
         <Form.Item>
           <Button type="primary" htmlType="submit">

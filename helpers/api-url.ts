@@ -20,6 +20,7 @@ const API_URL = {
   EVENTS: {
     GET_EVENTS: "/api/events",
     COUNT_EVENTS: "/api/events/statistic_events",
+    COUNT_EVENTS_BY_DATE: "/api/events/count_event",
   },
   ALERTS: {
     GET_ALERTS: "/api/alerts",

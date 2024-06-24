@@ -1,17 +1,16 @@
 "use client";
-import React, { useState, useEffect } from "react";
-import { Table, Tag, notification, Popconfirm, Button } from "antd";
-import type { ColumnsType } from "antd/es/table";
-import "./index.css";
-import { TASK } from "@/types/task";
 import API_URL from "@/helpers/api-url";
 import { customAxiosPost } from "@/helpers/custom-axios";
 import formatDateString from "@/helpers/format-date";
-import CONSTANT_DATA from "../common/constant";
 import getHeightScroll from "@/helpers/get-height-scroll";
-import { PlusOutlined, EditOutlined, DeleteOutlined } from "@ant-design/icons";
-import ModalCRUD from "./ModalCRUD";
 import { USER } from "@/types/user";
+import { DeleteOutlined, PlusOutlined } from "@ant-design/icons";
+import { Button, notification, Popconfirm, Table } from "antd";
+import type { ColumnsType } from "antd/es/table";
+import React, { useEffect, useState } from "react";
+import CONSTANT_DATA from "../common/constant";
+import "./index.css";
+import ModalCRUD from "./ModalCRUD";
 type NotificationType = "success" | "info" | "warning" | "error";
 type DataGridProps = {
   timeRange?: string[];

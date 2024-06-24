@@ -15,13 +15,16 @@ const LicenseManagementPage: React.FC = () => {
       // Send the file to the server via API
       const formData = new FormData();
       formData.append("file", file);
-      const response = await fetch("/api/upload-license", {
+      formData.append("upload_type", "license");
+      const response = await fetch("/api/files/upload", {
         method: "POST",
         body: formData,
       });
       const data = await response.json();
-      setLicenseStatus(data.status);
-      message.success("License file uploaded successfully!");
+      if (!data.error) {
+        setLicenseStatus("Correct!");
+        message.success("License file uploaded successfully!");
+      }
     } catch (error) {
       message.error("An error occurred while uploading the license file!");
     } finally {
