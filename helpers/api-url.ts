@@ -59,6 +59,9 @@ const API_URL = {
     SIGN_UP: "/api/users/signup",
     DELETE_USER: "/api/users/delete",
   },
+  LICENSE: {
+    CHECK_LICENSE: "/api/license/",
+  },
 };
 
 export const API_BACKEND = {
@@ -107,6 +110,9 @@ export const API_BACKEND = {
     DOWNLOAD_FILE: BACK_END_URL + "/api/v1/file/download",
     DELETE_FILE: BACK_END_URL + "/api/v1/file",
     UPLOAD_FILE: BACK_END_URL + "/api/v1/file/upload",
+  },
+  LICENSE: {
+    CHECK_LICENSE: BACK_END_URL + "/api/v1/license/check",
   },
 };
 export default API_URL;

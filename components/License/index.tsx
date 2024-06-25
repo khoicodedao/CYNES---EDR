@@ -1,13 +1,25 @@
-import React, { useState } from "react";
+"use client";
+import React, { useState, useEffect } from "react";
 import { Upload, message, Spin } from "antd";
+import API_URL from "@/helpers/api-url";
 import { InboxOutlined } from "@ant-design/icons";
-
+import LicenseStatusComponent from "./LicenseStatus";
+interface LicenseStatus {
+  msg: {
+    credentials: string;
+    expires: number;
+    id_device: string;
+  };
+  status: boolean;
+}
 const { Dragger } = Upload;
 
 const LicenseManagementPage: React.FC = () => {
   const [fileList, setFileList] = useState<any[]>([]);
   const [uploading, setUploading] = useState(false);
-  const [licenseStatus, setLicenseStatus] = useState<string | null>(null);
+  const [licenseStatus, setLicenseStatus] = useState<LicenseStatus | null>(
+    null
+  );
 
   const handleUpload = async (file: any) => {
     setUploading(true);
@@ -31,10 +43,28 @@ const LicenseManagementPage: React.FC = () => {
       setUploading(false);
     }
   };
+  useEffect(() => {
+    const fetchLicenseStatus = async () => {
+      try {
+        const response = await fetch(API_URL.LICENSE.CHECK_LICENSE, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+        const data: LicenseStatus = await response.json();
+        setLicenseStatus(data);
+      } catch (error) {
+        console.error("Error fetching license status:", error);
+      }
+    };
 
+    fetchLicenseStatus();
+  }, []);
   return (
     <div>
       <h1>License Management</h1>
+      <LicenseStatusComponent licenseStatus={licenseStatus} />
       <Dragger
         fileList={fileList}
         onChange={(info) => setFileList(info.fileList)}
@@ -60,7 +90,6 @@ const LicenseManagementPage: React.FC = () => {
         </p>
       </Dragger>
       {uploading && <Spin tip="Uploading file..." />}
-      {licenseStatus && <p>License status: {licenseStatus}</p>}
     </div>
   );
 };
