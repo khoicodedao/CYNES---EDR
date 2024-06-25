@@ -1948,23 +1948,36 @@ main > div {
   text-overflow: ellipsis !important;
   position: relative !important;
 }
-.ant-modal-confirm-title, .ant-modal-confirm-content, .ant-btn-default{
+.ant-modal-confirm-title,
+.ant-modal-confirm-content,
+.ant-btn-default {
   color: white !important ;
 }
-.ant-upload-list  svg{
-  fill:white !important ;
+.ant-upload-list svg {
+  fill: white !important ;
 }
-.ant-upload-list-item-name,.ant-upload-text,.ant-upload-hint{
-  color:white !important;
+.ant-upload-list-item-name,
+.ant-upload-text,
+.ant-upload-hint {
+  color: white !important;
 }
-.json-view-container,.summary-detail {
+.json-view-container,
+.summary-detail {
   width: 100%;
   overflow: auto;
   box-sizing: border-box;
   word-wrap: break-word; /* Ensures long words break down to fit within the container */
-  word-break: break-all; 
+  word-break: break-all;
 }
 .json-view-container > div {
   width: 100% !important;
 }
-.ant-tag{min-width: fit-content !important;}
+.ant-tag {
+  min-width: fit-content !important;
+}
+.file-page .ant-upload-wrapper {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  flex-direction: row-reverse !important;
+}

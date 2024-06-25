@@ -3,6 +3,7 @@ import API_URL from "@/helpers/api-url";
 import { customAxiosDelete, customAxiosPost } from "@/helpers/custom-axios";
 import formatDateString from "@/helpers/format-date";
 import { FILE } from "@/types/file";
+import UploadFile from "./Upload";
 import {
   CopyOutlined,
   DeleteOutlined,
@@ -21,7 +22,9 @@ type DataGridProps = {
   timeRange?: string[];
   search?: { field: string; operator: string; value: string }[];
   reload: boolean;
+  showUPload?: boolean;
   setReload: React.Dispatch<React.SetStateAction<boolean>>;
+  typeSource: string;
 };
 type NotificationType = "success" | "info" | "warning" | "error";
 
@@ -29,7 +32,9 @@ const DataGrid: React.FC<DataGridProps> = ({
   timeRange,
   search,
   reload,
+  typeSource,
   setReload,
+  showUPload = false,
 }) => {
   const [api, contextHolder] = notification.useNotification();
   const openNotificationWithIcon = (type: NotificationType, data: string) => {
@@ -157,15 +162,16 @@ const DataGrid: React.FC<DataGridProps> = ({
   const [loading, setLoading] = useState(false);
   const [totalCount, setTotalCount] = useState(0);
   const [filter, setFilter] = useState<any>(CONSTANT_DATA.PAGINATION);
-  filter["filter"] = [
-    {
-      field: "type",
-      operator: "!=",
-      value: "license", //agent , user, license
-    },
-  ];
+
   useEffect(() => {
     let url = API_URL.FILES.GET_FILES;
+    filter["filter"] = [
+      {
+        field: "type",
+        operator: "=",
+        value: typeSource, //agent , user, license
+      },
+    ];
     let getData = async () => {
       setLoading(true);
       let resData: {
@@ -191,9 +197,15 @@ const DataGrid: React.FC<DataGridProps> = ({
       }
     };
     getData();
-  }, [timeRange, search, filter, reload]);
+  }, [timeRange, search, filter, reload, typeSource]);
   return (
     <>
+      <div className="p-1 flex items-stretch justify-between">
+        <p className="uppercase">{typeSource} Files:</p>
+        {showUPload && (
+          <UploadFile setReload={setReload} reload={reload}></UploadFile>
+        )}
+      </div>
       {contextHolder}
       <Table
         loading={loading}

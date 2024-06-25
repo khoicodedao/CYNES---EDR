@@ -5,8 +5,10 @@ export async function POST(request: Request) {
   try {
     const formData = await request.formData();
     const file: any = formData.get("file");
+
     const uploadType: string | null =
       formData.get("upload_type")?.toString() || null;
+    console.log("uploadType", uploadType);
     if (!file) {
       return NextResponse.json({ error: "No file provided" }, { status: 400 });
     }

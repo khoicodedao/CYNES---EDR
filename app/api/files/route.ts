@@ -5,6 +5,7 @@ import { FILE } from "@/types/file";
 
 export async function POST(request: NextRequest) {
   let searchParams = await request.json();
+  console.log(searchParams);
   const url = API_BACKEND.FILES.GET_FILES;
   let token = request.cookies.get("token")?.value || "";
   try {
