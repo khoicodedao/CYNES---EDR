@@ -63,7 +63,6 @@ const LicenseManagementPage: React.FC = () => {
   }, []);
   return (
     <div>
-      <h1>License Management</h1>
       <LicenseStatusComponent licenseStatus={licenseStatus} />
       <Dragger
         fileList={fileList}

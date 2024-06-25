@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { Table, Tag, notification, Popconfirm, Button } from "antd";
+import { Table, Tag, notification, Popconfirm, Button, Drawer } from "antd";
 import type { ColumnsType } from "antd/es/table";
 import "./index.css";
 import { TASK } from "@/types/task";
@@ -30,7 +30,7 @@ const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
       title: "ID",
       dataIndex: "ID",
       key: "ID",
-      width: 90,
+      width: 60,
       align: "center",
     },
     // {
@@ -154,6 +154,14 @@ const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
       },
     },
   ];
+  const [open, setOpen] = useState(false);
+  const [taskDrawer, setTaskDrawer] = useState<TASK>({} as TASK);
+  const showDrawer = () => {
+    setOpen(true);
+  };
+  const onClose = () => {
+    setOpen(false);
+  };
   const [api, contextHolder] = notification.useNotification();
   const openNotificationWithIcon = (type: NotificationType, data: string) => {
     api[type]({
@@ -282,6 +290,20 @@ const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
   }, [timeRange, search, filter, reload]);
   return (
     <>
+      <Drawer
+        title={
+          <>
+            <span style={{ color: "#818798" }}>Task/ </span>
+            <span className="text-white">Computers</span>
+          </>
+        }
+        onClose={onClose}
+        open={open}
+        placement={"right"}
+        width={800}
+      >
+        {/* <DrawerAgent groupFilter={groupDrawer.group_filter}></DrawerAgent> */}
+      </Drawer>
       {contextHolder}
       <ModalCRUD
         dataCreate={dataCreate}
@@ -315,6 +337,15 @@ const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
       </div>
 
       <Table
+        onRow={(record, rowIndex) => {
+          return {
+            onDoubleClick: (event) => {
+              showDrawer();
+              console.log(record);
+              setTaskDrawer(record);
+            },
+          };
+        }}
         loading={loading}
         className="dark:border-strokedark dark:bg-boxdark"
         columns={columns}
