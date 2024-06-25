@@ -62,10 +62,28 @@ const DataGrid: React.FC<DataGridProps> = ({
       },
     });
   };
-  const downloadFile = async (id: string) => {
-    let url = API_URL.FILES.GET_FILES + `/${id}`;
-    window.open(url, "_blank", "noopener,noreferrer");
+  // const downloadFile = async (id: string) => {
+  //   let url = API_URL.FILES.GET_FILES + `/${id}`;
+  //   window.open(url, "_blank", "noopener,noreferrer");
+  // };
+  const downloadFile = async (id: string, fileName: string) => {
+    try {
+      const response = await fetch(`${API_URL.FILES.GET_FILES}/${id}`);
+      const blob = await response.blob();
+
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = fileName; // Đặt tên file tải xuống
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(url);
+    } catch (error) {
+      console.error("Error downloading file:", error);
+    }
   };
+
   const copyLink = (id: string, fileName: string) => {
     const link = window.location.hostname + `/api/v1/file/download/${id}`;
     navigator.clipboard.writeText(link).then(
@@ -113,7 +131,7 @@ const DataGrid: React.FC<DataGridProps> = ({
           <div className="flex justify-center items-center">
             <DownloadOutlined
               onClick={() => {
-                downloadFile(item + "," + record.file_name);
+                downloadFile(record.id, record.file_name);
               }}
               className="w-1/4 center justify-center"
             />
