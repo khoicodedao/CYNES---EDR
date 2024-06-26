@@ -81,23 +81,23 @@ const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
       }
     });
   };
-  if (timeRange) {
-    const filterInTimeRage = [
-      {
-        field: "created_at",
-        operator: ">=",
-        value: timeRange[0],
-      },
-      {
-        field: "created_at",
-        operator: "<=",
-        value: timeRange[1],
-      },
-    ];
-    filter["filter"] = filterInTimeRage;
-  }
+  // if (timeRange) {
+  //   const filterInTimeRage = [
+  //     {
+  //       field: "created_at",
+  //       operator: ">=",
+  //       value: timeRange[0],
+  //     },
+  //     {
+  //       field: "created_at",
+  //       operator: "<=",
+  //       value: timeRange[1],
+  //     },
+  //   ];
+  //   filter["filter"] = filterInTimeRage;
+  // }
   if (search) {
-    filter["filter"] = [...filter["filter"], ...search]; //Add filter time range and search
+    filter["filter"] = [...search]; //Add filter time range and search
   }
   Object.assign(filter, CONSTANT_DATA.REQUIRED_TOTAL);
   const exportData = async () => {
