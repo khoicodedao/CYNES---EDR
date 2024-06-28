@@ -70,10 +70,15 @@ const ChartTwo: React.FC<DataGridProps> = ({ data }) => {
   return (
     <div className="col-span-12 rounded-sm border border-stroke bg-white p-7.5 shadow-default dark:border-strokedark dark:bg-boxdark xl:col-span-4">
       <div className="mb-4 justify-between gap-4 sm:flex">
-        <div>
-          <h4 className="text-xl font-semibold text-black dark:text-white">
-            Statistic Alert
-          </h4>
+        <div className="flex w-full">
+          <span className="mt-1 mr-2 flex h-4 w-full max-w-4 items-center justify-center rounded-full border border-primary">
+            <span className="block h-2.5 w-full max-w-2.5 rounded-full bg-primary"></span>
+          </span>
+          <div className="w-full">
+            <p className="font-semibold text-primary uppercase">
+              Statistic Alert
+            </p>
+          </div>
         </div>
       </div>
 

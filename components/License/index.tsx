@@ -34,7 +34,7 @@ const LicenseManagementPage: React.FC = () => {
       });
       const data = await response.json();
       if (!data.error) {
-        setLicenseStatus("Correct!");
+        setLicenseStatus(data);
         message.success("License file uploaded successfully!");
       }
     } catch (error) {

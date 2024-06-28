@@ -1973,7 +1973,8 @@ main > div {
   width: 100% !important;
 }
 .ant-tag {
-  min-width: fit-content !important;
+  min-width: 63px;
+  text-align: center;
 }
 .file-page .ant-upload-wrapper {
   display: flex !important;
