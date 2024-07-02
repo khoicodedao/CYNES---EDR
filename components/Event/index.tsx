@@ -29,7 +29,7 @@ const Event = () => {
           setTimeRange={setTimeRange}
           setSearch={setSearch}
           search={search}
-          placeHolder="Search by query (mac='AA-DC-2F-4A-AD-F5')"
+          placeHolder="Search by query (mac=AA-DC-2F-4A-AD-F5,ip=192.168.1.1)"
           filterKey={[
             "mac",
             "agent",

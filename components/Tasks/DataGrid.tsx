@@ -5,9 +5,10 @@ import type { ColumnsType } from "antd/es/table";
 import "./index.css";
 import { TASK } from "@/types/task";
 import API_URL from "@/helpers/api-url";
-import { customAxiosPost } from "@/helpers/custom-axios";
+import { customAxiosPost, customAxiosGet } from "@/helpers/custom-axios";
 import formatDateString from "@/helpers/format-date";
 import CONSTANT_DATA from "../common/constant";
+import DrawerTask from "./Drawer";
 import getHeightScroll from "@/helpers/get-height-scroll";
 import {
   PlusOutlined,
@@ -155,7 +156,7 @@ const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
     },
   ];
   const [open, setOpen] = useState(false);
-  const [taskDrawer, setTaskDrawer] = useState<TASK>({} as TASK);
+  const [taskDrawer, setTaskDrawer] = useState<{ [key: string]: string }>({});
   const showDrawer = () => {
     setOpen(true);
   };
@@ -302,7 +303,7 @@ const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
         placement={"right"}
         width={800}
       >
-        {/* <DrawerAgent groupFilter={groupDrawer.group_filter}></DrawerAgent> */}
+        <DrawerTask receive_agents={taskDrawer}></DrawerTask>
       </Drawer>
       {contextHolder}
       <ModalCRUD
@@ -339,10 +340,14 @@ const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
       <Table
         onRow={(record, rowIndex) => {
           return {
-            onDoubleClick: (event) => {
+            onDoubleClick: async (event) => {
               showDrawer();
-              console.log(record);
-              setTaskDrawer(record);
+              let res: any = await customAxiosGet(
+                `${API_URL.TASKS.GET_TASKS}/${record.id}`
+              );
+              if (!res.error && res.task.receive_agents) {
+                setTaskDrawer(res.task.receive_agents);
+              }
             },
           };
         }}

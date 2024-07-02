@@ -32,6 +32,8 @@ const checkOnline = (lastSeen: string) => {
         style={{
           height: "16px",
           borderRadius: "50%",
+          width: "16px",
+          minWidth: "unset",
         }}
         color="#87d068"
       ></Tag>
@@ -42,6 +44,8 @@ const checkOnline = (lastSeen: string) => {
         style={{
           height: "16px",
           borderRadius: "50%",
+          width: "16px",
+          minWidth: "unset",
         }}
         color="rgba(255, 255, 255, 0.52)"
       ></Tag>
