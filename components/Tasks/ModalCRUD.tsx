@@ -113,6 +113,7 @@ const ModalCRUD: React.FC<DataGridProps> = ({
   form.setFieldsValue({
     group_id: dataEdit.group_name,
     command_id: dataEdit.command_name,
+    is_active: dataEdit.is_active,
   });
   return (
     <Modal width={600} title={title} onCancel={onCancel} open={open}>

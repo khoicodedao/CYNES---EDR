@@ -42,12 +42,18 @@ const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
       width: 200,
     },
     {
+      title: "Level",
+      dataIndex: "level",
+      key: "level",
+      width: 100,
+      align: "center",
+    },
+    {
       title: "Content",
       dataIndex: "content",
       key: "content",
       width: 200,
     },
-
     {
       title: "Update at",
       dataIndex: "updated_at",
@@ -93,6 +99,7 @@ const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
           <div className="flex justify-center items-center">
             <EditOutlined
               onClick={() => {
+                console.log(item);
                 showModal("edit");
                 setDataEdit({
                   ...item,
@@ -158,6 +165,7 @@ const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
     description: string;
     is_active: boolean;
     content: string;
+    level: number;
   }>(
     {} as {
       id: number;
@@ -165,6 +173,7 @@ const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
       description: string;
       is_active: boolean;
       content: string;
+      level: number;
     }
   );
   // if (timeRange) {

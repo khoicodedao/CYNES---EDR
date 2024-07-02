@@ -15,6 +15,7 @@ type DataGridProps = {
     description: string;
     is_active: boolean;
     content: string;
+    level: number;
   };
   setReload: React.Dispatch<React.SetStateAction<boolean>>;
   openNotificationWithIcon: (type: NotificationType, data: string) => void;
@@ -36,7 +37,6 @@ const ModalCRUD: React.FC<DataGridProps> = ({
 }) => {
   const [form] = Form.useForm();
   const onFinish = async (values: any) => {
-    console.log(values);
     if (type == "create") {
       let urlAdd = API_URL.DATABASE.ADD_DATABASE;
       let { db_info, ...restData } = values;
@@ -73,6 +73,8 @@ const ModalCRUD: React.FC<DataGridProps> = ({
   let title = type == "create" ? "Create Data" : "Edit Data";
 
   form.setFieldValue("type", dataEdit.type);
+  form.setFieldValue("level", dataEdit.level);
+
   form.setFieldValue("description", dataEdit.description);
   form.setFieldValue("is_active", dataEdit.is_active);
   form.setFieldValue("content", dataEdit.content);
@@ -89,9 +91,21 @@ const ModalCRUD: React.FC<DataGridProps> = ({
         autoComplete="off"
       >
         <Form.Item
+          label="Level"
+          name="level"
+          rules={[{ required: true, message: "Please input your Type!" }]}
+        >
+          <Select>
+            <Select.Option value={0}>0</Select.Option>
+            <Select.Option value={1}>1</Select.Option>
+            <Select.Option value={2}>2</Select.Option>
+            <Select.Option value={3}>3</Select.Option>
+          </Select>
+        </Form.Item>
+        <Form.Item
           label="Type"
           name="type"
-          rules={[{ required: true, message: "Please input your Type!" }]}
+          rules={[{ required: true, message: "Please input your Level!" }]}
         >
           <Select defaultValue={"md5"}>
             <Select.Option value="md5">md5</Select.Option>
