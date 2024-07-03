@@ -16,8 +16,8 @@ const ReceiveAgentsTable: React.FC<ReceiveAgentsProps> = ({
   const [filteredData, setFilteredData] = useState<
     { key: string; value: string }[]
   >([]);
-  const [agentDetails, setAgentDetails] = useState<{ agent: Object }>(
-    {} as { agent: Object }
+  const [agentDetails, setAgentDetails] = useState<{ agent: any }>(
+    {} as { agent: any }
   );
 
   useEffect(() => {
@@ -122,7 +122,11 @@ const ReceiveAgentsTable: React.FC<ReceiveAgentsProps> = ({
       {agentDetails && (
         <ReactJson
           displayDataTypes={false}
-          name={agentDetails.agent?.computer_name || ""}
+          name={
+            agentDetails.agent?.computer_name
+              ? agentDetails.agent?.computer_name
+              : "data"
+          }
           src={agentDetails.agent}
           theme="ocean"
         />
