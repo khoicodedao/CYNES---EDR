@@ -71,6 +71,7 @@ export const API_BACKEND = {
     SIGN_UP: BACK_END_URL + "/api/v1/user/signup",
   },
   AGENT: {
+    GET_DETAIL_AGENT: BACK_END_URL + "/api/v1/agent",
     GET_AGENTS: BACK_END_URL + "/api/v1/agent/list",
     DELETE_AGENT: BACK_END_URL + "/api/v1/agent",
     COUNT_AGENTS: BACK_END_URL + "/api/v1/agent/count",

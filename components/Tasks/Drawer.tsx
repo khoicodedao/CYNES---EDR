@@ -1,6 +1,9 @@
 import React, { useState, useEffect, useMemo } from "react";
-import { Table, Input } from "antd";
+import { Table, Input, Button, Modal } from "antd";
 import type { ColumnsType } from "antd/es/table";
+import ReactJson from "react-json-view";
+import { customAxiosGet } from "@/helpers/custom-axios";
+import API_URL from "@/helpers/api-url";
 
 interface ReceiveAgentsProps {
   receive_agents: { [key: string]: string };
@@ -13,6 +16,9 @@ const ReceiveAgentsTable: React.FC<ReceiveAgentsProps> = ({
   const [filteredData, setFilteredData] = useState<
     { key: string; value: string }[]
   >([]);
+  const [agentDetails, setAgentDetails] = useState<{ agent: Object }>(
+    {} as { agent: Object }
+  );
 
   useEffect(() => {
     const receiveAgentsData = Object.entries(receive_agents).map(
@@ -35,7 +41,27 @@ const ReceiveAgentsTable: React.FC<ReceiveAgentsProps> = ({
       dataIndex: "value",
       key: "value",
     },
+    {
+      title: "Action",
+      key: "action",
+      align: "center",
+      render: (_, record) => (
+        <Button onClick={() => handleViewDetails(record.key)}>
+          View Details
+        </Button>
+      ),
+    },
   ];
+
+  const handleViewDetails = async (id: string) => {
+    try {
+      const url = `${API_URL.AGENT.GET_AGENTS}/${id}`;
+      const response: { agent: Object } = await customAxiosGet(url);
+      setAgentDetails(response);
+    } catch (error) {
+      console.error("Error fetching agent details:", error);
+    }
+  };
 
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(40);
@@ -92,6 +118,15 @@ const ReceiveAgentsTable: React.FC<ReceiveAgentsProps> = ({
           },
         }}
       />
+
+      {agentDetails && (
+        <ReactJson
+          displayDataTypes={false}
+          name={agentDetails.agent?.computer_name || ""}
+          src={agentDetails.agent}
+          theme="ocean"
+        />
+      )}
     </div>
   );
 };
