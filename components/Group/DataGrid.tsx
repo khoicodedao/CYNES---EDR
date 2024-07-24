@@ -192,7 +192,7 @@ const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
     getData();
   }, [timeRange, search, filter, reload]);
   return (
-    <>
+    <div className="page-group">
       <Drawer
         title={
           <>
@@ -254,7 +254,7 @@ const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
           },
         }}
       ></Table>
-    </>
+    </div>
   );
 };
 

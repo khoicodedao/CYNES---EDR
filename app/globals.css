@@ -1982,3 +1982,15 @@ main > div {
   align-items: center !important;
   flex-direction: row-reverse !important;
 }
+.user-page .ant-table-wrapper,.tools-page .ant-table-wrapper,.page-group .ant-table-wrapper{
+  min-height: calc(100vh - 240px) !important;
+  background-color: #2b2b310a!important;
+}
+.tasks-page .ant-table-wrapper,.list-command-page .ant-table-wrapper{
+  min-height: calc(100vh - 290px) !important;
+  background-color: #2b2b310a!important;
+}
+.ant-popconfirm-buttons .ant-btn-default{
+  color: black !important;
+}
+

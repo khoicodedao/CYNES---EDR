@@ -175,7 +175,7 @@ const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
     getData();
   }, [timeRange, search, filter, reload]);
   return (
-    <>
+    <div className="user-page">
       {contextHolder}
       <ModalCRUD
         dataCreate={dataCreate}
@@ -221,7 +221,7 @@ const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
           },
         }}
       ></Table>
-    </>
+    </div>
   );
 };
 

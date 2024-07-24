@@ -29,28 +29,35 @@ const data: DataType[] = [
 ];
 
 const Tools: React.FC = () => (
-  <Table dataSource={data}>
-    <Column title="ID" dataIndex="id" key="id" width={30} align="center" />
-    <Column title="Tool Name" dataIndex="toolName" width={100} key="toolName" />
-    <Column
-      title="Description"
-      dataIndex="description"
-      width={500}
-      key="description"
-    />
-    <Column
-      title="Link"
-      dataIndex="link"
-      width={30}
-      align="center"
-      key="link"
-      render={(link) => (
-        <LinkOutlined
-          onClick={() => window.open(link, "_blank", "noopener,noreferrer")}
-        />
-      )}
-    />
-  </Table>
+  <div className="tools-page">
+    <Table pagination={false} dataSource={data}>
+      <Column title="ID" dataIndex="id" key="id" width={30} align="center" />
+      <Column
+        title="Tool Name"
+        dataIndex="toolName"
+        width={100}
+        key="toolName"
+      />
+      <Column
+        title="Description"
+        dataIndex="description"
+        width={500}
+        key="description"
+      />
+      <Column
+        title="Link"
+        dataIndex="link"
+        width={30}
+        align="center"
+        key="link"
+        render={(link) => (
+          <LinkOutlined
+            onClick={() => window.open(link, "_blank", "noopener,noreferrer")}
+          />
+        )}
+      />
+    </Table>
+  </div>
 );
 
 export default Tools;

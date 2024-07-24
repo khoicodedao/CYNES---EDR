@@ -19,7 +19,7 @@ const Tasks = () => {
     { field: string; operator: string; value: string }[]
   >([]);
   return (
-    <>
+    <div className="tasks-page">
       {/* <!-- ====== FunctionBar Section Start ====== --> */}
       <div className="w-full max-w-full rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
         <FunctionBar
@@ -48,7 +48,7 @@ const Tasks = () => {
         <DataGrid timeRange={timeRange} search={search}></DataGrid>
       </div>
       {/* <!-- ====== DataGrid Section End ====== --> */}
-    </>
+    </div>
   );
 };
 
