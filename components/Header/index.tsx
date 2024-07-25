@@ -76,8 +76,9 @@ const Header = (props: {
             <DarkModeSwitcher />
             {/* <!-- Dark Mode Toggler --> */}
 
-            {/* <!-- Notification Menu Area --> */}
-            <DropdownNotification />
+            {/* <!-- Notification Menu Area, notification thong bao khi co thong tin moi --> */}
+
+            {/* <DropdownNotification /> */}
             {/* <!-- Notification Menu Area --> */}
 
             {/* <!-- Chat Notification Area --> */}

@@ -137,7 +137,7 @@ const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
       title: "MAC",
       dataIndex: "mac",
       key: "mac",
-      width: 150,
+      width: 230,
       align: "center",
       render: (item, record) => {
         console.log(record);
@@ -154,21 +154,21 @@ const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
       dataIndex: "local_ip",
       key: "local_ip",
       width: 150,
-      align: "center",
+      align: "left",
     },
     {
       title: "Public IP",
       dataIndex: "public_ip",
       key: "public_ip",
       width: 120,
-      align: "center",
+      align: "left",
     },
     {
       title: "Computer Name",
       dataIndex: "computer_name",
       key: "computer_name",
       width: 200,
-      align: "center",
+      align: "left",
     },
     // { title: "OS", dataIndex: "os", key: "os", width: 200 },
 
@@ -190,7 +190,7 @@ const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
       dataIndex: "agent_user",
       key: "agent_user",
       width: 120,
-      align: "center",
+      align: "left",
     },
     {
       title: "Time",
