@@ -29,7 +29,7 @@ const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
       align: "center",
     },
     {
-      align: "center",
+      align: "left",
       title: "Command Name",
       dataIndex: "command_name",
       key: "command_name",
@@ -40,7 +40,7 @@ const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
       dataIndex: "command_type",
       key: "command_type",
       width: 200,
-      align: "center",
+      align: "left",
     },
     {
       title: "Command Info",
@@ -63,7 +63,7 @@ const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
       },
     },
     {
-      align: "center",
+      align: "left",
       title: "Update at",
       dataIndex: "updated_at",
       key: "updated_at",
@@ -73,7 +73,7 @@ const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
       },
     },
     {
-      align: "center",
+      align: "left",
       width: 200,
       title: "Created At",
       dataIndex: "created_at",

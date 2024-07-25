@@ -1990,6 +1990,10 @@ main > div {
   min-height: calc(100vh - 290px) !important;
   background-color: #2b2b310a!important;
 }
+.page-agents .ant-table-wrapper{
+  min-height: calc(100vh - 410px) !important;
+  background-color: #2b2b310a!important;
+}
 .ant-popconfirm-buttons .ant-btn-default{
   color: black !important;
 }
