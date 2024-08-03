@@ -22,4 +22,9 @@ export type AGENT = {
   agent_last_update?: string;
   last_seen?: string;
   created_at?: string;
+  peripheral_device?: Array<{
+    last_plug: string;
+    name: string;
+    type: string;
+  }>;
 };

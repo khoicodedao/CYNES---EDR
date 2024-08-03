@@ -69,6 +69,19 @@ type DataGridProps = {
   timeRange?: string[];
   search?: { field: string; operator: string; value: string }[];
 };
+
+// "peripheral_device": [
+//   {
+//       "last_plug": "2024-05-01",
+//       "name": "kington",
+//       "type": "usb"
+//   },
+//   {
+//       "last_plug": "2024-05-01",
+//       "name": "fulhen",
+//       "type": "keyboard"
+//   }
+// ],
 const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
   const [open, setOpen] = useState(false);
   const [reload, setReload] = useState(false);
@@ -444,6 +457,33 @@ const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
                         />
                       </div>
                     </div>
+                  ),
+                },
+                {
+                  label: `Peripheral Devices`,
+                  key: "5",
+                  children: (
+                    <Table
+                      dataSource={agentDrawer.peripheral_device}
+                      columns={[
+                        {
+                          title: "Name",
+                          dataIndex: "name",
+                          key: "name",
+                        },
+                        {
+                          title: "Type",
+                          dataIndex: "type",
+                          key: "type",
+                        },
+                        {
+                          title: "Last Plug",
+                          dataIndex: "last_plug",
+                          key: "last_plug",
+                          render: (date) => formatDateString(date),
+                        },
+                      ]}
+                    />
                   ),
                 },
               ]}
