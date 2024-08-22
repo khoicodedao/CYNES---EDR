@@ -12,6 +12,8 @@
 :root {
   --main-dark-bg-color: #23303f;
   --color-light--text: rgba(0, 0, 0, 0.88);
+  --main-dark-table-bg-color: #1e212a;
+  --button-primary-dark-color: #19caff;
 }
 .ant-btn-primary {
   color: #fff;
@@ -1990,6 +1992,10 @@ main > div {
   min-height: calc(100vh - 290px) !important;
   background-color: #2b2b310a!important;
 }
+.rules .ant-table-wrapper{
+  min-height: calc(100vh - 290px) !important;
+  background-color:var(--main-dark-table-bg-color)!important;
+}
 .page-agents .ant-table-wrapper{
   min-height: calc(100vh - 410px) !important;
   background-color: #2b2b310a!important;
@@ -1997,4 +2003,17 @@ main > div {
 .ant-popconfirm-buttons .ant-btn-default{
   color: black !important;
 }
+.agents{
+  background-color:var(--main-dark-table-bg-color)!important;
+}
+.rules .ant-tabs .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
+  color:var( --button-primary-dark-color) !important;
+  
+}
+.rules svg{
+  fill:white !important
+}
+.ant-tabs-ink-bar{
+  background:var( --button-primary-dark-color) !important;
 
+}

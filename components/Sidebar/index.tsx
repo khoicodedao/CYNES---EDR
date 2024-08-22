@@ -388,10 +388,10 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
 
                   <div className={styles.titleOfLine}>Users</div>
                 </Link>
-                <Link href="/database" className={styles.menuItem}>
+                <Link href="/rules" className={styles.menuItem}>
                   <div
                     className={`p-2 ${
-                      (pathname === "/database" && styles.active) || ""
+                      (pathname === "/rules" && styles.active) || ""
                     }`}
                   >
                     <svg
@@ -415,7 +415,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                     </svg>
                   </div>
 
-                  <div className={styles.titleOfLine}>Databases</div>
+                  <div className={styles.titleOfLine}>Rules</div>
                 </Link>
                 <Link href="/files" className={styles.menuItem}>
                   <div
