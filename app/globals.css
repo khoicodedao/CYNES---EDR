@@ -2017,3 +2017,12 @@ main > div {
   background:var( --button-primary-dark-color) !important;
 
 }
+
+.hover\:text-primary, #menu a {
+  transition: color 0.3s ease;
+}
+
+.hover\:text-primary:hover, #menu a:hover {
+  --tw-text-opacity: 1;
+  color: var(--button-primary-dark-color) !important;
+}

@@ -31,7 +31,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
         sidebarOpen ? "translate-x-0" : "-translate-x-full"
       }`}
     >
-      <div className={styles.navigation}>
+      <div id="menu" className={styles.navigation}>
         <img className={styles.bgIcon} alt="" src="/bg@2x.png" />
         <img className={styles.logoDemoIcon} alt="" src="/logo-demo.svg" />
         <div className={styles.navigation1}>

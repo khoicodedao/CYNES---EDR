@@ -7,11 +7,13 @@ import formatDateString from "@/helpers/format-date";
 import getHeightScroll from "@/helpers/get-height-scroll";
 import { AGENT } from "@/types/agent";
 import type { TableColumnsType } from "antd";
+
 import {
   Drawer,
   List,
   Progress,
   Space,
+  message,
   Switch,
   Table,
   Tabs,
@@ -83,6 +85,14 @@ type DataGridProps = {
 //   }
 // ],
 const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
+  const [messageApi, contextHolder] = message.useMessage();
+  const showMessage = (type: any, content: string) => {
+    messageApi.open({
+      type: type,
+      content,
+    });
+  };
+
   const [open, setOpen] = useState(false);
   const [reload, setReload] = useState(false);
   const [loadingExport, setLoadingExport] = useState(false);
@@ -242,8 +252,11 @@ const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
       success: boolean;
       msg: string;
     } = await customAxiosPost(url, params);
-    if (resData.success && checked) {
-      window.open("/control-directly", "_blank", "noopener,noreferrer");
+    if (resData.success) {
+      // window.open("/control-directly", "_blank", "noopener,noreferrer");
+      showMessage("success", "Command executed successfully!");
+    } else {
+      showMessage("error", "Command executed failed!");
     }
   };
   useEffect(() => {
@@ -277,6 +290,7 @@ const DataGrid: React.FC<DataGridProps> = ({ timeRange, search }) => {
 
   return (
     <div className="agents">
+      {contextHolder}
       {/* Show Drawer content in the rightside  */}
       <Drawer
         title={

@@ -3,7 +3,7 @@
   top: 0;
   left: 0;
   width: 224px;
-  height: 900px;
+  height: 100vh;
   object-fit: cover;
 }
 .logoDemoIcon {
